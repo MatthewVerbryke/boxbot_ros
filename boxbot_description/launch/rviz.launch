@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find boxbot_description)/robots/boxbot.urdf.xacro'"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="virtual_joint_broadcaster_1" args="0 0 0 0 0 0 map world 100"/>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">	
+    <param name="use_gui" value="TRUE"/>
+  </node>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find boxbot_description)/boxbot.rviz"/>
+
+</launch>

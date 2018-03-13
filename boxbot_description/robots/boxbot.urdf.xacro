@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<robot name="boxbot" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <link name="world"/>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.3048 0.3048 0.00635"/>
+      </geometry>
+    </visual>
+
+  </link>
+
+
+  <link name="torso">
+    <visual>
+      <geometry>
+        <box size="0.20 0.12 0.35"/>
+      </geometry>
+    </visual>
+
+  </link>
+
+  <joint name="fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+  <joint name="waist_joint" type="fixed">
+    <origin xyz="0 0 0.178175" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="torso"/>
+  </joint>
+
+  <xacro:include filename="$(find boxbot_description)/urdf/widowx.urdf.xacro"/>
+  <xacro:widowx_arm parent="torso" prefix="left_">
+    <origin xyz="0 0.087 0.0877273" rpy="-1.5707963268 0 0"/>
+  </xacro:widowx_arm>
+
+  <xacro:include filename="$(find boxbot_description)/urdf/widowx.urdf.xacro"/>
+  <xacro:widowx_arm parent="torso" prefix="right_">
+    <origin xyz="0 -0.087 0.0877273" rpy="1.5707963268 0 0"/>
+  </xacro:widowx_arm>
+
+  <xacro:include filename="$(find boxbot_description)/urdf/servos.urdf.xacro"/>
+
+</robot>
+
