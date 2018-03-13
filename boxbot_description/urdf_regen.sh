@@ -1,7 +1,7 @@
 #!/bin/bash
 # Copyright 2017 University of Cincinnati
 # All rights reserved. See LICENSE file at:
-# TODO
+# https://github.com/MatthewVerbryke/boxbot_ros
 # Additional copyright may be held by others, as reflected in the commit history.
 
 
