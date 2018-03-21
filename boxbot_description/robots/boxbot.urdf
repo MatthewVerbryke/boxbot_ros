@@ -10,14 +10,38 @@
       <geometry>
         <box size="0.3048 0.3048 0.00635"/>
       </geometry>
+      <material name="">
+        <color rgba="0.96 0.76 0.13 1.0"/>
+      </material>
     </visual>
+    <!--Can't get collision to work for this link; likely a collision issue with the torso.-->
+    <inertial>
+      <!--placeholders-->
+      <origin rpy="0 0 0" xyz="0.1524 0.1524 0.003175"/>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
   </link>
   <link name="torso">
     <visual>
       <geometry>
         <box size="0.20 0.12 0.35"/>
       </geometry>
+      <material name="">
+        <color rgba="0.96 0.76 0.13 1.0"/>
+      </material>
     </visual>
+    <collision>
+      <geometry>
+        <box size="0.20 0.12 0.35"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <!--placeholders-->
+      <origin rpy="0 0 0" xyz="0.100 0.060 0.175"/>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
   </link>
   <joint name="fixed" type="fixed">
     <parent link="world"/>
@@ -622,6 +646,16 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  <transmission name="ltran_fake">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_gripper_prismatic_joint_2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_motor_fake">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
   <!--right-->
   <transmission name="rtran1">
     <type>transmission_interface/SimpleTransmission</type>
@@ -679,6 +713,16 @@
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="right_motor6">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="rtran_fake">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_gripper_prismatic_joint_2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_motor_fake">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>

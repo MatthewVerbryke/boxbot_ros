@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 
 <robot name="boxbot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find widowx_arm_description)/urdf/common_materials.xacro" />
   
   <link name="world"/>
 
@@ -9,24 +11,42 @@
       <geometry>
         <box size="0.3048 0.3048 0.00635"/>
       </geometry>
+      <xacro:material_yellow/>
     </visual>
-
+    <!--Can't get collision to work for this link; likely a collision issue with the torso.-->
+    <inertial>
+      <!--placeholders-->
+      <origin xyz="0.1524 0.1524 0.003175" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
   </link>
-
 
   <link name="torso">
     <visual>
       <geometry>
         <box size="0.20 0.12 0.35"/>
       </geometry>
+      <xacro:material_yellow/>
     </visual>
-
+    <collision>
+      <geometry>
+        <box size="0.20 0.12 0.35"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <!--placeholders-->
+      <origin xyz="0.100 0.060 0.175" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
   </link>
 
   <joint name="fixed" type="fixed">
     <parent link="world"/>
     <child link="base_link"/>
   </joint>
+
   <joint name="waist_joint" type="fixed">
     <origin xyz="0 0 0.178175" rpy="0 0 0"/>
     <parent link="base_link"/>
