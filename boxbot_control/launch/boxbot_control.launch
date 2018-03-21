@@ -11,7 +11,8 @@
                         left_gripper_controller
                         right_arm_controller
                         right_gripper_controller
-
+                        left_fake_gripper_controller
+                        right_fake_gripper_controller
   "/>
 
   <!-- convert joint states to TF transforms for rviz, etc -->
