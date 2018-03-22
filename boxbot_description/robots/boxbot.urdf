@@ -237,12 +237,13 @@
         <color rgba="0.15 0.15 0.15 1.0"/>
       </material>
     </visual>
-    <collision>
-      <origin rpy="0 0 1.57" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://boxbot_description/meshes/gripper_rail_link.stl"/>
-      </geometry>
-    </collision>
+    <!--Removed for now due to problems with collision in Gazebo-->
+    <!--collision>
+         <origin xyz="0 0 0" rpy="0 0 1.57" />
+         <geometry>
+            <mesh filename="package://boxbot_description/meshes/gripper_rail_link.stl"/>
+         </geometry>
+      </collision-->
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <mass value="1"/>
@@ -500,12 +501,13 @@
         <color rgba="0.15 0.15 0.15 1.0"/>
       </material>
     </visual>
-    <collision>
-      <origin rpy="0 0 1.57" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://boxbot_description/meshes/gripper_rail_link.stl"/>
-      </geometry>
-    </collision>
+    <!--Removed for now due to problems with collision in Gazebo-->
+    <!--collision>
+         <origin xyz="0 0 0" rpy="0 0 1.57" />
+         <geometry>
+            <mesh filename="package://boxbot_description/meshes/gripper_rail_link.stl"/>
+         </geometry>
+      </collision-->
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <mass value="1"/>
@@ -727,4 +729,17 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  <!--joint mimics for the prismatic grippers in gazebo-->
+  <gazebo>
+    <plugin filename="libroboticsgroup_gazebo_mimic_joint_plugin.so" name="mimic_joint">
+      <joint>left_gripper_joint</joint>
+      <mimicJoint>left_gripper_prismatic_joint_2</mimicJoint>
+    </plugin>
+  </gazebo>
+  <gazebo>
+    <plugin filename="libroboticsgroup_gazebo_mimic_joint_plugin.so" name="mimic_joint">
+      <joint>left_gripper_joint</joint>
+      <mimicJoint>left_gripper_prismatic_joint_2</mimicJoint>
+    </plugin>
+  </gazebo>
 </robot>

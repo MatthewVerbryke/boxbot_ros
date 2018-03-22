@@ -8,12 +8,13 @@
          </geometry>
          <xacro:material_black />
       </visual>
-      <collision>
+      <!--Removed for now due to problems with collision in Gazebo-->
+      <!--collision>
          <origin xyz="0 0 0" rpy="0 0 1.57" />
          <geometry>
             <mesh filename="package://boxbot_description/meshes/gripper_rail_link.stl"/>
          </geometry>
-      </collision>
+      </collision-->
       <inertial>
          <origin xyz="0 0 0" rpy="0 0 0" />
          <mass value="1" />
