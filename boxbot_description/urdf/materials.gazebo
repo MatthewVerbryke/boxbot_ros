@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<robot>
+
+  <!--Gazebo compatable colors-->
+
+  <gazebo reference="base_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/Wood</material>
+  </gazebo>
+
+  <gazebo reference="torso">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/Wood</material>
+  </gazebo>
+
+  <!--left arm-->
+
+  <gazebo reference="left_arm_base_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="left_shoulder_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="left_biceps_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="left_forearm_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="left_wrist_1_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="left_wrist_2_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="left_gripper_rail_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="left_gripper_1_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="left_gripper_2_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <!--right arm-->
+
+  <gazebo reference="right_arm_base_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="right_shoulder_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="right_biceps_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="right_forearm_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="right_wrist_1_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="right_wrist_2_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="right_gripper_rail_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="right_gripper_1_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="right_gripper_2_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+</robot>
+

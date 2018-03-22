@@ -10,7 +10,7 @@ cd ~/rse_ws/
 source devel/setup.bash
 
 #Get path
-PACKAGE_PATH="/home/$USER/rse_ws/src/boxbot"
+PACKAGE_PATH="/home/$USER/rse_ws/src/boxbot_ros"
 
 #Delete old URDF file
 cd $PACKAGE_PATH/boxbot_description/robots/

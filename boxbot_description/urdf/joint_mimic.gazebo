@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+<!--joint mimics for the prismatic grippers in gazebo-->
+
+  <gazebo>
+    <plugin name="mimic_joint" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
+	    <joint>left_gripper_joint</joint>
+	    <mimicJoint>left_gripper_prismatic_joint_2</mimicJoint>
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="mimic_joint" filename="libroboticsgroup_gazebo_mimic_joint_plugin.so">
+	    <joint>left_gripper_joint</joint>
+	    <mimicJoint>left_gripper_prismatic_joint_2</mimicJoint>
+    </plugin>
+  </gazebo>
+
+</robot>
