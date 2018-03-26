@@ -13,6 +13,8 @@ The software was developed and tested in:
 - ROS Kinetic
 - Gazebo 7.9
 
+This package requires the University of Patras Robotics Group's [Gazebo mimic joint plugin](https://github.com/roboticsgroup/roboticsgroup_gazebo_plugins).
+
 ## Installation 
 
 To install the current version of the repository to your machine, change directory into the desired catkin workspace source directory and clone the repository.
