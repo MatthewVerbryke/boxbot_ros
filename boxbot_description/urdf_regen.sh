@@ -4,16 +4,12 @@
 # https://github.com/MatthewVerbryke/boxbot_ros
 # Additional copyright may be held by others, as reflected in the commit history.
 
-
-# Source setup
-cd ~/rse_ws/
-source devel/setup.bash
-
-#Get path
-PACKAGE_PATH="/home/$USER/rse_ws/src/boxbot_ros"
+# Get static paths
+RELATIVE_PATH="`dirname \"$0\"`"
+ABSOLUTE_PATH="`( cd \"$RELATIVE_PATH\" && pwd )`"
 
 #Delete old URDF file
-cd $PACKAGE_PATH/boxbot_description/robots/
+cd $ABSOLUTE_PATH/robots/
 rm boxbot.urdf
 
 #Create new URDF file
