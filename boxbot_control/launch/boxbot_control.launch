@@ -7,12 +7,18 @@
   <!-- load the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
     output="screen" ns="/boxbot" args=" joint_state_controller
-                        left_arm_controller
-                        left_gripper_controller
-                        right_arm_controller
-                        right_gripper_controller
-                        left_fake_gripper_controller
-                        right_fake_gripper_controller
+                          left_joint_1_controller
+                          left_joint_2_controller
+                          left_joint_3_controller
+                          left_joint_4_controller
+                          left_joint_5_controller
+                          left_gripper_joint_controller
+                          right_joint_1_controller
+                          right_joint_2_controller
+                          right_joint_3_controller
+                          right_joint_4_controller
+                          right_joint_5_controller
+                          right_gripper_joint_controller
   "/>
 
   <!-- convert joint states to TF transforms for rviz, etc -->

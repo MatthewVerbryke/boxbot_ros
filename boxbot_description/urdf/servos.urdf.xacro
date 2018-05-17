@@ -78,17 +78,6 @@
     </actuator>
   </transmission>
 
-  <transmission name="ltran_fake">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="left_gripper_prismatic_joint_2">    
-      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="left_motor_fake">
-      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-
   <!--right-->
 
   <transmission name="rtran1">
@@ -152,17 +141,6 @@
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="right_motor6">
-      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-
-  <transmission name="rtran_fake">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="right_gripper_prismatic_joint_2">    
-      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="right_motor_fake">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
