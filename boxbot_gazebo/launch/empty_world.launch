@@ -27,7 +27,7 @@
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
     args="-urdf -model boxbot -param robot_description"/>
 
-  <!-- launch files -->
+  <!-- Launch controllers -->
   <include file="$(find boxbot_control)/launch/boxbot_control.launch"/>
 
 </launch>
