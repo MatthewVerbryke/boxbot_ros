@@ -648,6 +648,16 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  <transmission name="ltran7">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_gripper_prismatic_joint_2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_motor7">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
   <!--right-->
   <transmission name="rtran1">
     <type>transmission_interface/SimpleTransmission</type>
@@ -709,19 +719,16 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
-  <!--joint mimics for the prismatic grippers in gazebo-->
-  <gazebo>
-    <plugin filename="libroboticsgroup_gazebo_mimic_joint_plugin.so" name="mimic_joint">
-      <joint>left_gripper_joint</joint>
-      <mimicJoint>left_gripper_prismatic_joint_2</mimicJoint>
-    </plugin>
-  </gazebo>
-  <gazebo>
-    <plugin filename="libroboticsgroup_gazebo_mimic_joint_plugin.so" name="mimic_joint">
-      <joint>left_gripper_joint</joint>
-      <mimicJoint>left_gripper_prismatic_joint_2</mimicJoint>
-    </plugin>
-  </gazebo>
+  <transmission name="rtran7">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_gripper_prismatic_joint_2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_motor7">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
   <!--Gazebo compatable colors-->
   <gazebo reference="base_link">
     <mu1>0.3</mu1>

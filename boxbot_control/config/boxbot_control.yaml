@@ -35,6 +35,11 @@ boxbot:
     joint: left_gripper_joint
     pid: {p: 50.0, i: 0.1, d: 1.0}
 
+  left_gripper_mimic_controller:
+    type: position_controllers/JointPositionController
+    joint: left_gripper_prismatic_joint_2
+    pid: {p: 50.0, i: 0.1, d: 1.0}
+
 
   right_joint_1_controller:
     type: position_controllers/JointPositionController
@@ -64,4 +69,9 @@ boxbot:
   right_gripper_joint_controller:
     type: position_controllers/JointPositionController
     joint: right_gripper_joint
+    pid: {p: 50.0, i: 0.1, d: 1.0}
+
+  right_gripper_mimic_controller:
+    type: position_controllers/JointPositionController
+    joint: right_gripper_prismatic_joint_2
     pid: {p: 50.0, i: 0.1, d: 1.0}

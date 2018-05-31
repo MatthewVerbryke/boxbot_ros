@@ -30,4 +30,7 @@
   <!-- Launch controllers -->
   <include file="$(find boxbot_control)/launch/boxbot_control.launch"/>
 
+  <!-- Launch joint mimic node -->
+  <node name="mimic" pkg="boxbot_gazebo" type="mimic.py" output="screen"/>
+
 </launch>

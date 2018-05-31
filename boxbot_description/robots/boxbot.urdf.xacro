@@ -64,7 +64,7 @@
   </xacro:widowx_arm>
 
   <xacro:include filename="$(find boxbot_description)/urdf/servos.urdf.xacro"/>
-  <xacro:include filename="$(find boxbot_description)/urdf/joint_mimic.gazebo"/>
+  <!--xacro:include filename="$(find boxbot_description)/urdf/joint_mimic.gazebo"/-->
   <xacro:include filename="$(find boxbot_description)/urdf/materials.gazebo"/>
 
 </robot>
