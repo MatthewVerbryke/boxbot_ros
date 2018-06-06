@@ -48,20 +48,22 @@ class ParallelGripperMimic:
         mimics = ["left_gripper_mimic_controller", "right_gripper_mimic_controller"]
         callbacks = [self.get_left_command, self.get_right_command]
         
-        pubs = []
-        subs = []
+        self.pubs = []
+        self.subs = []
+        self.left_command = 0.0
+        self.right_command = 0.0
         
         # Setup publishers and subscribers
         for i in range(0,len(leaders)):
             hold_sub = rospy.Subscriber(init_string + leaders[i] + final_string, Float64, callbacks[i])
             hold_pub = rospy.Publisher(init_string + mimics[i] + final_string, Float64, queue_size=1)
-            subs.append(hold_sub)
-            pubs.append(hold_pub)
+            self.subs.append(hold_sub)
+            self.pubs.append(hold_pub)
         
         # Wait for topics to start publishing before continuing
-        for topic in subs:
-            rospy.wait_for_message(init_string + leaders[i] + final_string, Float64)
-            
+        rospy.sleep(5)
+        rospy.loginfo("Parallel gripper mimic node initialized")
+        
         # Run main script
         self.main()
         
@@ -73,7 +75,7 @@ class ParallelGripperMimic:
         while not rospy.is_shutdown():
             
             # Acquire a lock
-            self.lock.aquire()
+            self.lock.acquire()
             
             try:
                 
@@ -82,7 +84,7 @@ class ParallelGripperMimic:
                 
                 # Publish the current commands to the parallel gripper
                 for i in range(0,len(current_goal)):
-                    pubs[i].publish(current_goal[i])
+                    self.pubs[i].publish(current_goal[i])
                     
             finally:
                 
