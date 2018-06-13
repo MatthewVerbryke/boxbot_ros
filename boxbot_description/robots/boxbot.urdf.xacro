@@ -9,14 +9,14 @@
   <link name="base_link">
     <visual>
       <geometry>
-        <box size="0.3048 0.3048 0.00635"/>
+        <box size="0.3048 0.3048 0.01905"/>
       </geometry>
       <xacro:material_yellow/>
     </visual>
     <!--Can't get collision to work for this link; likely a collision issue with the torso.-->
     <inertial>
       <!--placeholders-->
-      <origin xyz="0.1524 0.1524 0.003175" rpy="0 0 0"/>
+      <origin xyz="0.1524 0.1524 0.009525" rpy="0 0 0"/>
       <mass value="1"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
@@ -25,46 +25,46 @@
   <link name="torso">
     <visual>
       <geometry>
-        <box size="0.20 0.12 0.35"/>
+        <box size="0.19685 0.12065 0.3556"/>
       </geometry>
       <xacro:material_yellow/>
     </visual>
     <collision>
       <geometry>
-        <box size="0.20 0.12 0.35"/>
+        <box size="0.19685 0.12065 0.3556"/>
       </geometry>
     </collision>
     <inertial>
       <!--placeholders-->
-      <origin xyz="0.100 0.060 0.175" rpy="0 0 0"/>
+      <origin xyz="0.098425 0.060325 0.1778" rpy="0 0 0"/>
       <mass value="1"/>
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
   </link>
 
   <joint name="fixed" type="fixed">
+    <origin xyz="0 0 0.009525" rpy="0 0 0"/>
     <parent link="world"/>
     <child link="base_link"/>
   </joint>
 
   <joint name="waist_joint" type="fixed">
-    <origin xyz="0 0 0.178175" rpy="0 0 0"/>
+    <origin xyz="0 0 0.187325" rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="torso"/>
   </joint>
 
   <xacro:include filename="$(find boxbot_description)/urdf/widowx.urdf.xacro"/>
   <xacro:widowx_arm parent="torso" prefix="left_">
-    <origin xyz="0 0.087 0.0877273" rpy="-1.5707963268 0 0"/>
+    <origin xyz="0 0.087325 0.0635" rpy="-1.5707963268 0 0"/>
   </xacro:widowx_arm>
 
   <xacro:include filename="$(find boxbot_description)/urdf/widowx.urdf.xacro"/>
   <xacro:widowx_arm parent="torso" prefix="right_">
-    <origin xyz="0 -0.087 0.0877273" rpy="1.5707963268 0 0"/>
+    <origin xyz="0 -0.087325 0.0635" rpy="1.5707963268 0 0"/>
   </xacro:widowx_arm>
 
   <xacro:include filename="$(find boxbot_description)/urdf/servos.urdf.xacro"/>
-  <!--xacro:include filename="$(find boxbot_description)/urdf/joint_mimic.gazebo"/-->
   <xacro:include filename="$(find boxbot_description)/urdf/materials.gazebo"/>
 
 </robot>
