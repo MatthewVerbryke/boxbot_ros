@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot name="block_1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <link name="link_1">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0"/>
+      <mass value="0.14"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <box size="0.0762 0.1524 0.01905"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 0.0"/>
+      <geometry>
+        <box size="0.0762 0.1524 0.01905"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="link_1">
+    <material>Gazebo/Wood</material>
+  </gazebo>
+</robot>
