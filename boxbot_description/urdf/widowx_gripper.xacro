@@ -18,7 +18,7 @@
       <inertial>
          <origin xyz="0 0 0" rpy="0 0 0" />
          <mass value="7.0e-3" />
-         <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+         <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
       </inertial>
    </link>
    <!--link name="${prefix}gripper_aux_link">
@@ -38,9 +38,9 @@
          </geometry>
       </collision>
       <inertial>
-         <origin xyz="0 0 0" rpy="0 0 0" />
+         <origin xyz="0.0 -0.008292 0.017304" rpy="0 0 0" />
          <mass value="8.0e-3" />
-         <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+         <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
       </inertial>
    </link>
    <link name="${prefix}gripper_2_link">
@@ -58,9 +58,9 @@
          </geometry>
       </collision>
       <inertial>
-         <origin xyz="0 0 0" rpy="0 0 0" />
+         <origin xyz="0.0 0.008292 0.017304" rpy="0 0 0" />
          <mass value="8.0e-3" />
-         <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+         <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
       </inertial>
    </link>
    <joint name="${prefix}joint_6" type="fixed">

@@ -24,7 +24,7 @@
             </geometry>
          </collision>
          <inertial>
-            <origin xyz="0 0 0" rpy="0 0 0" />
+            <origin xyz="0 0 0.0275" rpy="0 0 0" />
             <mass value="1" />
             <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
          </inertial>
@@ -45,9 +45,10 @@
             </geometry>
          </collision>
          <inertial>
-            <origin xyz="0 0 0" rpy="0 0 0" />
+            <!--estimated CM-->
+            <origin xyz="0.0 0.0 -0.04" rpy="0 0 0" />
             <mass value="0.061" />
-            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
          </inertial>
       </link>
 
@@ -66,9 +67,9 @@
             </geometry>
          </collision>
          <inertial>
-            <origin xyz="0 0 0" rpy="0 0 0" />
+            <origin xyz="0.006670 0.0 0.083394" rpy="0 0 0" />
             <mass value="3.62e-1" />
-            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
          </inertial>
       </link>
 
@@ -87,9 +88,9 @@
             </geometry>
          </collision>
          <inertial>
-            <origin xyz="0 0 0" rpy="0 0 0" />
+            <origin xyz="0.000018 0.0 0.090995" rpy="0 0 0" />
             <mass value="1.87e-1" />
-            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
          </inertial>
       </link>
 
@@ -108,9 +109,9 @@
             </geometry>
          </collision>
          <inertial>
-            <origin xyz="0 0 0" rpy="0 0 0" />
+            <origin xyz="-0.010852 0.0 0.048078" rpy="0 0 0" />
             <mass value="9.1e-2" />
-            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
          </inertial>
       </link>
 
@@ -129,9 +130,10 @@
             </geometry>
          </collision>
          <inertial>
-            <origin xyz="0 0 0" rpy="0 0 0" />
+            <!--estimated CM-->
+            <origin xyz="-0.018000 0.0 0.01500 " rpy="0 0 0" />
             <mass value="6.3e-2" />
-            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
          </inertial>
       </link>
 
