@@ -39,7 +39,8 @@
      -J right_joint_4 1.183139
      -J right_joint_5 0.0
      -J right_gripper_joint 0.009525
-     -J right_gripper_prismatic_joint_2 0.009526"/>
+     -J right_gripper_prismatic_joint_2 0.009526
+     -unpause"/>
 
   <!-- Add the block model to the parameter server -->
   <param name="block_description" 
@@ -50,10 +51,7 @@
     args="-urdf -model block_1 -param block_description
      -x 0.24 
      -y 0.0 
-     -z 0.26035
-     "/>
-
-  <!---unpause -->
+     -z 0.26035"/>
 
   <!-- Launch controllers -->
   <include file="$(find boxbot_control)/launch/boxbot_control.launch"/>
