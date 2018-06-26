@@ -93,7 +93,6 @@
       </geometry>
     </collision>
     <inertial>
-      <!--estimated CM-->
       <origin rpy="0 0 0" xyz="0.0 0.0 -0.04"/>
       <mass value="0.061"/>
       <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
@@ -182,7 +181,6 @@
       </geometry>
     </collision>
     <inertial>
-      <!--estimated CM-->
       <origin rpy="0 0 0" xyz="-0.018000 0.0 0.01500 "/>
       <mass value="6.3e-2"/>
       <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
@@ -359,7 +357,6 @@
       </geometry>
     </collision>
     <inertial>
-      <!--estimated CM-->
       <origin rpy="0 0 0" xyz="0.0 0.0 -0.04"/>
       <mass value="0.061"/>
       <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
@@ -448,7 +445,6 @@
       </geometry>
     </collision>
     <inertial>
-      <!--estimated CM-->
       <origin rpy="0 0 0" xyz="-0.018000 0.0 0.01500 "/>
       <mass value="6.3e-2"/>
       <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
@@ -781,14 +777,15 @@
     <mu2>0.3</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
+  <!-- Unrealistic, but based on PR2; likely due to how Gazebo is not good with contacts -->
   <gazebo reference="left_gripper_1_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>500.0</mu1>
+    <mu2>500.0</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="left_gripper_2_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>500.0</mu1>
+    <mu2>500.0</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <!--right arm-->
@@ -828,13 +825,13 @@
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="right_gripper_1_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>500.0</mu1>
+    <mu2>500.0</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="right_gripper_2_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>500.0</mu1>
+    <mu2>500.0</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 </robot>

@@ -45,7 +45,6 @@
             </geometry>
          </collision>
          <inertial>
-            <!--estimated CM-->
             <origin xyz="0.0 0.0 -0.04" rpy="0 0 0" />
             <mass value="0.061" />
             <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
@@ -130,7 +129,6 @@
             </geometry>
          </collision>
          <inertial>
-            <!--estimated CM-->
             <origin xyz="-0.018000 0.0 0.01500 " rpy="0 0 0" />
             <mass value="6.3e-2" />
             <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />

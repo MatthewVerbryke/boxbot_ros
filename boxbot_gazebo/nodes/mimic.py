@@ -38,6 +38,10 @@ class ParallelGripperMimic:
         # Initialize cleanup
         rospy.on_shutdown(self.cleanup)
         
+        # Get initial gripper states
+        self.left_start = rospy.get_param("~left_gripper_start", 0.0)
+        self.right_start = rospy.get_param("~right_gripper_start", 0.0)
+        
         # Get a lock
         self.lock = thread.allocate_lock()
         
@@ -50,8 +54,8 @@ class ParallelGripperMimic:
         
         self.pubs = []
         self.subs = []
-        self.left_command = 0.0
-        self.right_command = 0.0
+        self.left_command = None
+        self.right_command = None
         
         # Setup publishers and subscribers
         for i in range(0,len(leaders)):
@@ -78,9 +82,14 @@ class ParallelGripperMimic:
             self.lock.acquire()
             
             try:
-                
                 # Update current commands
                 current_goal = [self.left_command, self.right_command]
+                
+                # Go to the start state if we aren't getting anything yet
+                if (self.left_command==None):
+                    self.left_command = self.left_start
+                if (self.right_command==None):
+                    self.right_command = self.right_start
                 
                 # Publish the current commands to the parallel gripper
                 for i in range(0,len(current_goal)):
