@@ -26,18 +26,18 @@
   <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
     args="-urdf -model boxbot -param robot_description
-     -J left_joint_1 0.0
-     -J left_joint_2 0.492083
-     -J left_joint_3 -0.0852091
-     -J left_joint_4 1.163922
-     -J left_joint_5 0.0
+     -J left_joint_1 0.430967
+     -J left_joint_2 0.674721
+     -J left_joint_3 -0.428684
+     -J left_joint_4 1.324760
+     -J left_joint_5 0.430967
      -J left_gripper_joint 0.009525
      -J left_gripper_prismatic_joint_2 0.009525
-     -J right_joint_1 0.0
-     -J right_joint_2 0.492083
-     -J right_joint_3 -0.0852091
-     -J right_joint_4 1.163922
-     -J right_joint_5 0.0
+     -J right_joint_1 -0.430967
+     -J right_joint_2 0.674721
+     -J right_joint_3 -0.428684
+     -J right_joint_4 1.324760
+     -J right_joint_5 -0.430967
      -J right_gripper_joint 0.009525
      -J right_gripper_prismatic_joint_2 0.009525
      -unpause"/>
@@ -51,7 +51,7 @@
     args="-urdf -model block_1 -param block_description
      -x 0.24 
      -y 0.0 
-     -z 0.26035"/>
+     -z 0.15"/>
 
   <!-- Launch controllers -->
   <include file="$(find boxbot_control)/launch/boxbot_control.launch"/>
@@ -63,3 +63,4 @@
   </node>
 
 </launch>
+

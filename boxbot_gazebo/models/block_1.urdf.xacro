@@ -3,7 +3,7 @@
   <link name="link_1">
     <inertial>
       <origin xyz="0.0 0.0 0.0"/>
-      <mass value="0.14"/>
+      <mass value="0.05"/>
       <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
     </inertial>
     <visual>
@@ -20,6 +20,8 @@
     </collision>
   </link>
   <gazebo reference="link_1">
+    <mu1>500.0</mu1>
+    <mu2>500.0</mu2>
     <material>Gazebo/Wood</material>
   </gazebo>
 </robot>
