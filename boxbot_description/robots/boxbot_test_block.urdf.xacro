@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+
+<robot name="boxbot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find widowx_arm_description)/urdf/common_materials.xacro" />
+  
+  <link name="world"/>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.3048 0.3048 0.01905"/>
+      </geometry>
+      <xacro:material_yellow/>
+    </visual>
+    <!--Can't get collision to work for this link; likely a collision issue with the torso.-->
+    <inertial>
+      <!--placeholders-->
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <link name="torso">
+    <visual>
+      <geometry>
+        <box size="0.19685 0.12065 0.3556"/>
+      </geometry>
+      <xacro:material_yellow/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.19685 0.12065 0.3556"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <!--placeholders-->
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="fixed" type="fixed">
+    <origin xyz="0 0 0.009525" rpy="0 0 0"/>
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+
+  <joint name="waist_joint" type="fixed">
+    <origin xyz="0 0 0.187325" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="torso"/>
+  </joint>
+
+  <xacro:include filename="$(find boxbot_description)/urdf/widowx.urdf.xacro"/>
+  <xacro:widowx_arm parent="torso" prefix="left_">
+    <origin xyz="0 0.087325 0.0635" rpy="-1.5707963268 0 0"/>
+  </xacro:widowx_arm>
+
+  <xacro:include filename="$(find boxbot_description)/urdf/widowx.urdf.xacro"/>
+  <xacro:widowx_arm parent="torso" prefix="right_">
+    <origin xyz="0 -0.087325 0.0635" rpy="1.5707963268 0 0"/>
+  </xacro:widowx_arm>
+
+  <xacro:include filename="$(find boxbot_description)/urdf/test_block.urdf.xacro"/>
+  <xacro:test_block parent="left_wrist_2_link" prefix="left_"/>
+
+  <xacro:include filename="$(find boxbot_description)/urdf/test_block.urdf.xacro"/>
+  <xacro:test_block parent="right_wrist_2_link" prefix="right_"/>
+
+  <xacro:include filename="$(find boxbot_description)/urdf/servos.urdf.xacro"/>
+  <xacro:include filename="$(find boxbot_description)/urdf/materials.gazebo"/>
+
+</robot>
+

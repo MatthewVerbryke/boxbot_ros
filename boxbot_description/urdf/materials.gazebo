@@ -59,16 +59,15 @@
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
-  <!-- based on PR2 grippers -->
   <gazebo reference="left_gripper_1_link">
-    <mu1>500.0</mu1>
-    <mu2>500.0</mu2>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
   <gazebo reference="left_gripper_2_link">
-    <mu1>500.0</mu1>
-    <mu2>500.0</mu2>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
@@ -116,16 +115,15 @@
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
-  <!-- based on PR2 grippers -->
   <gazebo reference="right_gripper_1_link">
-    <mu1>500.0</mu1>
-    <mu2>500.0</mu2>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
   <gazebo reference="right_gripper_2_link">
-    <mu1>500.0</mu1>
-    <mu2>500.0</mu2>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 

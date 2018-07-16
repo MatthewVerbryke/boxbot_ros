@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="test_block" params="parent prefix">
+
+    <link name="${prefix}test_block">
+      <inertial>
+        <origin xyz="0.0 0.0 0.0"/>
+        <mass value="0.025"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="0.0762 0.01905 0.0762"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="0.0762 0.01905 0.0762 "/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}test_block_joint" type="fixed">
+      <origin xyz="0.0 0.0 0.0889" />
+      <parent link="${parent}" />
+      <child link="${prefix}test_block"/>
+    </joint>
+
+    <gazebo reference="${prefix}test_block">
+
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+      <material>Gazebo/Wood</material>
+
+      <sensor name="${prefix}test_block_contact" type="contact">
+        <always_on>true</always_on>
+        <update_rate>30</update_rate>
+        <contact>
+          <collision>${prefix}wrist_2_link_fixed_joint_lump__${prefix}test_block_collision_1</collision>
+        </contact>
+        <plugin name="${prefix}test_block_contact_plugin" filename="libgazebo_ros_bumper.so">
+          <bumperTopicName>${prefix}test_block_contact_state</bumperTopicName>
+          <frameName>${prefix}test_block</frameName>
+        </plugin>
+      </sensor>
+
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

@@ -8,9 +8,11 @@
 RELATIVE_PATH="`dirname \"$0\"`"
 ABSOLUTE_PATH="`( cd \"$RELATIVE_PATH\" && pwd )`"
 
-#Delete old URDF file
+#Delete old URDF files
 cd $ABSOLUTE_PATH/robots/
 rm boxbot.urdf
+rm boxbot_test_block.urdf
 
-#Create new URDF file
+#Create new URDF files
 rosrun xacro xacro.py -o boxbot.urdf boxbot.urdf.xacro
+rosrun xacro xacro.py -o boxbot_test_block.urdf boxbot_test_block.urdf.xacro
