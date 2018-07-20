@@ -10,13 +10,13 @@
         <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
       </inertial>
       <visual>
-        <origin xyz="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 0.0381"/>
         <geometry>
           <box size="0.0762 0.01905 0.0762"/>
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 0.0381"/>
         <geometry>
           <box size="0.0762 0.01905 0.0762 "/>
         </geometry>
@@ -24,7 +24,7 @@
     </link>
 
     <joint name="${prefix}test_block_joint" type="fixed">
-      <origin xyz="0.0 0.0 0.0889" />
+      <origin xyz="0.0 0.0 0.0508" />
       <parent link="${parent}" />
       <child link="${prefix}test_block"/>
     </joint>
