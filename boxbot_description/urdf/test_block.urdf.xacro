@@ -30,7 +30,8 @@
     </joint>
 
     <gazebo reference="${prefix}test_block">
-
+      
+      <self_collide>1</self_collide>
       <mu1>1.0</mu1>
       <mu2>1.0</mu2>
       <material>Gazebo/Wood</material>
