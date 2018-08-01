@@ -23,5 +23,16 @@
     <mu1>1.0</mu1>
     <mu2>1.0</mu2>
     <material>Gazebo/Wood</material>
+    <sensor name="block_contact" type="contact">
+      <always_on>true</always_on>
+      <update_rate>30</update_rate>
+      <contact>
+        <collision>link_1_collision</collision>
+      </contact>
+      <plugin name="block_contact_plugin" filename="libgazebo_ros_bumper.so">
+        <bumperTopicName>block_contact_state</bumperTopicName>
+        <frameName>link_1</frameName>
+      </plugin>
+    </sensor>
   </gazebo>
 </robot>
