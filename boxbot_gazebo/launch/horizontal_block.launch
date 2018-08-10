@@ -31,15 +31,15 @@
      -J left_joint_3 -0.0521050
      -J left_joint_4 0.837194
      -J left_joint_5 0.0
-     -J left_gripper_joint 0.009525
-     -J left_gripper_prismatic_joint_2 0.009525
+     -J left_gripper_joint 0.0086
+     -J left_gripper_prismatic_joint_2 0.0086
      -J right_joint_1 0.0
      -J right_joint_2 0.386687
      -J right_joint_3 -0.441830
      -J right_joint_4 1.625939
      -J right_joint_5 0.0
-     -J right_gripper_joint 0.009525
-     -J right_gripper_prismatic_joint_2 0.009525
+     -J right_gripper_joint 0.0086
+     -J right_gripper_prismatic_joint_2 0.0086
      -unpause"/>
 
   <!-- Add the block model to the parameter server -->
