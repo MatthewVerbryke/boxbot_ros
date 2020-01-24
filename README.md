@@ -1,15 +1,17 @@
-# Boxbot
+# Boxbot v2 (WIP)
 
 ## Summary
+
+Note: Currently designing a 6-DOF version of the WidowX arm, which will also solve the shoulder overload problem (see Notes). Gazebo and ros-control functionality is currently broken.
 
 This repository contains the ROS packages needed for the simulation of "Boxbot", a simple dual-armed robot consisting of two [WidowX robotic arms](http://www.trossenrobotics.com/widowxrobotarm) attached to a simple "torso". Included is a URDF model of the robot, along with corresponding ros-control and Gazebo interfaces.
 
 ## Recommended OS/Programs
 
 This software was developed and tested in:
-- Ubuntu 16.04 LTS
-- ROS Kinetic
-- Gazebo 7.13.0
+- Ubuntu 18.04 LTS
+- ROS Melodic
+- Gazebo 9.0.0
 
 ## Installation 
 
@@ -19,10 +21,16 @@ To install the current version of the repository to your machine, change directo
 
 ### RViz
 
-To launch a model of the robot in RViz from the top level directory, use:
+To launch a model of the original robot in RViz from the top level directory, use:
 
 ```
 roslaunch boxbot_description rviz.launch
+```
+
+For the new preliminary design with 6-DOF arms, use:
+
+```
+roslaunch boxbot_description rviz_2.launch
 ```
 
 Currently, you will manually have to add the robot model to the RViz window.
@@ -49,7 +57,7 @@ After you are done editing, you can regenerate the complete urdf model by switch
 
 ### Notes
 
-- During initial testing of the physical Boxbot system, it was found that the first shoulder joint of the WidowX arm (joint_1) has problems holding up the wieght of the arm, sporadically shutting down due to what appears to be overload. In response, the shoulder joint is being redesigned to utilize a larger and more capable servo.
+- During initial testing of the physical Boxbot system, it was found that the first shoulder joint of the WidowX arm (joint_1) has problems holding up the weight of the arm, sporadically shutting down due to what appears to be overload. In response, the shoulder joint is being redesigned to utilize a larger and more capable servo.
 
 ## License:
 

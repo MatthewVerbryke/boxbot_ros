@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<robot name="boxbot" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="M_SCALE" value="0.001"/>
+  <xacro:include filename="$(find boxbot_description)/urdf/common_materials.xacro" />
+  
+  <link name="world"/>
+
+  <link name="torso">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707963268 0 1.5707963268" />
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/torso_link.stl"/>
+      </geometry>
+      <xacro:material_yellow/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5707963268 0 1.5707963268" />
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/torso_link.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <!--placeholders-->
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="fixed" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="world"/>
+    <child link="torso"/>
+  </joint>
+
+  <xacro:include filename="$(find boxbot_description)/urdf/widowx_6dof.urdf.xacro"/>
+  <xacro:widowx_arm parent="torso" prefix="left_">
+    <origin xyz="0 ${M_SCALE*99.613} ${M_SCALE*249.53}" rpy="-${M_PI/2.0} 0 0" />
+  </xacro:widowx_arm>
+
+  <xacro:include filename="$(find boxbot_description)/urdf/widowx_6dof.urdf.xacro"/>
+  <xacro:widowx_arm parent="torso" prefix="right_">
+    <origin xyz="0 -${M_SCALE*99.613} ${M_SCALE*249.53}" rpy="${M_PI/2.0} 0 0"/>
+  </xacro:widowx_arm>
+
+  <xacro:include filename="$(find boxbot_description)/urdf/servos.urdf.xacro"/>
+  <xacro:include filename="$(find boxbot_description)/urdf/materials.gazebo"/>
+
+</robot>
+
