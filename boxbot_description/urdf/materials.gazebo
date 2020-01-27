@@ -3,12 +3,6 @@
 
   <!--Gazebo compatable colors-->
 
-  <gazebo reference="base_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
-    <material>Gazebo/Wood</material>
-  </gazebo>
-
   <gazebo reference="torso">
     <mu1>0.3</mu1>
     <mu2>0.3</mu2>
@@ -16,12 +10,6 @@
   </gazebo>
 
   <!--left arm-->
-
-  <gazebo reference="left_arm_base_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
-    <material>Gazebo/DarkGrey</material>
-  </gazebo>
 
   <gazebo reference="left_shoulder_link">
     <mu1>0.3</mu1>
@@ -35,7 +23,13 @@
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
-  <gazebo reference="left_forearm_link">
+  <gazebo reference="left_forearm_1_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="left_forearm_2_link">
     <mu1>0.3</mu1>
     <mu2>0.3</mu2>
     <material>Gazebo/DarkGrey</material>
@@ -73,12 +67,6 @@
 
   <!--right arm-->
 
-  <gazebo reference="right_arm_base_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
-    <material>Gazebo/DarkGrey</material>
-  </gazebo>
-
   <gazebo reference="right_shoulder_link">
     <mu1>0.3</mu1>
     <mu2>0.3</mu2>
@@ -91,7 +79,13 @@
     <material>Gazebo/DarkGrey</material>
   </gazebo>
 
-  <gazebo reference="right_forearm_link">
+  <gazebo reference="right_forearm_1_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+
+  <gazebo reference="right_forearm_2_link">
     <mu1>0.3</mu1>
     <mu2>0.3</mu2>
     <material>Gazebo/DarkGrey</material>

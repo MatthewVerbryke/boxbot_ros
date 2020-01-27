@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
+
    <link name="${prefix}gripper_rail_link">
       <visual>
          <origin xyz="0 0 0" rpy="0 0 1.57" />
@@ -21,8 +22,6 @@
          <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
       </inertial>
    </link>
-   <!--link name="${prefix}gripper_aux_link">
-   </link-->
    <link name="${prefix}gripper_1_link">
       <visual>
          <origin xyz="0 -0.0007 0" rpy="0 0 1.57" />

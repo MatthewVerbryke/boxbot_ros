@@ -7,17 +7,18 @@
   <link name="world"/>
   <link name="torso">
     <visual>
+      <origin rpy="1.5707963268 0 1.5707963268" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://boxbot_description/meshes/torso.stl"/>
+        <mesh filename="package://boxbot_description/meshes/torso_link.stl"/>
       </geometry>
       <material name="">
         <color rgba="0.96 0.76 0.13 1.0"/>
       </material>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="1.5707963268 0 1.5707963268" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://boxbot_description/meshes/torso.stl"/>
+        <mesh filename="package://boxbot_description/meshes/torso_link.stl"/>
       </geometry>
     </collision>
     <inertial>
@@ -28,11 +29,22 @@
     </inertial>
   </link>
   <joint name="fixed" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0 0.009525"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
     <parent link="world"/>
     <child link="torso"/>
   </joint>
   <!-- links -->
+  <link name="left_arm_base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius=".001"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.15 0.15 0.15 1.0"/>
+      </material>
+    </visual>
+  </link>
   <link name="left_shoulder_link">
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -59,7 +71,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://boxbot_description/meshes/biceps_link.new.stl"/>
+        <mesh filename="package://boxbot_description/meshes/biceps_new_link.stl"/>
       </geometry>
       <material name="">
         <color rgba="0.15 0.15 0.15 1.0"/>
@@ -68,7 +80,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://boxbot_description/meshes/biceps_link.new.stl"/>
+        <mesh filename="package://boxbot_description/meshes/biceps_new_link.stl"/>
       </geometry>
     </collision>
     <inertial>
@@ -79,7 +91,7 @@
   </link>
   <link name="left_forearm_1_link">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="-1.570795 0 1.570795" xyz="0 0 0"/>
       <geometry>
         <mesh filename="package://boxbot_description/meshes/forearm_1_link.stl"/>
       </geometry>
@@ -88,20 +100,20 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="-1.570795 0 1.570795" xyz="0 0 0"/>
       <geometry>
         <mesh filename="package://boxbot_description/meshes/forearm_1_link.stl"/>
       </geometry>
     </collision>
     <inertial>
-      <origin rpy="0 0 0" xyz="0.000018 0.0 0.090995"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <mass value="1.87e-1"/>
       <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
     </inertial>
   </link>
   <link name="left_forearm_2_link">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 1.570795 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="package://boxbot_description/meshes/forearm_2_link.stl"/>
       </geometry>
@@ -110,7 +122,7 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 1.570795 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="package://boxbot_description/meshes/forearm_2_link.stl"/>
       </geometry>
@@ -166,59 +178,684 @@
     </inertial>
   </link>
   <!-- joints -->
-  <joint name="left_shoulder_joint_1" type="revolute">
-    <origin rpy="0 0 0" xyz="0.099613 0 0.243180"/>
+  <joint name="left_arm_base_joint" type="fixed">
+    <origin rpy="-1.570795 0 0" xyz="0 0.099613 0.24953"/>
     <parent link="torso"/>
+    <child link="left_arm_base_link"/>
+  </joint>
+  <joint name="left_shoulder_joint_1" type="revolute">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="left_arm_base_link"/>
     <child link="left_shoulder_link"/>
     <axis xyz="0 0 1"/>
     <limit effort="6" lower="-2.617" upper="2.617" velocity="0.785"/>
   </joint>
-  <!--joint name="${prefix}shoulder_joint_2" type="revolute">
-         <!origin xyz="0 0 0" rpy="0 0 0" />
-         <parent link="${prefix}shoulder_link" />
-         <child link="${prefix}biceps_link" />
-         <!axis xyz="0 1 0" />
-         <!limit lower="-1.571" upper="1.571" effort="6" velocity="1.571" />
-      </joint>
-
-      <joint name="${prefix}_elbow_joint" type="revolute">
-         <!origin xyz="${M_SCALE*48.25} 0 ${M_SCALE*142.03}" rpy="0 ${M_PI/2.0} 0" />
-         <parent link="${prefix}biceps_link" />
-         <child link="${prefix}forearm_1_link" />
-         <!axis xyz="0 1 0" />
-         <!limit lower="-1.571" upper="1.571" effort="6" velocity="1.571" />
-      </joint>
-
-      <joint name="${prefix}wrist_joint_1" type="revolute">
-         <!origin xyz="0 0 ${M_SCALE*142.03}" rpy="0 0 0" />
-         <parent link="${prefix}forearm_1_link" />
-         <child link="${prefix}forearm_2_link" />
-         <!axis xyz="0 1 0" />
-         <!limit lower="-1.745" upper="1.745" effort="6" velocity="1.571" />
-      </joint>
-
-      <joint name="${prefix}wrist_joint_2" type="revolute">
-         <!origin xyz="0 0 ${M_SCALE*71.5}" rpy="0 0 0" />
-         <parent link="${prefix}forearm_2_link" />
-         <child link="${prefix}wrist_1_link" />
-         <!axis xyz="0 0 1" />
-         <!limit lower="-2.617" upper="2.617" effort="6" velocity="1.571" />
-      </joint>
-
-      <joint name="${prefix}wrist_joint_3" type="revolute">
-         <!origin xyz="0 0 ${M_SCALE*71.5}" rpy="0 0 0" />
-         <parent link="${prefix}wrist_1_link" />
-         <child link="${prefix}wrist_2_link" />
-         <!axis xyz="0 0 1" />
-         <!limit lower="-2.617" upper="2.617" effort="6" velocity="1.571" />
-      </joint-->
-  <!-- gripper -->
-  <!--xacro:include filename="$(find boxbot_description)/urdf/widowx_gripper.xacro"/-->
-  <!--xacro:include filename="$(find boxbot_description)/urdf/widowx_6dof.urdf.xacro"/>
-  <xacro:widowx_arm parent="torso" prefix="right_">
-    <origin xyz="0 -0.087325 0.0635" rpy="1.5707963268 0 0"/>
-  </xacro:widowx_arm>
-
-  <xacro:include filename="$(find boxbot_description)/urdf/servos.urdf.xacro"/>
-  <xacro:include filename="$(find boxbot_description)/urdf/materials.gazebo"/-->
+  <joint name="left_shoulder_joint_2" type="revolute">
+    <origin rpy="0 0 3.14159" xyz="0 0 0"/>
+    <parent link="left_shoulder_link"/>
+    <child link="left_biceps_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="6" lower="-1.571" upper="1.571" velocity="1.571"/>
+  </joint>
+  <joint name="left_elbow_joint" type="revolute">
+    <origin rpy="0 1.570795 3.14159" xyz="-0.04825 0 0.1418"/>
+    <parent link="left_biceps_link"/>
+    <child link="left_forearm_1_link"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="6" lower="-1.571" upper="1.571" velocity="1.571"/>
+  </joint>
+  <joint name="left_wrist_joint_1" type="revolute">
+    <origin rpy="0 0 -1.570795" xyz="0 0 0.0928"/>
+    <parent link="left_forearm_1_link"/>
+    <child link="left_forearm_2_link"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="6" lower="-1.745" upper="1.745" velocity="1.571"/>
+  </joint>
+  <joint name="left_wrist_joint_2" type="revolute">
+    <origin rpy="0 0 1.570795" xyz="0 0 0.048"/>
+    <parent link="left_forearm_2_link"/>
+    <child link="left_wrist_1_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="6" lower="-1.571" upper="1.571" velocity="1.571"/>
+  </joint>
+  <joint name="left_wrist_joint_3" type="revolute">
+    <origin rpy="0 0 0" xyz="0 0 0.0715"/>
+    <parent link="left_wrist_1_link"/>
+    <child link="left_wrist_2_link"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="6" lower="-2.617" upper="2.617" velocity="1.571"/>
+  </joint>
+  <link name="left_gripper_rail_link">
+    <visual>
+      <origin rpy="0 0 1.57" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/gripper_rail_link.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.15 0.15 0.15 1.0"/>
+      </material>
+    </visual>
+    <!--Removed for now due to problems with collision in Gazebo-->
+    <!--collision>
+         <origin xyz="0 0 0" rpy="0 0 1.57" />
+         <geometry>
+            <mesh filename="package://boxbot_description/meshes/gripper_rail_link.stl"/>
+         </geometry>
+      </collision-->
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="7.0e-3"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+  <link name="left_gripper_1_link">
+    <visual>
+      <origin rpy="0 0 1.57" xyz="0 -0.0007 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/gripper_hand_fixed_link.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.15 0.15 0.15 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.57" xyz="0 -0.0007 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/gripper_hand_fixed_link.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0 -0.008292 0.017304"/>
+      <mass value="8.0e-3"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+  <link name="left_gripper_2_link">
+    <visual>
+      <origin rpy="0 0 -1.57" xyz="0 0.0007 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/gripper_hand_fixed_link.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.15 0.15 0.15 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 -1.57" xyz="0 0.0007 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/gripper_hand_fixed_link.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0 0.008292 0.017304"/>
+      <mass value="8.0e-3"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+  <joint name="left_joint_6" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.043"/>
+    <parent link="left_wrist_2_link"/>
+    <child link="left_gripper_rail_link"/>
+  </joint>
+  <joint name="left_gripper_joint" type="prismatic">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="left_gripper_rail_link"/>
+    <child link="left_gripper_1_link"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="0" lower="0.002" upper="0.031" velocity="0.5"/>
+  </joint>
+  <joint name="left_gripper_prismatic_joint_2" type="prismatic">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="left_gripper_rail_link"/>
+    <child link="left_gripper_2_link"/>
+    <mimic joint="left_gripper_joint"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="0" lower="0.002" upper="0.031" velocity="0.5"/>
+  </joint>
+  <!-- links -->
+  <link name="right_arm_base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.001" radius=".001"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.15 0.15 0.15 1.0"/>
+      </material>
+    </visual>
+  </link>
+  <link name="right_shoulder_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/shoulder_link.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.15 0.15 0.15 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/shoulder_link.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0 0.0 -0.04"/>
+      <mass value="0.061"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+  <link name="right_biceps_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/biceps_new_link.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.15 0.15 0.15 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/biceps_new_link.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.006670 0.0 0.083394"/>
+      <mass value="3.62e-1"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+  <link name="right_forearm_1_link">
+    <visual>
+      <origin rpy="-1.570795 0 1.570795" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/forearm_1_link.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.15 0.15 0.15 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="-1.570795 0 1.570795" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/forearm_1_link.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="1.87e-1"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+  <link name="right_forearm_2_link">
+    <visual>
+      <origin rpy="0 1.570795 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/forearm_2_link.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.15 0.15 0.15 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.570795 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/forearm_2_link.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.000018 0.0 0.090995"/>
+      <mass value="1.87e-1"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+  <link name="right_wrist_1_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/wrist_1_link.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.15 0.15 0.15 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/wrist_1_link.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.010852 0.0 0.048078"/>
+      <mass value="9.1e-2"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+  <link name="right_wrist_2_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/wrist_2_link.new.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.15 0.15 0.15 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/wrist_2_link.new.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.018000 0.0 0.01500 "/>
+      <mass value="6.3e-2"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+  <!-- joints -->
+  <joint name="right_arm_base_joint" type="fixed">
+    <origin rpy="1.570795 0 0" xyz="0 -0.099613 0.24953"/>
+    <parent link="torso"/>
+    <child link="right_arm_base_link"/>
+  </joint>
+  <joint name="right_shoulder_joint_1" type="revolute">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="right_arm_base_link"/>
+    <child link="right_shoulder_link"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="6" lower="-2.617" upper="2.617" velocity="0.785"/>
+  </joint>
+  <joint name="right_shoulder_joint_2" type="revolute">
+    <origin rpy="0 0 3.14159" xyz="0 0 0"/>
+    <parent link="right_shoulder_link"/>
+    <child link="right_biceps_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="6" lower="-1.571" upper="1.571" velocity="1.571"/>
+  </joint>
+  <joint name="right_elbow_joint" type="revolute">
+    <origin rpy="0 1.570795 3.14159" xyz="-0.04825 0 0.1418"/>
+    <parent link="right_biceps_link"/>
+    <child link="right_forearm_1_link"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="6" lower="-1.571" upper="1.571" velocity="1.571"/>
+  </joint>
+  <joint name="right_wrist_joint_1" type="revolute">
+    <origin rpy="0 0 -1.570795" xyz="0 0 0.0928"/>
+    <parent link="right_forearm_1_link"/>
+    <child link="right_forearm_2_link"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="6" lower="-1.745" upper="1.745" velocity="1.571"/>
+  </joint>
+  <joint name="right_wrist_joint_2" type="revolute">
+    <origin rpy="0 0 1.570795" xyz="0 0 0.048"/>
+    <parent link="right_forearm_2_link"/>
+    <child link="right_wrist_1_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="6" lower="-1.571" upper="1.571" velocity="1.571"/>
+  </joint>
+  <joint name="right_wrist_joint_3" type="revolute">
+    <origin rpy="0 0 0" xyz="0 0 0.0715"/>
+    <parent link="right_wrist_1_link"/>
+    <child link="right_wrist_2_link"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="6" lower="-2.617" upper="2.617" velocity="1.571"/>
+  </joint>
+  <link name="right_gripper_rail_link">
+    <visual>
+      <origin rpy="0 0 1.57" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/gripper_rail_link.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.15 0.15 0.15 1.0"/>
+      </material>
+    </visual>
+    <!--Removed for now due to problems with collision in Gazebo-->
+    <!--collision>
+         <origin xyz="0 0 0" rpy="0 0 1.57" />
+         <geometry>
+            <mesh filename="package://boxbot_description/meshes/gripper_rail_link.stl"/>
+         </geometry>
+      </collision-->
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="7.0e-3"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+  <link name="right_gripper_1_link">
+    <visual>
+      <origin rpy="0 0 1.57" xyz="0 -0.0007 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/gripper_hand_fixed_link.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.15 0.15 0.15 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.57" xyz="0 -0.0007 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/gripper_hand_fixed_link.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0 -0.008292 0.017304"/>
+      <mass value="8.0e-3"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+  <link name="right_gripper_2_link">
+    <visual>
+      <origin rpy="0 0 -1.57" xyz="0 0.0007 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/gripper_hand_fixed_link.stl"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.15 0.15 0.15 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 -1.57" xyz="0 0.0007 0"/>
+      <geometry>
+        <mesh filename="package://boxbot_description/meshes/gripper_hand_fixed_link.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0 0.008292 0.017304"/>
+      <mass value="8.0e-3"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+  <joint name="right_joint_6" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.043"/>
+    <parent link="right_wrist_2_link"/>
+    <child link="right_gripper_rail_link"/>
+  </joint>
+  <joint name="right_gripper_joint" type="prismatic">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="right_gripper_rail_link"/>
+    <child link="right_gripper_1_link"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="0" lower="0.002" upper="0.031" velocity="0.5"/>
+  </joint>
+  <joint name="right_gripper_prismatic_joint_2" type="prismatic">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="right_gripper_rail_link"/>
+    <child link="right_gripper_2_link"/>
+    <mimic joint="right_gripper_joint"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="0" lower="0.002" upper="0.031" velocity="0.5"/>
+  </joint>
+  <!--gazebo ros control-->
+  <gazebo>
+    <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
+      <robotNamespace>/boxbot</robotNamespace>
+    </plugin>
+  </gazebo>
+  <!--transmissions-->
+  <!--left-->
+  <transmission name="ltran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_shoulder_joint_1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_motor1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="ltran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_shoulder_joint_2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_motor2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="ltran3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_elbow_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_motor3">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="ltran4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_wrist_joint_1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_motor4">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="ltran5">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_wrist_joint_2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_motor5">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="ltran6">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_wrist_joint_3">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_motor6">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="ltran7">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_gripper_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_motor7">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="ltran8">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_gripper_prismatic_joint_2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_motor8">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <!--right-->
+  <transmission name="rtran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_shoulder_joint_1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_motor1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="rtran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_shoulder_joint_2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_motor2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="rtran3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_elbow_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_motor3">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="rtran4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_wrist_joint_1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_motor4">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="rtran5">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_wrist_joint_2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_motor5">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="rtran6">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_wrist_joint_3">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_motor6">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="rtran7">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_gripper_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_motor7">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="rtran8">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_gripper_prismatic_joint_2">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_motor8">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <!--Gazebo compatable colors-->
+  <gazebo reference="torso">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/Wood</material>
+  </gazebo>
+  <!--left arm-->
+  <gazebo reference="left_shoulder_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="left_biceps_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="left_forearm_1_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="left_forearm_2_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="left_wrist_1_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="left_wrist_2_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="left_gripper_rail_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="left_gripper_1_link">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="left_gripper_2_link">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <!--right arm-->
+  <gazebo reference="right_shoulder_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="right_biceps_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="right_forearm_1_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="right_forearm_2_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="right_wrist_1_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="right_wrist_2_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="right_gripper_rail_link">
+    <mu1>0.3</mu1>
+    <mu2>0.3</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="right_gripper_1_link">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="right_gripper_2_link">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
 </robot>
