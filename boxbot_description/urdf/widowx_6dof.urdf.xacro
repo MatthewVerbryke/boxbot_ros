@@ -181,7 +181,7 @@
          <parent link="${prefix}forearm_1_link" />
          <child link="${prefix}forearm_2_link" />
          <axis xyz="0 0 1" />
-         <limit lower="-1.745" upper="1.745" effort="6" velocity="1.571" />
+         <limit lower="-2.617" upper="2.617" effort="2.5" velocity="1.571" />
       </joint>
 
       <joint name="${prefix}wrist_joint_2" type="revolute">
@@ -189,7 +189,7 @@
          <parent link="${prefix}forearm_2_link" />
          <child link="${prefix}wrist_1_link" />
          <axis xyz="0 1 0" />
-         <limit lower="-1.571" upper="1.571" effort="6" velocity="1.571" />
+         <limit lower="-1.745" upper="1.745" effort="2.5" velocity="1.571" />
       </joint>
 
       <joint name="${prefix}wrist_joint_3" type="revolute">
@@ -197,7 +197,7 @@
          <parent link="${prefix}wrist_1_link" />
          <child link="${prefix}wrist_2_link" />
          <axis xyz="0 0 1" />
-         <limit lower="-2.617" upper="2.617" effort="6" velocity="1.571" />
+         <limit lower="-2.617" upper="2.617" effort="1.5" velocity="1.571" />
       </joint>
 
       <!-- gripper -->

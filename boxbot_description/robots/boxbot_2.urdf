@@ -35,15 +35,11 @@
   </joint>
   <!-- links -->
   <link name="left_arm_base_link">
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.001" radius=".001"/>
-      </geometry>
-      <material name="">
-        <color rgba="0.15 0.15 0.15 1.0"/>
-      </material>
-    </visual>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0 0.0 -0.04"/>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
   </link>
   <link name="left_shoulder_link">
     <visual>
@@ -209,21 +205,21 @@
     <parent link="left_forearm_1_link"/>
     <child link="left_forearm_2_link"/>
     <axis xyz="0 0 1"/>
-    <limit effort="6" lower="-1.745" upper="1.745" velocity="1.571"/>
+    <limit effort="2.5" lower="-2.617" upper="2.617" velocity="1.571"/>
   </joint>
   <joint name="left_wrist_joint_2" type="revolute">
     <origin rpy="0 0 1.570795" xyz="0 0 0.048"/>
     <parent link="left_forearm_2_link"/>
     <child link="left_wrist_1_link"/>
     <axis xyz="0 1 0"/>
-    <limit effort="6" lower="-1.571" upper="1.571" velocity="1.571"/>
+    <limit effort="2.5" lower="-1.745" upper="1.745" velocity="1.571"/>
   </joint>
   <joint name="left_wrist_joint_3" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0.0715"/>
     <parent link="left_wrist_1_link"/>
     <child link="left_wrist_2_link"/>
     <axis xyz="0 0 1"/>
-    <limit effort="6" lower="-2.617" upper="2.617" velocity="1.571"/>
+    <limit effort="1.5" lower="-2.617" upper="2.617" velocity="1.571"/>
   </joint>
   <link name="left_gripper_rail_link">
     <visual>
@@ -314,15 +310,11 @@
   </joint>
   <!-- links -->
   <link name="right_arm_base_link">
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.001" radius=".001"/>
-      </geometry>
-      <material name="">
-        <color rgba="0.15 0.15 0.15 1.0"/>
-      </material>
-    </visual>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.0 0.0 -0.04"/>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
   </link>
   <link name="right_shoulder_link">
     <visual>
@@ -488,21 +480,21 @@
     <parent link="right_forearm_1_link"/>
     <child link="right_forearm_2_link"/>
     <axis xyz="0 0 1"/>
-    <limit effort="6" lower="-1.745" upper="1.745" velocity="1.571"/>
+    <limit effort="2.5" lower="-2.617" upper="2.617" velocity="1.571"/>
   </joint>
   <joint name="right_wrist_joint_2" type="revolute">
     <origin rpy="0 0 1.570795" xyz="0 0 0.048"/>
     <parent link="right_forearm_2_link"/>
     <child link="right_wrist_1_link"/>
     <axis xyz="0 1 0"/>
-    <limit effort="6" lower="-1.571" upper="1.571" velocity="1.571"/>
+    <limit effort="2.5" lower="-1.745" upper="1.745" velocity="1.571"/>
   </joint>
   <joint name="right_wrist_joint_3" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0.0715"/>
     <parent link="right_wrist_1_link"/>
     <child link="right_wrist_2_link"/>
     <axis xyz="0 0 1"/>
-    <limit effort="6" lower="-2.617" upper="2.617" velocity="1.571"/>
+    <limit effort="1.5" lower="-2.617" upper="2.617" velocity="1.571"/>
   </joint>
   <link name="right_gripper_rail_link">
     <visual>
@@ -768,38 +760,38 @@
   </gazebo>
   <!--left arm-->
   <gazebo reference="left_shoulder_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="left_biceps_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="left_forearm_1_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="left_forearm_2_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="left_wrist_1_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="left_wrist_2_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="left_gripper_rail_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="left_gripper_1_link">
@@ -814,38 +806,38 @@
   </gazebo>
   <!--right arm-->
   <gazebo reference="right_shoulder_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="right_biceps_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="right_forearm_1_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="right_forearm_2_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="right_wrist_1_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="right_wrist_2_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="right_gripper_rail_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
     <material>Gazebo/DarkGrey</material>
   </gazebo>
   <gazebo reference="right_gripper_1_link">
