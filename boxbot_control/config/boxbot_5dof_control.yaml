@@ -7,27 +7,23 @@ boxbot:
   # Position controllers -------------------------------------------
   left_shoulder_1_controller:
     type: position_controllers/JointPositionController
-    joint: left_shoulder_joint_1
+    joint: left_joint_1
 
   left_shoulder_2_controller:
     type: position_controllers/JointPositionController
-    joint: left_shoulder_joint_2
+    joint: left_joint_2
 
   left_elbow_controller:
     type: position_controllers/JointPositionController
-    joint: left_elbow_joint
+    joint: left_joint_3
 
   left_wrist_1_controller:
     type: position_controllers/JointPositionController
-    joint: left_wrist_joint_1
+    joint: left_joint_4
 
   left_wrist_2_controller:
     type: position_controllers/JointPositionController
-    joint: left_wrist_joint_2
-
-  left_wrist_3_controller:
-    type: position_controllers/JointPositionController
-    joint: left_wrist_joint_3
+    joint: left_joint_5
 
   left_gripper_joint_controller:
     type: position_controllers/JointPositionController
@@ -39,27 +35,23 @@ boxbot:
 
   right_shoulder_1_controller:
     type: position_controllers/JointPositionController
-    joint: right_shoulder_joint_1
+    joint: right_joint_1
 
   right_shoulder_2_controller:
     type: position_controllers/JointPositionController
-    joint: right_shoulder_joint_2
+    joint: right_joint_2
 
   right_elbow_controller:
     type: position_controllers/JointPositionController
-    joint: right_elbow_joint
+    joint: right_joint_3
 
   right_wrist_1_controller:
     type: position_controllers/JointPositionController
-    joint: right_wrist_joint_1
+    joint: right_joint_4
 
   right_wrist_2_controller:
     type: position_controllers/JointPositionController
-    joint: right_wrist_joint_2
-
-  right_wrist_3_controller:
-    type: position_controllers/JointPositionController
-    joint: right_wrist_joint_3
+    joint: right_joint_5
 
   right_gripper_joint_controller:
     type: position_controllers/JointPositionController
@@ -70,20 +62,18 @@ boxbot:
     joint: right_gripper_prismatic_joint_2
 
   gazebo_ros_control/pid_gains:
-    left_shoulder_joint_1: {p: 50.0, i: 0.1, d: 1.0}
-    left_shoulder_joint_2: {p: 50.0, i: 0.1, d: 1.0}
-    left_elbow_joint: {p: 50.0, i: 0.1, d: 1.0}
-    left_wrist_joint_1: {p: 50.0, i: 0.1, d: 1.0}
-    left_wrist_joint_2: {p: 50.0, i: 0.1, d: 1.0}
-    left_wrist_joint_3: {p: 50.0, i: 0.1, d: 1.0}
+    left_joint_1: {p: 50.0, i: 0.1, d: 1.0}
+    left_joint_2: {p: 50.0, i: 0.1, d: 1.0}
+    left_joint_3: {p: 50.0, i: 0.1, d: 1.0}
+    left_joint_4: {p: 50.0, i: 0.1, d: 1.0}
+    left_joint_5: {p: 50.0, i: 0.1, d: 1.0}
     left_gripper_joint: {p: 50.0, i: 0.1, d: 1.0}
     left_gripper_prismatic_joint_2: {p: 50.0, i: 0.1, d: 1.0}
-    right_shoulder_joint_1: {p: 50.0, i: 0.1, d: 1.0}
-    right_shoulder_joint_2: {p: 50.0, i: 0.1, d: 1.0}
-    right_elbow_joint: {p: 50.0, i: 0.1, d: 1.0}
-    right_wrist_joint_1: {p: 50.0, i: 0.1, d: 1.0}
-    right_wrist_joint_2: {p: 50.0, i: 0.1, d: 1.0}
-    right_wrist_joint_3: {p: 50.0, i: 0.1, d: 1.0}
+    right_joint_1: {p: 50.0, i: 0.1, d: 1.0}
+    right_joint_2: {p: 50.0, i: 0.1, d: 1.0}
+    right_joint_3: {p: 50.0, i: 0.1, d: 1.0}
+    right_joint_4: {p: 50.0, i: 0.1, d: 1.0}
+    right_joint_5: {p: 50.0, i: 0.1, d: 1.0}
     right_gripper_joint: {p: 50.0, i: 0.1, d: 1.0}
     right_gripper_prismatic_joint_2: {p: 50.0, i: 0.1, d: 1.0}
 

@@ -1,10 +1,10 @@
-# Boxbot v2 (WIP)
+# Boxbot
 
 ## Summary
 
-Note: Currently designing a 6-DOF version of the WidowX arm, which will also solve the shoulder overload problem (see Notes). Gazebo and ros-control functionality is currently broken.
+This repository contains the ROS packages needed for the simulation of "Boxbot", a simple dual-armed robot consisting of two [WidowX Robot Arms (Mark II)](http://www.trossenrobotics.com/widowxrobotarm) attached to a simple "torso". Included is a URDF model of the robot, along with corresponding ros-control and Gazebo interfaces.
 
-This repository contains the ROS packages needed for the simulation of "Boxbot", a simple dual-armed robot consisting of two [WidowX robotic arms](http://www.trossenrobotics.com/widowxrobotarm) attached to a simple "torso". Included is a URDF model of the robot, along with corresponding ros-control and Gazebo interfaces.
+Note: We are currently trying to solve the shoulder joint overload problem (see Notes). Additionally, we are working on a modified 6-DOF WidowX arm, which can be used in Gazebo and RViz instead of the original 5-DOF arm.
 
 ## Recommended OS/Programs
 
@@ -21,17 +21,18 @@ To install the current version of the repository to your machine, change directo
 
 ### RViz
 
-To launch a model of the original robot in RViz from the top level directory, use:
+To launch a model of the robot in RViz from the top level directory use:
 
 ```
-roslaunch boxbot_description rviz.launch
+roslaunch boxbot_description boxbot_5dof_rviz.launch
 ```
 
-For the new preliminary design with 6-DOF arms, use:
+... or:
+```
+roslaunch boxbot_description boxbot_6dof_rviz.launch
+```
 
-```
-roslaunch boxbot_description rviz_2.launch
-```
+... for the 5-DOF and 6-DOF models, respectively.
 
 Currently, you will manually have to add the robot model to the RViz window.
 
@@ -40,16 +41,21 @@ Currently, you will manually have to add the robot model to the RViz window.
 To launch an empty world with only the Boxbot robot in it, use:
 
 ```
-roslaunch boxbot_gazebo empty_world.launch
+roslaunch boxbot_gazebo boxbot_6dof.launch
 ```
 
-Some other scenarios are included that were used to test dual-arm manipulation in simulation.
+... or:
+```
+roslaunch boxbot_gazebo boxbot_6dof.launch
+```
+
+... for the 5-DOF and 6-DOF models, respectively.
 
 ### Model Editing
 
-If you want to edit the URDF model, only modify the files that end with ```.urdf.xacro``` or ```.gazebo```, found in the ```boxbot_description/robots``` and ```boxbot_description/urdf``` folders. Generally, you will not want to edit the ```.urdf``` files directly, as they are auto-generated and are also harder to sift through than the subcomponent files.
+If you want to edit the URDF model, only modify the files that end with ```.urdf.xacro``` or ```.gazebo```, found in the ```boxbot_description/robots``` and ```boxbot_description/urdf``` folders. Generally, you will not want to edit the ```.urdf``` files directly, as they are auto-generated and are also harder to look through than the subcomponent ```.xacro``` files.
 
-After you are done editing, you can regenerate the complete urdf model by switching into the ```boxbot_description``` package directory, and running the autogeneration script:
+After you are done editing, you can regenerate the complete URDF model by switching into the ```boxbot_description``` package directory, and running the autogeneration script:
 
 ```
 ./urdf_regen.sh
@@ -57,10 +63,10 @@ After you are done editing, you can regenerate the complete urdf model by switch
 
 ### Notes
 
-- During initial testing of the physical Boxbot system, it was found that the first shoulder joint of the WidowX arm (joint_1) has problems holding up the weight of the arm, sporadically shutting down due to what appears to be overload. In response, the shoulder joint is being redesigned to utilize a larger and more capable servo.
+- During initial testing of the physical Boxbot, we found that the first shoulder joint of the WidowX arm (joint_1) has problems holding up the weight of the arm, sporadically shutting down due to what appears to be overload (either torque or power). In response, we are currently redesigning the shoulder joint to utilize a larger and more capable servo.
 
 ## License:
 
 All new packages/files use the BSD 3-clause license presented in the main license file, and are Copyright (C) University of Cincinnati.
 
-Exceptions include the whole of `boxbot_description/meshes` and some of the contents of `boxbot_description/urdf`, which are based on files from [Interbotix's widowx_arm repository](https://github.com/Interbotix/widowx_arm). Copyright for these are held by others, as reflected in the commit history for the original files.  All modifications are Copyright (C) University of Cincinnati
+Exceptions include the whole of `boxbot_description/meshes` and some of the contents of `boxbot_description/urdf`, which are based on files from [Interbotix's widowx_arm repository](https://github.com/Interbotix/widowx_arm). Copyright for these are held by others, as reflected in the commit history for the original files. All modifications are Copyright (C) University of Cincinnati

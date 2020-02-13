@@ -10,23 +10,10 @@
       <!-- links -->
 
       <link name="${prefix}arm_base_link">
-         <visual>
-            <origin xyz="0 0 0" rpy="0 0 0" />
-            <geometry>
-               <cylinder radius=".072" length="0.055"/>
-            </geometry>
-            <xacro:material_black />
-	       </visual>
-         <collision>
-            <origin xyz="0 0 0" rpy="0 0 0" />
-            <geometry>
-               <cylinder radius=".072" length="0.055"/>
-            </geometry>
-         </collision>
          <inertial>
-            <origin xyz="0 0 0.0275" rpy="0 0 0" />
-            <mass value="1" />
-            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+            <origin xyz="0.0 0.0 -0.04" rpy="0 0 0" />
+            <mass value="0.001" />
+            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
          </inertial>
       </link>
 
@@ -72,7 +59,7 @@
          </inertial>
       </link>
 
-      <link name="${prefix}forearm_link">
+      <link name="${prefix}forearm_1_link">
          <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
@@ -144,7 +131,7 @@
       </joint>
 
       <joint name="${prefix}joint_1" type="revolute">
-         <origin xyz="0 0 0.065" rpy="0 0 0" />
+         <origin xyz="0 0 0" rpy="0 0 0" />
          <parent link="${prefix}arm_base_link" />
          <child link="${prefix}shoulder_link" />
          <axis xyz="0 0 1" />
@@ -163,14 +150,14 @@
       <joint name="${prefix}joint_3" type="revolute">
          <origin xyz="${M_SCALE*48.25} 0 ${M_SCALE*142.03}" rpy="0 ${M_PI/2.0} 0" />
          <parent link="${prefix}biceps_link" />
-         <child link="${prefix}forearm_link" />
+         <child link="${prefix}forearm_1_link" />
          <axis xyz="0 1 0" />
          <limit lower="-1.571" upper="1.571" effort="6" velocity="1.571" />
       </joint>
 
       <joint name="${prefix}joint_4" type="revolute">
          <origin xyz="0 0 ${M_SCALE*142.03}" rpy="0 0 0" />
-         <parent link="${prefix}forearm_link" />
+         <parent link="${prefix}forearm_1_link" />
          <child link="${prefix}wrist_1_link" />
          <axis xyz="0 1 0" />
          <limit lower="-1.745" upper="1.745" effort="6" velocity="1.571" />

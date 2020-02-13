@@ -45,7 +45,10 @@
   </xacro:widowx_arm>
 
   <xacro:include filename="$(find boxbot_description)/urdf/servos.urdf.xacro"/>
+  <xacro:ros_control_widowx six_dof="true"/>
+
   <xacro:include filename="$(find boxbot_description)/urdf/materials.gazebo"/>
+  <xacro:gazebo_widowx six_dof="true"/>
 
 </robot>
 
