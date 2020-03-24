@@ -38,18 +38,7 @@ Currently, you will manually have to add the robot model to the RViz window.
 
 ### Gazebo
 
-To launch an empty world with only the Boxbot robot in it, use:
-
-```
-roslaunch boxbot_gazebo boxbot_6dof.launch
-```
-
-... or:
-```
-roslaunch boxbot_gazebo boxbot_6dof.launch
-```
-
-... for the 5-DOF and 6-DOF models, respectively.
+Currently a WIP in this commit after a rework and still needs to be tested. Use previous commit for now.
 
 ### Model Editing
 

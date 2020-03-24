@@ -8,6 +8,7 @@
   <arg name="gui" default="true"/>
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
+  <arg name="5dof_arm" default="false"/>
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -21,14 +22,24 @@
 
   <!-- Load the URDF into the ROS Parameter Server -->
   <param name="robot_description" 
-    command="$(find xacro)/xacro --inorder '$(find boxbot_description)/robots/boxbot_6dof.urdf.xacro'"/>
+    command="$(find xacro)/xacro --inorder '$(find boxbot_description)/robots/boxbot_5dof.urdf.xacro'"/>
 
   <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-    args="-urdf -model boxbot_6dof -param robot_description"/>
+    args="-urdf -model boxbot_5dof -param robot_description"/>
 
-  <!-- Launch controllers -->
-  <include file="$(find boxbot_control)/launch/boxbot_6dof_control.launch"/>
+  <!-- Launch low-level arm controllers -->
+  <include file="$(find boxbot_control)/launch/boxbot_control.launch"/>
+    <arg name="sim" value="true"/>
+    <arg name="gazebo" value="true"/>
+    <arg name="left" value="true"/>
+    <arg name="5dof" value="$(arg 5dof_arm)"/>
+
+  <include file="$(find boxbot_control)/launch/boxbot_control.launch"/>
+    <arg name="sim" value="true"/>
+    <arg name="gazebo" value="true"/>
+    <arg name="left" value="false"/>
+    <arg name="5dof" value="$(arg 5dof_arm)"/>
 
   <!-- Launch joint mimic node -->
   <node name="mimic" pkg="boxbot_gazebo" type="mimic.py" output="screen"/>
