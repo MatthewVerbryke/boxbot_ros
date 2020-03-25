@@ -24,21 +24,20 @@ To install the current version of the repository to your machine, change directo
 To launch a model of the robot in RViz from the top level directory use:
 
 ```
-roslaunch boxbot_description boxbot_5dof_rviz.launch
+roslaunch boxbot_description boxbot_rviz.launch five_dof:=BOOLEAN
 ```
 
-... or:
-```
-roslaunch boxbot_description boxbot_6dof_rviz.launch
-```
-
-... for the 5-DOF and 6-DOF models, respectively.
-
-Currently, you will manually have to add the robot model to the RViz window.
+where the ```BOOLEAN``` argument can be set as ```true``` to spawn the 5-DOF model or ```false``` to use the 6-DOF model. If the argument is left out, the default model is set as the 6-DOF model.
 
 ### Gazebo
 
-Currently a WIP in this commit after a rework and still needs to be tested. Use previous commit for now.
+To launch the robot model in Gazebo with ROS controllers top level directory use:
+
+```
+roslaunch boxbot_gazebo boxbot_gazebo.launch five_dof:=BOOLEAN
+```
+
+where the ```BOOLEAN``` argument can be set as ```true``` to spawn the 5-DOF model or ```false``` to use the 6-DOF model. If the argument is left out, the default model is set as the 6-DOF model.
 
 ### Model Editing
 

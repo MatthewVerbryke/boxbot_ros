@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!-- Input arguments -->
+  <arg name="five_dof" default="false"/>
+
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param if="$(arg five_dof)" name="robot_description" 
+    command="$(find xacro)/xacro --inorder '$(find boxbot_description)/robots/boxbot_5dof.urdf.xacro'"/>
+  <param unless="$(arg five_dof)" name="robot_description" 
+    command="$(find xacro)/xacro --inorder '$(find boxbot_description)/robots/boxbot_6dof.urdf.xacro'"/>
+
+  <!-- Launch a static transform publisher -->
+  <node pkg="tf" type="static_transform_publisher" name="virtual_joint_broadcaster_1" args="0 0 0 0 0 0 map world 100"/>
+
+  <!-- Launch a joint state publisher -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+
+  <!-- Launch a robot state publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <!-- Launch RViz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find boxbot_description)/launch/boxbot.rviz"/>
+
+</launch>

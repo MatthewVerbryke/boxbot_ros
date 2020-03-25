@@ -3,36 +3,50 @@
 <launch>
   
   <!-- Input arguments -->
-  <arg name="sim" default="false"/>
-  <arg name="gazebo" default="false"/>
-  <arg name="left" default="true"/>
-  <arg name="5dof" default="false"/>
+  <arg name="five_dof" default="false"/>
 
-  <!-- Launch robot state publisher -->
-  <node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam if="$(arg five_dof)" file="$(find boxbot_control)/config/boxbot_control_5dof.yaml" command="load"/>
 
-  <!-- If running on the real robot -->
-  <node unless="$(arg gazebo)" name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
-    <rosparam if="$(arg 5dof)" file="$(find boxbot_control)/config/arm_5dof.yaml"/>
-    <rosparam unless="($arg 5dof)" file="$(find boxbot_control/config/arm_6dof.yaml"/>
-    <param name="sim" value="$(arg sim)"/>
-  </node>
+  <rosparam unless="$(arg five_dof)" file="$(find boxbot_control)/config/boxbot_control_6dof.yaml" command="load"/>
 
-  <node unless="$(arg gazebo)" name="gripper_controller" pkg="arbotix_controllers" type="gripper_controller" output="screen">
-    <rosparam file="$(find widowx_arm_bringup)/config/widowx_arm_gripper.yaml" command="load" />
-  </node>
+  <!-- load the controllers -->
+  <node if="$(arg five_dof)" name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/boxbot" args=" joint_state_controller
+					left_shoulder_1_controller
+					left_shoulder_2_controller
+					left_elbow_controller
+					left_wrist_1_controller
+					left_wrist_2_controller
+					left_gripper_joint_controller
+					left_gripper_mimic_controller
+					right_shoulder_1_controller
+					right_shoulder_2_controller
+					right_elbow_controller
+					right_wrist_1_controller
+					right_wrist_2_controller
+					right_gripper_joint_controller
+					right_gripper_mimic_controller
+  "/>
 
-  <!-- If simulated (i.e. in Gazebo) -->
-  <node if="$(arg gazebo)" name="arbotix" pkg="arbotix_python" type="arbotix_gazebo" output="screen">
-    <rosparam if="$(arg 5dof)" file="$(find boxbot_control)/config/arm_5dof.yaml"/>
-    <rosparam unless="($arg 5dof)" file="$(find boxbot_control/config/arm_6dof.yaml"/>
-    <param name="sim" value="$(arg simulation)"/>
-    <param name="left_arm" value="$(arg left)"/>
-    <param name="robot" value="boxbot"/>
-  </node>
+  <node unless="$(arg five_dof)" name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/boxbot" args=" joint_state_controller
+					left_shoulder_1_controller
+					left_shoulder_2_controller
+					left_elbow_controller
+					left_wrist_1_controller
+					left_wrist_2_controller
+					left_wrist_3_controller
+					left_gripper_joint_controller
+					left_gripper_mimic_controller
+					right_shoulder_1_controller
+					right_shoulder_2_controller
+					right_elbow_controller
+					right_wrist_1_controller
+					right_wrist_2_controller
+					right_wrist_3_controller
+					right_gripper_joint_controller
+					right_gripper_mimic_controller
+  "/>
 
-  <node if="$(arg gazebo)" name="gripper_controller" pkg="arbotix_controllers" type="gripper_sim" output="screen">
-    <rosparam file="$(find widowx_arm_bringup)/config/widowx_arm_gripper.yaml" command="load" />
-  </node>
-  
 </launch>
