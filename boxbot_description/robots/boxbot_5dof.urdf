@@ -260,7 +260,7 @@
       <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
     </inertial>
   </link>
-  <joint name="left__rail_joint" type="fixed">
+  <joint name="left_rail_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0.043"/>
     <parent link="left_wrist_2_link"/>
     <child link="left_gripper_rail_link"/>
@@ -507,7 +507,7 @@
       <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
     </inertial>
   </link>
-  <joint name="right__rail_joint" type="fixed">
+  <joint name="right_rail_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0.043"/>
     <parent link="right_wrist_2_link"/>
     <child link="right_gripper_rail_link"/>

@@ -46,7 +46,7 @@ If you want to edit the URDF model, only modify the files that end with ```.urdf
 After you are done editing, you can regenerate the complete URDF model by switching into the ```boxbot_description``` package directory, and running the autogeneration script:
 
 ```
-./urdf_regen.sh
+./regen_urdf.sh
 ```
 
 ### Notes
