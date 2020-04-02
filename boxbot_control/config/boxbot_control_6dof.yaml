@@ -5,7 +5,7 @@ boxbot:
     type: joint_state_controller/JointStateController
     publish_rate: 50
 
-  # Position controllers -------------------------------------------
+  # Individual joint controllers -----------------------------------
   left_shoulder_1_controller:
     type: position_controllers/JointPositionController
     joint: left_joint_1

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(boxbot_6_dof_moveit_config)
+project(boxbot_5_dof_moveit_config)
 
 find_package(catkin REQUIRED)
 
