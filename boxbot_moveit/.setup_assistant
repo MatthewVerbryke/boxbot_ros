@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: boxbot_description
+    relative_path: robots/boxbot_6dof.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/boxbot.srdf
+  CONFIG:
+    author_name: Matthew Verbryke
+    author_email: verbrymr@mail.uc.edu
+    generated_timestamp: 1585763657

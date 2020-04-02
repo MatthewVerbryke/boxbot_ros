@@ -52,6 +52,7 @@ After you are done editing, you can regenerate the complete URDF model by switch
 ### Notes
 
 - During initial testing of the physical Boxbot, we found that the first shoulder joint of the WidowX arm (joint_1) has problems holding up the weight of the arm, sporadically shutting down due to what appears to be overload (either torque or power). In response, we are currently redesigning the shoulder joint to utilize a larger and more capable servo.
+- Currently in the progress of updating MoveIt! for both configurations. For the 6-DOF arrangment, the arms now use TRAC-IK solver and seems to be working fine. The 5-DOF arm does not currently have a MoveIt! configuration, due to the fact that some deprication issue seems to be happening with IK-Fast in ROS Melodic. Still investigating this issue.
 
 ## License:
 
