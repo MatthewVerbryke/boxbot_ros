@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!-- Command-line arguments -->
+  <arg name="five_dof" default="false"/>
+  <arg name="world_name" default="empty"/>
+  <arg name="gazebo_only" default="false"/>
+
+  <!-- Launch the appropriate Gazebo model -->
+  <include file="$(find boxbot_gazebo)/launch/boxbot_gazebo.launch">
+    <arg name="five_dof_model" value="$(arg five_dof)"/>
+    <arg name="world" value="$(arg world_name)"/>
+  </include>
+
+  <!-- Launch low-level arm controllers -->
+  <include file="$(find boxbot_control)/launch/boxbot_control.launch">
+    <arg name="five_dof_control" value="$(arg five_dof)"/>
+  </include>
+
+  <!-- Launch joint mimic node -->
+  <node name="mimic" pkg="boxbot_gazebo" type="mimic.py" output="screen"/>
+
+</launch>

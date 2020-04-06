@@ -3,15 +3,15 @@
 <launch>
   
   <!-- Input arguments -->
-  <arg name="five_dof" default="false"/>
+  <arg name="five_dof_control" default="false"/>
 
   <!-- Load joint controller configurations from YAML file to parameter server -->
-  <rosparam if="$(arg five_dof)" file="$(find boxbot_control)/config/boxbot_control_5dof.yaml" command="load"/>
+  <rosparam if="$(arg five_dof_control)" file="$(find boxbot_control)/config/boxbot_control_5dof.yaml" command="load"/>
 
-  <rosparam unless="$(arg five_dof)" file="$(find boxbot_control)/config/boxbot_control_6dof.yaml" command="load"/>
+  <rosparam unless="$(arg five_dof_control)" file="$(find boxbot_control)/config/boxbot_control_6dof.yaml" command="load"/>
 
   <!-- load the controllers -->
-  <node if="$(arg five_dof)" name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+  <node if="$(arg five_dof_control)" name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
     output="screen" ns="/boxbot" args=" joint_state_controller
 					left_shoulder_1_controller
 					left_shoulder_2_controller
@@ -29,7 +29,7 @@
 					right_gripper_mimic_controller
   "/>
 
-  <node unless="$(arg five_dof)" name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+  <node unless="$(arg five_dof_control)" name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
     output="screen" ns="/boxbot" args=" joint_state_controller
 					left_shoulder_1_controller
 					left_shoulder_2_controller
