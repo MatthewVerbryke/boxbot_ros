@@ -6,5 +6,5 @@
   <param name="moveit_controller_manager" value="$(arg moveit_controller_manager)"/>
 
   <!-- loads ros_controllers to the param server -->
-  <rosparam file="$(find boxbot_moveit)/config/ros_controllers.yaml"/>
+  <rosparam file="$(find boxbot_6_dof_moveit_config)/config/ros_controllers.yaml"/>
 </launch>

@@ -10,7 +10,7 @@
 
   <node name="$(anon rviz)" launch-prefix="$(arg launch_prefix)" pkg="rviz" type="rviz" respawn="false"
 	args="$(arg command_args)" output="screen">
-    <rosparam command="load" file="$(find boxbot_moveit)/config/kinematics.yaml"/>
+    <rosparam command="load" file="$(find boxbot_6_dof_moveit_config)/config/kinematics.yaml"/>
   </node>
 
 </launch>
