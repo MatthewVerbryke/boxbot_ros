@@ -18,7 +18,13 @@
     <arg name="five_dof_control" value="$(arg five_dof)"/>
   </include>
 
-  <!-- Launch joint mimic node -->
-  <node name="mimic" pkg="boxbot_gazebo" type="mimic.py" output="screen"/>
+  <!-- Launch joint mimic nodes -->
+  <node name="left_mimic" pkg="boxbot_gazebo" type="mimic_node" output="screen">
+    <param name="side" value="left" type="str"/>
+  </node>
+
+  <node name="right_mimic" pkg="boxbot_gazebo" type="mimic_node" output="screen">
+    <param name="side" value="right" type="str"/>
+  </node>
 
 </launch>
