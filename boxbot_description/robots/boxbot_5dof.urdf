@@ -270,7 +270,7 @@
     <parent link="left_gripper_rail_link"/>
     <child link="left_gripper_1_link"/>
     <axis xyz="0 -1 0"/>
-    <limit effort="0" lower="0.002" upper="0.031" velocity="0.5"/>
+    <limit effort="6" lower="0.002" upper="0.031" velocity="0.5"/>
   </joint>
   <joint name="left_gripper_prismatic_joint_2" type="prismatic">
     <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -278,7 +278,7 @@
     <child link="left_gripper_2_link"/>
     <mimic joint="left_gripper_joint"/>
     <axis xyz="0 1 0"/>
-    <limit effort="0" lower="0.002" upper="0.031" velocity="0.5"/>
+    <limit effort="6" lower="0.002" upper="0.031" velocity="0.5"/>
   </joint>
   <!-- links -->
   <link name="right_arm_base_link">
@@ -517,7 +517,7 @@
     <parent link="right_gripper_rail_link"/>
     <child link="right_gripper_1_link"/>
     <axis xyz="0 -1 0"/>
-    <limit effort="0" lower="0.002" upper="0.031" velocity="0.5"/>
+    <limit effort="6" lower="0.002" upper="0.031" velocity="0.5"/>
   </joint>
   <joint name="right_gripper_prismatic_joint_2" type="prismatic">
     <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -525,7 +525,7 @@
     <child link="right_gripper_2_link"/>
     <mimic joint="right_gripper_joint"/>
     <axis xyz="0 1 0"/>
-    <limit effort="0" lower="0.002" upper="0.031" velocity="0.5"/>
+    <limit effort="6" lower="0.002" upper="0.031" velocity="0.5"/>
   </joint>
   <!--gazebo ros control-->
   <gazebo>
