@@ -1,3 +1,13 @@
+// A node for 'faking' the functionality of a parallel gripper in Gazebo 
+// by sending the commanded values from a one joint, which is recieving the
+// gripper commands directly, to a 'follower' joint.
+//
+// Copyright 2020 University of Cincinnati
+// All rights reserved. See LICENSE file at:
+// https://github.com/MatthewVerbryke/rse_dam
+// Additional copyright may be held by others, as reflected in the
+// commit history.
+
 #include <string>
 
 #include <ros/ros.h>
@@ -6,7 +16,7 @@
 class Listener{
     
     public:
-        double command = 10.0;
+        double command;
     
     void jointCommandCallback(const std_msgs::Float64& msg){
         command = msg.data;
