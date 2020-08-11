@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find boxbot_control)/config/boxbot_5dof_control.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"
+    ns="/boxbot" args=" joint_state_controller
+			left_shoulder_1_controller
+			left_shoulder_2_controller
+			left_elbow_controller
+			left_wrist_1_controller
+			left_wrist_2_controller
+			left_gripper_joint_controller
+			left_gripper_mimic_controller
+			right_shoulder_1_controller
+			right_shoulder_2_controller
+			right_elbow_controller
+			right_wrist_1_controller
+			right_wrist_2_controller
+			right_gripper_joint_controller
+			right_gripper_mimic_controller
+  "/>
+
+</launch>

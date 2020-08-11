@@ -3,27 +3,39 @@
 <launch>
 
   <!-- Command-line arguments -->
-  <arg name="five_dof" default="false"/>
+  <arg name="dof" default="6"/>
   <arg name="world_name" default="empty"/>
   <arg name="gazebo_only" default="false"/>
 
   <!-- Launch the appropriate Gazebo model -->
-  <include file="$(find boxbot_gazebo)/launch/boxbot_gazebo.launch">
-    <arg name="five_dof_model" value="$(arg five_dof)"/>
+  <include file="$(find boxbot_gazebo)/launch/boxbot_$(arg dof)dof_gazebo.launch">
     <arg name="world" value="$(arg world_name)"/>
   </include>
 
   <!-- Launch low-level arm controllers -->
-  <include file="$(find boxbot_control)/launch/boxbot_control.launch">
-    <arg name="five_dof_control" value="$(arg five_dof)"/>
-  </include>
-
-  <!-- Launch joint mimic nodes -->
-  <node name="left_mimic" pkg="boxbot_gazebo" type="mimic_node" output="screen">
+  <include file="$(find boxbot_control)/launch/boxbot_$(arg dof)dof_control.launch"/>
+  
+  <!-- Launch simulated arbotix interfaces -->
+  <node name="left_driver" pkg="boxbot_driver" type="sim_arbotix_node" output="screen" ns="boxbot">
+    <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
+    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
+    <param name="robot" value="boxbot" type="str"/>
     <param name="side" value="left" type="str"/>
   </node>
 
-  <node name="right_mimic" pkg="boxbot_gazebo" type="mimic_node" output="screen">
+  <node name="right_driver" pkg="boxbot_driver" type="sim_arbotix_node" output="screen" ns="boxbot">
+    <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
+    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
+    <param name="robot" value="boxbot" type="str"/>
+    <param name="side" value="right" type="str"/>
+  </node>
+
+  <!-- Launch joint mimic nodes-->
+  <node name="left_mimic" pkg="boxbot_gazebo" type="mimic_node" output="screen" ns="boxbot">
+    <param name="side" value="left" type="str"/>
+  </node>
+
+  <node name="right_mimic" pkg="boxbot_gazebo" type="mimic_node" output="screen" ns="boxbot">
     <param name="side" value="right" type="str"/>
   </node>
 
