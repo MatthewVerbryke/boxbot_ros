@@ -14,7 +14,7 @@
 			left_wrist_1_controller
 			left_wrist_2_controller
 			left_wrist_3_controller
-			left_gripper_joint_controller
+			left_gripper_controller
 			left_gripper_mimic_controller
 			right_shoulder_1_controller
 			right_shoulder_2_controller
@@ -22,7 +22,7 @@
 			right_wrist_1_controller
 			right_wrist_2_controller
 			right_wrist_3_controller
-			right_gripper_joint_controller
+			right_gripper_controller
 			right_gripper_mimic_controller
   "/>
 

@@ -130,7 +130,7 @@
          <child link="${prefix}arm_base_link"/>
       </joint>
 
-      <joint name="${prefix}joint_1" type="revolute">
+      <joint name="${prefix}shoulder_1_joint" type="revolute">
          <origin xyz="0 0 0" rpy="0 0 0" />
          <parent link="${prefix}arm_base_link" />
          <child link="${prefix}shoulder_link" />
@@ -138,7 +138,7 @@
          <limit lower="-2.617" upper="2.617" effort="6" velocity="0.785" />
       </joint>
 
-      <joint name="${prefix}joint_2" type="revolute">
+      <joint name="${prefix}shoulder_2_joint" type="revolute">
          <!--origin xyz="0.04825 0 0.14203" rpy="0 0 0" /-->
          <origin xyz="0 0 0" rpy="0 0 0" />
          <parent link="${prefix}shoulder_link" />
@@ -147,7 +147,7 @@
          <limit lower="-1.571" upper="1.571" effort="6" velocity="1.571" />
       </joint>
 
-      <joint name="${prefix}joint_3" type="revolute">
+      <joint name="${prefix}elbow_joint" type="revolute">
          <origin xyz="${M_SCALE*48.25} 0 ${M_SCALE*142.03}" rpy="0 ${M_PI/2.0} 0" />
          <parent link="${prefix}biceps_link" />
          <child link="${prefix}forearm_1_link" />
@@ -155,7 +155,7 @@
          <limit lower="-1.571" upper="1.571" effort="6" velocity="1.571" />
       </joint>
 
-      <joint name="${prefix}joint_4" type="revolute">
+      <joint name="${prefix}wrist_1_joint" type="revolute">
          <origin xyz="0 0 ${M_SCALE*142.03}" rpy="0 0 0" />
          <parent link="${prefix}forearm_1_link" />
          <child link="${prefix}wrist_1_link" />
@@ -163,7 +163,7 @@
          <limit lower="-1.745" upper="1.745" effort="6" velocity="1.571" />
       </joint>
 
-      <joint name="${prefix}joint_5" type="revolute">
+      <joint name="${prefix}wrist_2_joint" type="revolute">
          <origin xyz="0 0 ${M_SCALE*71.5}" rpy="0 0 0" />
          <parent link="${prefix}wrist_1_link" />
          <child link="${prefix}wrist_2_link" />

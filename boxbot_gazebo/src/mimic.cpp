@@ -42,7 +42,7 @@ int main(int argc, char **argv){
     // Create topic names for node
     Listener listener;
     std::string mimicPubName = "/boxbot/" + side + "_gripper_mimic_controller/command";
-    std::string mimicSubName = "/boxbot/" + side + "_gripper_joint_controller/command";
+    std::string mimicSubName = "/boxbot/" + side + "_gripper_controller/command";
     
     // Setup mimic joint command publisher
     ros::Publisher controlPub = nh.advertise<std_msgs::Float64>(mimicPubName, 1);

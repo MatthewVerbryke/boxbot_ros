@@ -16,7 +16,7 @@
 
     <transmission name="ltran1">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="left_joint_1">    
+      <joint name="left_shoulder_1_joint">    
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
       <actuator name="left_motor1">
@@ -27,7 +27,7 @@
   
     <transmission name="ltran2">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="left_joint_2">
+      <joint name="left_shoulder_2_joint">
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
       <actuator name="left_motor2">
@@ -38,7 +38,7 @@
   
     <transmission name="ltran3">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="left_joint_3">
+      <joint name="left_elbow_joint">
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
       <actuator name="left_motor3">
@@ -49,7 +49,7 @@
   
     <transmission name="ltran4">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="left_joint_4">
+      <joint name="left_wrist_1_joint">
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
       <actuator name="left_motor4">
@@ -60,7 +60,7 @@
   
     <transmission name="ltran5">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="left_joint_5">
+      <joint name="left_wrist_2_joint">
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
       <actuator name="left_motor5">
@@ -72,7 +72,7 @@
     <xacro:if value="${six_dof}">
       <transmission name="ltran6">
         <type>transmission_interface/SimpleTransmission</type>
-        <joint name="left_joint_6">
+        <joint name="left_wrist_3_joint">
           <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="left_motor6">
@@ -108,7 +108,7 @@
   
     <transmission name="rtran1">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="right_joint_1">
+      <joint name="right_shoulder_1_joint">
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
       <actuator name="right_motor1">
@@ -119,7 +119,7 @@
   
     <transmission name="rtran2">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="right_joint_2">
+      <joint name="right_shoulder_2_joint">
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
       <actuator name="right_motor2">
@@ -130,7 +130,7 @@
   
     <transmission name="rtran3">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="right_joint_3">
+      <joint name="right_elbow_joint">
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
       <actuator name="right_motor3">
@@ -141,7 +141,7 @@
   
     <transmission name="rtran4">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="right_joint_4">
+      <joint name="right_wrist_1_joint">
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
       <actuator name="right_motor4">
@@ -152,7 +152,7 @@
 
     <transmission name="rtran5">
       <type>transmission_interface/SimpleTransmission</type>
-      <joint name="right_joint_5">
+      <joint name="right_wrist_2_joint">
         <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
       </joint>
       <actuator name="right_motor5">
@@ -164,7 +164,7 @@
     <xacro:if value="${six_dof}">
       <transmission name="rtran6">
         <type>transmission_interface/SimpleTransmission</type>
-        <joint name="right_joint_6">
+        <joint name="right_wrist_3_joint">
           <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
         <actuator name="right_motor6">

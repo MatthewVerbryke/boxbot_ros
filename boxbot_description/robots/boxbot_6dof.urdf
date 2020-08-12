@@ -179,42 +179,42 @@
     <parent link="torso"/>
     <child link="left_arm_base_link"/>
   </joint>
-  <joint name="left_joint_1" type="revolute">
+  <joint name="left_shoulder_1_joint" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <parent link="left_arm_base_link"/>
     <child link="left_shoulder_link"/>
     <axis xyz="0 0 1"/>
     <limit effort="6" lower="-2.617" upper="2.617" velocity="0.785"/>
   </joint>
-  <joint name="left_joint_2" type="revolute">
+  <joint name="left_shoulder_2_joint" type="revolute">
     <origin rpy="0 0 3.14159" xyz="0 0 0"/>
     <parent link="left_shoulder_link"/>
     <child link="left_biceps_link"/>
     <axis xyz="0 1 0"/>
     <limit effort="6" lower="-1.571" upper="1.571" velocity="1.571"/>
   </joint>
-  <joint name="left_joint_3" type="revolute">
+  <joint name="left_elbow_joint" type="revolute">
     <origin rpy="0 1.570795 3.14159" xyz="-0.04825 0 0.1418"/>
     <parent link="left_biceps_link"/>
     <child link="left_forearm_1_link"/>
     <axis xyz="0 -1 0"/>
     <limit effort="6" lower="-1.571" upper="1.571" velocity="1.571"/>
   </joint>
-  <joint name="left_joint_4" type="revolute">
+  <joint name="left_wrist_1_joint" type="revolute">
     <origin rpy="0 0 -1.570795" xyz="0 0 0.0928"/>
     <parent link="left_forearm_1_link"/>
     <child link="left_forearm_2_link"/>
     <axis xyz="0 0 1"/>
     <limit effort="2.5" lower="-2.617" upper="2.617" velocity="1.571"/>
   </joint>
-  <joint name="left_joint_5" type="revolute">
+  <joint name="left_wrist_2_joint" type="revolute">
     <origin rpy="0 0 1.570795" xyz="0 0 0.048"/>
     <parent link="left_forearm_2_link"/>
     <child link="left_wrist_1_link"/>
     <axis xyz="0 1 0"/>
     <limit effort="2.5" lower="-1.745" upper="1.745" velocity="1.571"/>
   </joint>
-  <joint name="left_joint_6" type="revolute">
+  <joint name="left_wrist_3_joint" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0.0715"/>
     <parent link="left_wrist_1_link"/>
     <child link="left_wrist_2_link"/>
@@ -454,42 +454,42 @@
     <parent link="torso"/>
     <child link="right_arm_base_link"/>
   </joint>
-  <joint name="right_joint_1" type="revolute">
+  <joint name="right_shoulder_1_joint" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <parent link="right_arm_base_link"/>
     <child link="right_shoulder_link"/>
     <axis xyz="0 0 1"/>
     <limit effort="6" lower="-2.617" upper="2.617" velocity="0.785"/>
   </joint>
-  <joint name="right_joint_2" type="revolute">
+  <joint name="right_shoulder_2_joint" type="revolute">
     <origin rpy="0 0 3.14159" xyz="0 0 0"/>
     <parent link="right_shoulder_link"/>
     <child link="right_biceps_link"/>
     <axis xyz="0 1 0"/>
     <limit effort="6" lower="-1.571" upper="1.571" velocity="1.571"/>
   </joint>
-  <joint name="right_joint_3" type="revolute">
+  <joint name="right_elbow_joint" type="revolute">
     <origin rpy="0 1.570795 3.14159" xyz="-0.04825 0 0.1418"/>
     <parent link="right_biceps_link"/>
     <child link="right_forearm_1_link"/>
     <axis xyz="0 -1 0"/>
     <limit effort="6" lower="-1.571" upper="1.571" velocity="1.571"/>
   </joint>
-  <joint name="right_joint_4" type="revolute">
+  <joint name="right_wrist_1_joint" type="revolute">
     <origin rpy="0 0 -1.570795" xyz="0 0 0.0928"/>
     <parent link="right_forearm_1_link"/>
     <child link="right_forearm_2_link"/>
     <axis xyz="0 0 1"/>
     <limit effort="2.5" lower="-2.617" upper="2.617" velocity="1.571"/>
   </joint>
-  <joint name="right_joint_5" type="revolute">
+  <joint name="right_wrist_2_joint" type="revolute">
     <origin rpy="0 0 1.570795" xyz="0 0 0.048"/>
     <parent link="right_forearm_2_link"/>
     <child link="right_wrist_1_link"/>
     <axis xyz="0 1 0"/>
     <limit effort="2.5" lower="-1.745" upper="1.745" velocity="1.571"/>
   </joint>
-  <joint name="right_joint_6" type="revolute">
+  <joint name="right_wrist_3_joint" type="revolute">
     <origin rpy="0 0 0" xyz="0 0 0.0715"/>
     <parent link="right_wrist_1_link"/>
     <child link="right_wrist_2_link"/>
@@ -593,7 +593,7 @@
   <!--left-->
   <transmission name="ltran1">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="left_joint_1">
+    <joint name="left_shoulder_1_joint">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="left_motor1">
@@ -603,7 +603,7 @@
   </transmission>
   <transmission name="ltran2">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="left_joint_2">
+    <joint name="left_shoulder_2_joint">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="left_motor2">
@@ -613,7 +613,7 @@
   </transmission>
   <transmission name="ltran3">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="left_joint_3">
+    <joint name="left_elbow_joint">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="left_motor3">
@@ -623,7 +623,7 @@
   </transmission>
   <transmission name="ltran4">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="left_joint_4">
+    <joint name="left_wrist_1_joint">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="left_motor4">
@@ -633,7 +633,7 @@
   </transmission>
   <transmission name="ltran5">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="left_joint_5">
+    <joint name="left_wrist_2_joint">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="left_motor5">
@@ -643,7 +643,7 @@
   </transmission>
   <transmission name="ltran6">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="left_joint_6">
+    <joint name="left_wrist_3_joint">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="left_motor6">
@@ -674,7 +674,7 @@
   <!--right-->
   <transmission name="rtran1">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="right_joint_1">
+    <joint name="right_shoulder_1_joint">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="right_motor1">
@@ -684,7 +684,7 @@
   </transmission>
   <transmission name="rtran2">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="right_joint_2">
+    <joint name="right_shoulder_2_joint">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="right_motor2">
@@ -694,7 +694,7 @@
   </transmission>
   <transmission name="rtran3">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="right_joint_3">
+    <joint name="right_elbow_joint">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="right_motor3">
@@ -704,7 +704,7 @@
   </transmission>
   <transmission name="rtran4">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="right_joint_4">
+    <joint name="right_wrist_1_joint">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="right_motor4">
@@ -714,7 +714,7 @@
   </transmission>
   <transmission name="rtran5">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="right_joint_5">
+    <joint name="right_wrist_2_joint">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="right_motor5">
@@ -724,7 +724,7 @@
   </transmission>
   <transmission name="rtran6">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="right_joint_6">
+    <joint name="right_wrist_3_joint">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="right_motor6">
