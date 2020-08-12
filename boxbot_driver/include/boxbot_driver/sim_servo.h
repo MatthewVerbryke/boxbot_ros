@@ -21,6 +21,7 @@ private:
     
     // Parameters
     std::string name;
+    std::string jointName;
     std::string side;
     std::string robot;
     std::string commandTopic;
@@ -34,10 +35,6 @@ private:
         
     // ROS publishers and subscribers
     ros::Publisher ControlPub;
-    ros::Subscriber JointStateSub;
-    
-    // Joint state callback
-    void jointStateCB(const sensor_msgs::JointState& msg);
     
 public:
 
@@ -49,9 +46,13 @@ public:
     
     // Access functions
     std::string getName(){return name;};
+    int getIndex(){return index;};
     double getPosition(){return position;};
-    double getVelocity(){return velocity;}; 
-    double setDesired(double command){desired = command;};
+    double getVelocity(){return velocity;};
+    void setPosition(double poseIn){position = poseIn;};
+    void setVelocity(double velIn){velocity = velIn;};
+    void setDesired(double command){desired = command;};
+    void setIndex(int ind){index = ind;};
 };
 
 #endif

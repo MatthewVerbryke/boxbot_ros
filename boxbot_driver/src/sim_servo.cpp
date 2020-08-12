@@ -8,34 +8,13 @@
 
 #include "boxbot_driver/sim_servo.h"
 
-// Joint state callback function
-void SimServo::jointStateCB(const sensor_msgs::JointState& msg){
-    
-    // Get index of joint in JointState topic, if we don't know it yet.
-    if (index == -1){
-        std::vector<std::string> jointNames = msg.name;
-        int i=0;
-        while (i<14){
-            if (jointNames[i] == name){
-                index = i;
-                i = 14;
-            }
-            i++;
-        }
-    }
-    
-    // Record positions and velocity
-    position = msg.position[index];
-    velocity = msg.velocity[index];
-}
-
-SimServo::SimServo(std::string name_in, std::string side_in, ros::NodeHandle nh, std::string robot_in){
+SimServo::SimServo(std::string nameIn, std::string sideIn, ros::NodeHandle nh, std::string robotIn){
     
     // Setup names
-    name = name_in;
-    side = side_in;
-    robot = robot_in;
-    commandTopic = robot + "/" + side + "_" + name + "_controller/command";
+    side = sideIn;
+    robot = robotIn;
+    name = side + "_" + nameIn + "_joint";
+    commandTopic = robot + "/" + side + "_" + nameIn + "_controller/command";
     jointStateTopic = robot + "/joint_states";
     
     // Initialize variables
@@ -46,7 +25,6 @@ SimServo::SimServo(std::string name_in, std::string side_in, ros::NodeHandle nh,
     
     // Setup publishers and subscribers
     ControlPub = nh.advertise<std_msgs::Float64>(commandTopic, 1);
-    JointStateSub = nh.subscribe(jointStateTopic, 1, &SimServo::jointStateCB, this);
 }
 
 void SimServo::setCommandOutput(){
