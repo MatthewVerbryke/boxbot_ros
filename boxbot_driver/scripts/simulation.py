@@ -189,7 +189,7 @@ class ArbotixGazeboDriver(object):
                 
             # Hold cycle rate
             r.sleep()
-            
+
 
 if __name__ == "__main__":
     try:
