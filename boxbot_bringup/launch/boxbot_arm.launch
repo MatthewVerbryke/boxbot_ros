@@ -9,11 +9,11 @@
   <arg name="dof" default="6"/>
 
   <!-- Launch robot state publisher -->
-  <node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  <!--node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher"/-->
 
   <!-- If running on the real robot, launch actual arbotix controllers-->
   <node unless="$(arg sim)" name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
-    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)_dof.yaml"/>
+    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
     <param name="sim" value="$(arg sim)"/>
   </node>
 
@@ -26,7 +26,7 @@
 
   <!-- If simulated (i.e. in Gazebo) run the 'fake' arbotix controllers-->
   <node if="$(arg sim)" name="arbotix" pkg="arbotix_python" type="arbotix_gazebo" output="screen">
-    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)_dof.yaml"/>
+    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
     <param name="sim" value="$(arg sim)"/>
     <param name="left_arm" value="$(arg left)"/>
     <param name="robot" value="boxbot"/>

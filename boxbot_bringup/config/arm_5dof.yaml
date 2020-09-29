@@ -10,3 +10,4 @@ joints: {
     wrist_2_joint: {id: 5, ticks: 1024, range: 300.0, max_speed: 100.0, min_angle: -150.0, max_angle: 150.0},
     gripper_revolute_joint: {id: 6, ticks: 1024, range: 300.0, max_speed: 100.0, min_angle: 0.0, max_angle: 149.0, invert: true},
 }
+

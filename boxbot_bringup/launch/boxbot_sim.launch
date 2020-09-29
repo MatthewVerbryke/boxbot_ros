@@ -6,6 +6,8 @@
   <arg name="dof" default="6"/>
   <arg name="world_name" default="empty"/>
   <arg name="gazebo_only" default="false"/>
+  <arg name="left_driver" default="false"/>
+  <arg name="right_driver" default="false"/>
 
   <!-- Launch the appropriate Gazebo model -->
   <include file="$(find boxbot_gazebo)/launch/boxbot_$(arg dof)dof_gazebo.launch">
@@ -15,27 +17,47 @@
   <!-- Launch low-level arm controllers -->
   <include file="$(find boxbot_control)/launch/boxbot_$(arg dof)dof_control.launch"/>
   
-  <!-- Launch simulated arbotix interfaces -->
-  <node name="left_driver" pkg="boxbot_driver" type="sim_arbotix_node" output="screen" ns="boxbot">
-    <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
-    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
-    <param name="robot" value="boxbot" type="str"/>
-    <param name="side" value="left" type="str"/>
-  </node>
-
-  <node name="right_driver" pkg="boxbot_driver" type="sim_arbotix_node" output="screen" ns="boxbot">
-    <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
-    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
-    <param name="robot" value="boxbot" type="str"/>
-    <param name="side" value="right" type="str"/>
-  </node>
-
   <!-- Launch joint mimic nodes-->
   <node name="left_mimic" pkg="boxbot_gazebo" type="mimic_node" output="screen" ns="boxbot">
     <param name="side" value="left" type="str"/>
   </node>
 
   <node name="right_mimic" pkg="boxbot_gazebo" type="mimic_node" output="screen" ns="boxbot">
+    <param name="side" value="right" type="str"/>
+  </node>
+
+  <!-- Launch simulated arbotix interfaces -->
+  <node if="$(arg left_driver)" name="left_driver" pkg="boxbot_driver" type="sim_arbotix_node" output="screen" ns="boxbot">
+    <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
+    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
+    <param name="robot" value="boxbot" type="str"/>
+    <param name="side" value="left" type="str"/>
+  </node>
+
+  <node if="$(arg right_driver)" name="right_driver" pkg="boxbot_driver" type="sim_arbotix_node" output="screen" ns="boxbot">
+    <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
+    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
+    <param name="robot" value="boxbot" type="str"/>
+    <param name="side" value="right" type="str"/>
+  </node>
+
+  <!-- Launch a simulation clock publisher -->
+  <node name="sim_clock_publisher" pkg="boxbot_gazebo" type="clock.py" output="screen">
+    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
+  </node>  
+
+  <!-- Launch arm state publishers to mimic hardware driver -->
+  <node unless="$(arg left_driver)" name="left_state_publisher" pkg="boxbot_driver" type="state.py" output="screen">
+    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
+    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
+    <param name="robot" value="boxbot" type="str"/>
+    <param name="side" value="right" type="str"/>
+  </node>
+
+  <node unless="$(arg right_driver)" name="right_state_publisher" pkg="boxbot_driver" type="state.py" output="screen">
+    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
+    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
+    <param name="robot" value="boxbot" type="str"/>
     <param name="side" value="right" type="str"/>
   </node>
 
