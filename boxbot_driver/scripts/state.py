@@ -9,8 +9,6 @@
   https://github.com/MatthewVerbryke/rse_dam
   Additional copyright may be held by others, as reflected in the commit
   history.
-  
-  TODO: Test
 """
 
 
@@ -21,11 +19,9 @@ from sensor_msgs.msg import JointState
 from std_msgs.msg import Float64
 import rospy
 
-from packing import pack_jointstate
-
 # Retrieve Rosbridge/Websocket utilities
 file_dir = sys.path[0]
-sys.path.append(file_dir + '/../..')
+sys.path.append(file_dir + '/../../..')
 from rss_git_lite.common import ws4pyRosMsgSrvFunctions_gen as ws4pyROS
 from rss_git_lite.common import rosConnectWrapper as rC
 
@@ -48,14 +44,22 @@ class ArmStatePublisher():
         self.lock = thread.allocate_lock()
         
         # Get parameters
-        robot = rospy.get_param("~/robot", "")
-        side = rospy.get_param("~/side", "")
-        ip = rospy.get_param("~/connections/{}_arm".format(side))
+        robot = rospy.get_param("~robot")
+        side = rospy.get_param("~side")
+        ip = rospy.get_param("~connections/{}_arm".format(side))
         
         # Parse out joint information from param server
         self.joints = []
         for name in rospy.get_param("~joints", dict().keys()):
             self.joints.append(side + "_" + name)
+        
+        # Setup arm state storage variable
+        self.arm_state = JointState()
+        self.arm_state.name = self.joints
+        self.arm_state.position = [0.0]*len(self.joints)
+        self.arm_state.velocity = [0.0]*len(self.joints)
+        self.arm_state.effort = [0.0]*len(self.joints)
+        self.j = [0]*len(self.joints)
         
         # Message storage variable
         self.robot_joint_state = None
@@ -70,22 +74,23 @@ class ArmStatePublisher():
         # Setup ROS Subscriber
         rospy.Subscriber(whole_joint_state, JointState, self.joint_state_cb)
         
-        # Setup ROSbridge publisher
+        # Setup ROSbridge publisher or local publisher
         if ip == "local":
             self.local = True
-            self.pub = rospy.Publisher(whole_joint_state, Float64,
+            self.pub = rospy.Publisher(arm_joint_state, JointState,
                                        queue_size=5)
         else:
             self.local = False
-            self.pub = rC.RosMsg("ws4py", ip, "pub", arm_state_topic,
+            self.pub = rC.RosMsg("ws4py", ip, "pub", arm_joint_state,
                                  "sensor_msgs/JointState", 
-                                 pack_jointstate)
+                                 pack_joint_state)
         
         # Run publisher
-        rospy.loginfo("{} side arm state publisher initialized")
+        rospy.loginfo("State publisher for {} arm initialized".format(side))
+        self.side = side
         self.main()
         
-    def get_joint_states(self, msg):
+    def joint_state_cb(self, msg):
         """
         Callback for joint states.
         """
@@ -111,30 +116,49 @@ class ArmStatePublisher():
         
     def parse_joint_state(self, msg):
         """
-        Get out information related to this arm from full joint state
-        message.
+        Given the full state of boxbot, get out only the joint state of
+        the current arm.
         """
         
-        position = []
-        velocity = []
-        effort = []
-        
-        # Find names in message
-        for joint in self.joints:
-            i = msg.name.index(joint)
-            position.append(msg.position[i])
-            velocity.append(msg.velocity[i])
-            effort.append(msg.effort[i])
+        # Steal the header
+        self.arm_state.header = msg.header
+                
+        # Retrieve information on arm joints
+        for i in range(0, len(self.joints)):
             
-        # Fill out truncated message for just this arm
-        arm_joint_state = JointState()
-        arm_joint_state.header = msg.header
-        arm_joint_state.name = self.joints
-        arm_joitn_state.position = position
-        arm_joint_state.velocity = velocity
-        arm_joint_state.effort = effort
+            # Save time on indexes since they shouldn't change change
+            j = self.j[i]
+            if msg.name[j] != self.joints[i]:
+                self.j[i] = msg.name.index(self.joints[i])
+                j = self.j[i]
+            
+            # Fill out remaining data
+            self.arm_state.position[i] = msg.position[j]
+            self.arm_state.velocity[i] = msg.velocity[j]
+            self.arm_state.effort[i] = msg.effort[j]
         
-        return arm_joint_state
+    def pack_joint_state(joint_state):
+        """
+        Package 'sensor_msgs/JointState' message
+        """
+        
+        # Get header message
+        header_msg = pack_header(joint_state.header)
+        
+        # Get joint state info
+        names = joint_state.name
+        positions = joint_state.position
+        velocities = joint_state.velocity
+        efforts = joint_state.effort
+        
+        # Package into dict
+        joint_state_msg = {"header": header_msg,
+                          "name": names,
+                          "position": positions,
+                          "velocity": velocities,
+                          "effort": efforts}
+                          
+        return joint_state_msg
         
     def main(self):
         """
@@ -150,11 +174,11 @@ class ArmStatePublisher():
             if joint_state == None:
                 pass
             else:
-                arm_joint_state = self.parse_joint_state(joint_state)
-                if local:
-                    self.pub.publish(arm_joint_state)
+                self.parse_joint_state(joint_state)
+                if self.local:
+                    self.pub.publish(self.arm_state)
                 else:
-                    self.pub.send(arm_joint_state)
+                    self.pub.send(self.arm_state)
                 
             self.rate.sleep()
 
@@ -164,7 +188,7 @@ class ArmStatePublisher():
         """
         
         # Log shutdown
-        rospy.loginfo("Shutting down '{}_arm_state_publisher'".format(self.arm))
+        rospy.loginfo("Shutting down '{}_state_publisher'...".format(self.side))
         rospy.sleep(1)
 
 

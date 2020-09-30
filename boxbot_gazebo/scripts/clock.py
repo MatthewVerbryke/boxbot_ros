@@ -22,7 +22,6 @@ file_dir = sys.path[0]
 sys.path.append(file_dir + '/../../..')
 from rss_git_lite.common import ws4pyRosMsgSrvFunctions_gen as ws4pyROS
 from rss_git_lite.common import rosConnectWrapper as rC
-from rse_dam.communication import pack_time
 
 
 class SimClockPublisher():
@@ -44,6 +43,9 @@ class SimClockPublisher():
         # Set the publishing rate (1 kHz)
         self.rate = rospy.Rate(1000.0)
         
+        # Initialize variables
+        self.clock_time = None
+        
         # '/clock' Subscriber
         rospy.Subscriber("/clock", Clock, self.time_cb)
         
@@ -57,6 +59,11 @@ class SimClockPublisher():
                 self.pubs.append(rC.RosMsg("ws4py", ip, "pub", "/clock", 
                                            "rosgraph_msgs/Clock",
                                            pack_time))
+                                           
+        # Make sure there are actual publishing needs, or else shut down
+        if len(self.pubs) == 0:
+            rospy.logwarn("All clock publish destinations are local. Clock publisher not needed")
+            exit()
         
         # Run publisher
         rospy.loginfo("Simulation clock publisher initialized")
@@ -81,8 +88,24 @@ class SimClockPublisher():
         self.lock.release()
         
         return clock_current
+        
+    def pack_time(time):
+        """
+        Unpackage 'rosgraph_msgs/Clock' message.
+        """
+        
+        # Get time data
+        data = time.clock
+        seconds = data.secs
+        nanoseconds = data.nsecs
+        
+        # Place data into dictionary
+        time_msg = {"clock": {"secs": seconds,
+                              "nsecs": nanoseconds}}
+                
+        return time_msg
     
-    def publish_clock(self):
+    def main(self):
         """
         Retrieve and publish the clock time.
         """
@@ -96,8 +119,8 @@ class SimClockPublisher():
             if (clock_now==None):
                 pass
             else:
-                for pub in pubs:
-                    self.pub.send(clock_now)
+                for pub in self.pubs:
+                    pub.send(clock_now)
                     
             self.rate.sleep()
     
@@ -107,7 +130,7 @@ class SimClockPublisher():
         """
         
         # Log shutdown
-        rospy.loginfo("Shutting down 'clock_publisher'")
+        rospy.loginfo("Shutting down 'clock_publisher'...")
         rospy.sleep(1)
 
 

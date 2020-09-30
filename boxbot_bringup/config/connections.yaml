@@ -1,8 +1,8 @@
 # Add/Edit/Remove connection names and sub-computer IP addresses here
 
 connections: {
-    left_arm: local
-    right_arm: local
-    main: local
-    sim: local
+    left_arm: local,
+    right_arm: local,
+    main: local,
+    sim: local,
 }

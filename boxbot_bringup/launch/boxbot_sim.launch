@@ -51,7 +51,7 @@
     <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
     <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
     <param name="robot" value="boxbot" type="str"/>
-    <param name="side" value="right" type="str"/>
+    <param name="side" value="left" type="str"/>
   </node>
 
   <node unless="$(arg right_driver)" name="right_state_publisher" pkg="boxbot_driver" type="state.py" output="screen">
