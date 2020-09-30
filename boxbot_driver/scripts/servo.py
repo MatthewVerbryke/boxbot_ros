@@ -20,6 +20,7 @@ file_dir = sys.path[0]
 sys.path.append(file_dir + '/../../..')
 from rss_git_lite.common import ws4pyRosMsgSrvFunctions_gen as ws4pyROS
 from rss_git_lite.common import rosConnectWrapper as rC
+from rse_dam.communication import pack_float
 
 
 class DynamixelServo(object):
@@ -62,7 +63,7 @@ class SimServo(object):
             self.pub = rospy.Publisher(command_topic, Float64, queue_size=5)
         else:
             self.pub = rC.RosMsg("ws4py", ip, "pub", command_topic,
-                                 "std_msgs/Float64", self.pack_float)
+                                 "std_msgs/Float64", pack_float)
         
     def update_joint_info(self, msg):
         """

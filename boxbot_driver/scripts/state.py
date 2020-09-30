@@ -18,6 +18,7 @@ import sys
 import thread
 
 from sensor_msgs.msg import JointState
+from std_msgs.msg import Float64
 import rospy
 
 from packing import pack_jointstate
@@ -49,7 +50,7 @@ class ArmStatePublisher():
         # Get parameters
         robot = rospy.get_param("~/robot", "")
         side = rospy.get_param("~/side", "")
-        connection = rospy.get_param("~/{}_ip".format(side))
+        ip = rospy.get_param("~/connections/{}_arm".format(side))
         
         # Parse out joint information from param server
         self.joints = []
@@ -64,14 +65,21 @@ class ArmStatePublisher():
         
         # Get topics
         whole_joint_state = "{}/joint_states".format(robot)
-        arm_joint_state = "{}/{}_arm/joint_state".format(robot, side)
+        arm_joint_state = "{}/{}_joint_state".format(robot, side)
         
         # Setup ROS Subscriber
         rospy.Subscriber(whole_joint_state, JointState, self.joint_state_cb)
         
         # Setup ROSbridge publisher
-        self.pub = rC.RosMsg("ws4py", ip, "pub", arm_state_topic,
-                             "sensor_msgs/JointState", pack_jointstate)
+        if ip == "local":
+            self.local = True
+            self.pub = rospy.Publisher(whole_joint_state, Float64,
+                                       queue_size=5)
+        else:
+            self.local = False
+            self.pub = rC.RosMsg("ws4py", ip, "pub", arm_state_topic,
+                                 "sensor_msgs/JointState", 
+                                 pack_jointstate)
         
         # Run publisher
         rospy.loginfo("{} side arm state publisher initialized")
@@ -143,7 +151,10 @@ class ArmStatePublisher():
                 pass
             else:
                 arm_joint_state = self.parse_joint_state(joint_state)
-                self.pub.send(arm_joint_state)
+                if local:
+                    self.pub.publish(arm_joint_state)
+                else:
+                    self.pub.send(arm_joint_state)
                 
             self.rate.sleep()
 

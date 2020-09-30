@@ -26,6 +26,7 @@ file_dir = sys.path[0]
 sys.path.append(file_dir + '/../../..')
 from rss_git_lite.common import ws4pyRosMsgSrvFunctions_gen as ws4pyROS
 from rss_git_lite.common import rosConnectWrapper as rC
+from rse_dam.communication import pack_joint_state
 
 
 class ArbotixGazeboDriver(object):
@@ -48,12 +49,13 @@ class ArbotixGazeboDriver(object):
         self.side = rospy.get_param("~/side", "")
         self.robot = rospy.get_param("~/robot", "")
         self.rate = rospy.get_param("~/rate", 100.0)
-        
         read_rate = rospy.get_param("~/readRate", 10.0)
         write_rate = rospy.get_param("~/writeRate", 10.0)
         controllers = rospy.get_param("~/controllers")
-        command_ip = rospy.get_param("~/command_ip")
-        state_ip = rospy.get_param("~/state_ip")
+        
+        # Get ROSbridge publishers destinations
+        command_ip = rospy.get_param("~/connections/sim")
+        state_ip = rospy.get_param("~/connections/main")
         
         # Create servo objects
         self.servos = []
@@ -62,11 +64,12 @@ class ArbotixGazeboDriver(object):
             self.servo.append(new_servo)
             
         # Setup topic names
-        whole_joint_state = "{}/joint_states".format(self.robot)
-        arm_joint_state = "{}/{}_arm/joint_states".format(self.robot,
+        sim_joint_state = "{}/{}_sim_joint_state".format(self.robot,
                                                          self.side)
+        arm_joint_state = "{}/{}_arm/joint_states".format(self.robot,
+                                                          self.side)
         arm_commands = "{}/{}_arm/joint_commands".format(self.robot,
-                                                        self.side)
+                                                         self.side)
         
         # Setup read/write rates
         self.w_delta = rospy.Duration(1.0/write_rate)
@@ -75,7 +78,7 @@ class ArbotixGazeboDriver(object):
         self.r_next = rospy.Time.now() + self.r_delta
         
         # Create ROS subcribers
-        self.state_sub = rospy.Subscriber(whole_joint_state, JointState,
+        self.state_sub = rospy.Subscriber(sim_joint_state, JointState,
                                           self.joint_state_cb)
         self.command_sub = rospy.Subscriber(arm_commands, JointState,
                                             self.joint_commands_cb)
