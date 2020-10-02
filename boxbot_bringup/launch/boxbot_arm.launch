@@ -5,13 +5,10 @@
   <!-- Command-line arguments -->
   <arg name="sim" default="false"/>
   <arg name="headless" default="true"/>
-  <arg name="left" default="true"/>
+  <arg name="side" default="left"/>
   <arg name="dof" default="6"/>
 
-  <!-- Launch robot state publisher -->
-  <!--node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher"/-->
-
-  <!-- If running on the real robot, launch actual arbotix controllers-->
+  <!-- If running on the real robot, launch actual arbotix controllers (TODO: redo this section)-->
   <node unless="$(arg sim)" name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
     <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
     <param name="sim" value="$(arg sim)"/>
@@ -21,25 +18,13 @@
     <rosparam file="$(find widowx_arm_bringup)/config/widowx_arm_gripper.yaml" command="load" />
   </node>
 
-  <!-- If Gazebo isn't running, launch the robot state publisher -->
-  <node unless="$(arg sim)" name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
-
   <!-- If simulated (i.e. in Gazebo) run the 'fake' arbotix controllers-->
-  <node if="$(arg sim)" name="arbotix" pkg="arbotix_python" type="arbotix_gazebo" output="screen">
+  <node if="$(arg sim)" name="$(arg side)_arm_driver" pkg="boxbot_driver" type="simulation.py" output="screen">
+    <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
     <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
-    <param name="sim" value="$(arg sim)"/>
-    <param name="left_arm" value="$(arg left)"/>
+    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
+    <param name="side" value="$(arg side)"/>
     <param name="robot" value="boxbot"/>
   </node>
-
-  <node if="$(arg sim)" name="gripper_controller" pkg="arbotix_controllers" type="gripper_sim" output="screen">
-    <rosparam file="$(find widowx_arm_bringup)/config/widowx_arm_gripper.yaml" command="load" />
-  </node>
-
-  <!-- Launch MoveIt! for the arm -->
-  <include file="$(find boxbot_moveit)/boxbot_$(arg dof)_dof_moveit_config/launch/move_group.launch"/>
-
-  <!-- Launch RViz if not in headless mode -->
-  <include unless="$(arg headless)" file="$(find boxbot_moveit)/boxbot_$(arg dof)_dof_moveit_config//launch/moveit_rviz.launch"/>
   
 </launch>

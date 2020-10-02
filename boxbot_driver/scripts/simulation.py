@@ -26,7 +26,6 @@ file_dir = sys.path[0]
 sys.path.append(file_dir + '/../../..')
 from rss_git_lite.common import ws4pyRosMsgSrvFunctions_gen as ws4pyROS
 from rss_git_lite.common import rosConnectWrapper as rC
-from rse_dam.communication import pack_joint_state
 
 
 class ArbotixGazeboDriver(object):
@@ -40,28 +39,32 @@ class ArbotixGazeboDriver(object):
         rospy.init_node("sim_arbotix_driver")
         
         # Setup cleanup
-        rospy.on_cleanup(self.cleanup)
+        rospy.on_shutdown(self.cleanup)
         
         # Get a lock
         self.lock = thread.allocate_lock()
         
         # Get parameters
-        self.side = rospy.get_param("~/side", "")
-        self.robot = rospy.get_param("~/robot", "")
-        self.rate = rospy.get_param("~/rate", 100.0)
-        read_rate = rospy.get_param("~/readRate", 10.0)
-        write_rate = rospy.get_param("~/writeRate", 10.0)
-        controllers = rospy.get_param("~/controllers")
+        self.side = rospy.get_param("~side", "")
+        self.robot = rospy.get_param("~robot", "")
+        self.rate = rospy.get_param("~rate", 100.0)
+        read_rate = rospy.get_param("~readRate", 10.0)
+        write_rate = rospy.get_param("~writeRate", 10.0)
+        controllers = rospy.get_param("~controllers")
+        
+        # Message holding variables
+        self.joint_state_msg = None
+        self.joint_commands = None
         
         # Get ROSbridge publishers destinations
-        command_ip = rospy.get_param("~/connections/sim")
-        state_ip = rospy.get_param("~/connections/main")
+        command_ip = rospy.get_param("~connections/sim")
+        state_ip = rospy.get_param("~connections/main")
         
         # Create servo objects
         self.servos = []
         for name in controllers:
             new_servo = SimServo(name, self.side, self.robot, command_ip)
-            self.servo.append(new_servo)
+            self.servos.append(new_servo)
             
         # Setup topic names
         sim_joint_state = "{}/{}_sim_joint_state".format(self.robot,
@@ -90,7 +93,7 @@ class ArbotixGazeboDriver(object):
                                              queue_size=1)
         else:
             self.local = False
-            self.state_pub = rC.RosMsg("ws4py", state_ip, "pub", 
+            self.state_pub = rC.RosMsg("ws4py", "ws://"+state_ip+":9090/", "pub", 
                                        arm_joint_state,
                                        "sensor_msgs/JointState",
                                        pack_joint_state)
@@ -120,9 +123,7 @@ class ArbotixGazeboDriver(object):
         Callback for joint command messages.
         """
         
-        for servo in self.servos:
-            i = msg.name.index(servo.name)
-            servo.desired = msg.position[i]
+        self.joint_commands = msg
             
     def update_state(self):
         """
@@ -136,6 +137,7 @@ class ArbotixGazeboDriver(object):
         state_msg.header.stamp = rospy.Time.now()
         
         try:
+        
             # Update servo information
             for servo in self.servos:
                 servo.update_joint_info(self.joint_state_msg)
@@ -144,13 +146,12 @@ class ArbotixGazeboDriver(object):
                 state_msg.name.append(servo.name)
                 state_msg.positions.append(servo.position)
                 state_msg.velocity.append(servo.velocity)
-                    
-            # Publish message
-            if self.local:
-                self.state_pub.publish(state_msg)
-            else:
-                self.state_pub.send(state_msg)
                 
+                # Clear out old state message
+                self.joint_state_msg = None
+                
+            return state_msg
+            
         finally:
             # Release lock
             self.lock.release()
@@ -164,14 +165,27 @@ class ArbotixGazeboDriver(object):
         self.lock.acquire()
         
         try:
-            # Publish command message
-            for servo in self.servo:
+            
+            msg = self.joint_commands
+            
+            for servo in self.servos:
+                
+                # Assign desired joint positions to correct servo
+                i = servo.index
+                if msg.name[servo.index] != servo.name:
+                    servo.index = msg.name.index(servo.name)
+                servo.desired = msg.position[servo.index]
+                
+                # Publish command message
                 servo.publish_command()
+                
+            # Clear out old commands
+            self.joint_commands = None
                 
         finally:
             # Release lock
-            self.lock.release()                
-    
+            self.lock.release()
+        
     def main(self):
         """
         Main execution function for the class
@@ -180,19 +194,54 @@ class ArbotixGazeboDriver(object):
         r = rospy.Rate(self.rate)
         while not rospy.is_shutdown():
             
-            # Read and publish state 
+            # Read state
             if rospy.Time.now() >= self.r_next:
-                self.update_state()
+                if self.joint_state_msg != None:
+                    state_msg = self.update_state()
+                
+                    # Publish message
+                    if self.local:
+                        self.state_pub.publish(state_msg)
+                    else:
+                        self.state_pub.send(state_msg)
+                    
+                # Update next read time
                 self.r_next = rospy.Time.now() + self.r_delta
             
             # Write commands
             if rospy.Time.now() >= self.w_next:
-                self.publish_commands()
+                if self.joint_commands != None:
+                    self.publish_commands()
+                
+                # Update next write time
                 self.w_next = rospy.Time.now() + self.w_delta
                 
             # Hold cycle rate
             r.sleep()
-
+            
+def pack_joint_state(joint_state):
+    """
+    Package 'sensor_msgs/JointState' message
+    """
+    
+    # Get header message
+    header_msg = pack_header(joint_state.header)
+        
+    # Get joint state info
+    names = joint_state.name
+    positions = joint_state.position
+    velocities = joint_state.velocity
+    efforts = joint_state.effort
+    
+    # Package into dict
+    joint_state_msg = {"header": header_msg,
+                       "name": names,
+                       "position": positions,
+                       "velocity": velocities,
+                       "effort": efforts}
+    
+    return joint_state_msg
+            
 
 if __name__ == "__main__":
     try:

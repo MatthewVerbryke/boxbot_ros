@@ -51,12 +51,12 @@ class SimClockPublisher():
         
         # Setup ROSbridge publisher(s)
         self.pubs = []
-        for name in rospy.get_param("~/connections", dict()).keys():
-            ip = rospy.get_param("~/connections/" + name)
+        for name in rospy.get_param("~connections", dict()).keys():
+            ip = rospy.get_param("~connections/" + name)
             if ip == "local":
                 pass
             else:
-                self.pubs.append(rC.RosMsg("ws4py", ip, "pub", "/clock", 
+                self.pubs.append(rC.RosMsg("ws4py", "ws://"+ip+":9090/", "pub", "/clock", 
                                            "rosgraph_msgs/Clock",
                                            pack_time))
                                            
@@ -88,22 +88,6 @@ class SimClockPublisher():
         self.lock.release()
         
         return clock_current
-        
-    def pack_time(time):
-        """
-        Unpackage 'rosgraph_msgs/Clock' message.
-        """
-        
-        # Get time data
-        data = time.clock
-        seconds = data.secs
-        nanoseconds = data.nsecs
-        
-        # Place data into dictionary
-        time_msg = {"clock": {"secs": seconds,
-                              "nsecs": nanoseconds}}
-                
-        return time_msg
     
     def main(self):
         """
@@ -132,6 +116,22 @@ class SimClockPublisher():
         # Log shutdown
         rospy.loginfo("Shutting down 'clock_publisher'...")
         rospy.sleep(1)
+
+def pack_time(time):
+    """
+    Package 'rosgraph_msgs/Clock' message.
+    """
+    
+    # Get time data
+    data = time.clock
+    seconds = data.secs
+    nanoseconds = data.nsecs
+    
+    # Place data into dictionary
+    time_msg = {"clock": {"secs": seconds,
+                          "nsecs": nanoseconds}}
+    
+    return time_msg
 
 
 if __name__ == "__main__":

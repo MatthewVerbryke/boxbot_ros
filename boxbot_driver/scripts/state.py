@@ -37,15 +37,13 @@ class ArmStatePublisher():
         # Inititialize node
         rospy.init_node("arm_state_publisher", anonymous=True)
         
-        # Initialize cleanup for this node
-        rospy.on_shutdown(self.cleanup)
-        
         # Get a lock
         self.lock = thread.allocate_lock()
         
         # Get parameters
         robot = rospy.get_param("~robot")
         side = rospy.get_param("~side")
+	self.side = side
         ip = rospy.get_param("~connections/{}_arm".format(side))
         
         # Parse out joint information from param server
@@ -60,6 +58,9 @@ class ArmStatePublisher():
         self.arm_state.velocity = [0.0]*len(self.joints)
         self.arm_state.effort = [0.0]*len(self.joints)
         self.j = [0]*len(self.joints)
+
+        # Initialize cleanup for this node
+        rospy.on_shutdown(self.cleanup)
         
         # Message storage variable
         self.robot_joint_state = None
@@ -81,13 +82,12 @@ class ArmStatePublisher():
                                        queue_size=5)
         else:
             self.local = False
-            self.pub = rC.RosMsg("ws4py", ip, "pub", arm_joint_state,
+            self.pub = rC.RosMsg("ws4py", "ws://"+ip+":9090/", "pub", arm_joint_state,
                                  "sensor_msgs/JointState", 
                                  pack_joint_state)
         
         # Run publisher
         rospy.loginfo("State publisher for {} arm initialized".format(side))
-        self.side = side
         self.main()
         
     def joint_state_cb(self, msg):
@@ -137,29 +137,6 @@ class ArmStatePublisher():
             self.arm_state.velocity[i] = msg.velocity[j]
             self.arm_state.effort[i] = msg.effort[j]
         
-    def pack_joint_state(joint_state):
-        """
-        Package 'sensor_msgs/JointState' message
-        """
-        
-        # Get header message
-        header_msg = pack_header(joint_state.header)
-        
-        # Get joint state info
-        names = joint_state.name
-        positions = joint_state.position
-        velocities = joint_state.velocity
-        efforts = joint_state.effort
-        
-        # Package into dict
-        joint_state_msg = {"header": header_msg,
-                          "name": names,
-                          "position": positions,
-                          "velocity": velocities,
-                          "effort": efforts}
-                          
-        return joint_state_msg
-        
     def main(self):
         """
         Retrieve and publish the current state of the arm.
@@ -191,6 +168,47 @@ class ArmStatePublisher():
         rospy.loginfo("Shutting down '{}_state_publisher'...".format(self.side))
         rospy.sleep(1)
 
+def pack_joint_state(joint_state):
+    """
+    Package 'sensor_msgs/JointState' message
+    """
+    
+    # Get header message
+    header_msg = pack_header(joint_state.header)
+    
+    # Get joint state info
+    names = joint_state.name
+    positions = joint_state.position
+    velocities = joint_state.velocity
+    efforts = joint_state.effort
+        
+    # Package into dict
+    joint_state_msg = {"header": header_msg,
+                       "name": names,
+                       "position": positions,
+                       "velocity": velocities,
+                       "effort": efforts}
+                          
+    return joint_state_msg
+    
+def pack_header(header):
+    """
+    Package 'std_msgs/Header' message.
+    """
+    
+    # Get header info
+    seq = header.seq
+    secs = header.stamp.secs
+    nsecs = header.stamp.nsecs
+    frame = header.frame_id
+    
+    # Place into dictionary
+    header_msg = {"seq": seq,
+                  "stamp": {"secs": secs, "nsecs": nsecs},
+                  "frame_id": frame}
+                  
+    return header_msg
+        
 
 if __name__ == "__main__":
     try:
