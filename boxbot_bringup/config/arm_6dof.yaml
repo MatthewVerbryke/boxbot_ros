@@ -1,14 +1,7 @@
-# Modified from https://github.com/Interbotix/widowx_arm/blob/master/widowx_arm_controller/config/arm.yaml
-
-controllers: [shoulder_1, shoulder_2, elbow, wrist_1, wrist_2, wrist_3, gripper]
+base_link: arm_base_link
+eef_link: wrist_2_link
 
 joints: {
-    shoulder_1_joint: {id: 1, ticks: 4096, range: 360.0, max_speed: 100.0},
-    shoulder_2_joint: {id: 2, ticks: 4096, range: 360.0, min_angle: -90.0, max_angle: 90.0, max_speed: 100.0},
-    elbow_joint: {id: 3, ticks: 4096, range: 360.0, max_speed: 100.0, invert: true},
-    wrist_1_joint: {id: 4, ticks: 4096, range: 300.0, max_speed: 100.0, min_angle: -150.0, max_angle: 150.0},
-    wrist_2_joint: {id: 5, ticks: 4096, range: 360.0, min_angle: -90.0, max_angle: 90.0, max_speed: 100.0, invert: true},
-    wrist_3_joint: {id: 6, ticks: 1024, range: 300.0, max_speed: 100.0, min_angle: -150.0, max_angle: 150.0},
-    gripper_joint: {id: 6, ticks: 1024, range: 300.0, max_speed: 100.0, min_angle: 0.0, max_angle: 149.0, invert: true},
+    arm: [shoulder_1, shoulder_2, elbow, wrist_1, wrist_2, wrist_3],
+    eef: [gripper],
 }
-

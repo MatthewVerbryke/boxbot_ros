@@ -1,3 +1,5 @@
+robot: boxbot
+reference_frame: "torso_link"
 port: /dev/ttyUSB0
 rate: 100
 read_rate: 50

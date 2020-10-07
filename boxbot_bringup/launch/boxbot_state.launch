@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!-- Command-line arguments -->
+  <arg name="dof" default="6"/>
+
+  <!-- Load the robot decripiton into the parameter server -->
+  <param name="robot_description" textfile="$(find boxbot_description)/robots/boxbot_$(arg dof)dof.urdf"/>
+
+  <!-- Launch the joint state aggregator to get the full joint state -->
+  <node name="joint_state_aggregator" pkg="boxbot_driver" type="aggregator.py" output="screen">
+    <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
+  </node>
+
+  <!-- Launch a robot state publisher -->
+  <node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+</launch>
