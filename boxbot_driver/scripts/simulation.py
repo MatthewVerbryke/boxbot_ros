@@ -53,8 +53,8 @@ class ArbotixGazeboDriver(object):
         
         # Get full joint names
         joint_dict = rospy.get_param("~joints")
-        arm_joints = ["{}_{}".format(self.side, joint) for joint in joint_dict["arm"]]
-        eef_joints = ["{}_{}".format(self.side, joint) for joint in joint_dict["eef"]]
+        arm_joints = ["{}_{}_joint".format(self.side, joint) for joint in joint_dict["arm"]]
+        eef_joints = ["{}_{}_joint".format(self.side, joint) for joint in joint_dict["eef"]]
         joints = arm_joints + eef_joints
         
         # Message holding variables
