@@ -4,6 +4,9 @@
 
   <!-- Command-line arguments -->
   <arg name="dof" default="6"/>
+  
+  <!-- Set use sim time as true-->
+  <param name="use_sim_time" value="false"/>
 
   <!-- Load the robot decripiton into the parameter server -->
   <param name="robot_description" textfile="$(find boxbot_description)/robots/boxbot_$(arg dof)dof.urdf"/>
@@ -14,6 +17,8 @@
   </node>
 
   <!-- Launch a robot state publisher -->
-  <node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  <node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher">
+    <remap from="joint_states" to="/boxbot/joint_states"/>
+  </node>
 
 </launch>

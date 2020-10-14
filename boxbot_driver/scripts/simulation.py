@@ -50,7 +50,12 @@ class ArbotixGazeboDriver(object):
         self.rate = rospy.get_param("~rate", 100.0)
         read_rate = rospy.get_param("~readRate", 10.0)
         write_rate = rospy.get_param("~writeRate", 10.0)
-        controllers = rospy.get_param("~controllers")
+        
+        # Get full joint names
+        joint_dict = rospy.get_param("~joints")
+        arm_joints = ["{}_{}".format(self.side, joint) for joint in joint_dict["arm"]]
+        eef_joints = ["{}_{}".format(self.side, joint) for joint in joint_dict["eef"]]
+        joints = arm_joints + eef_joints
         
         # Message holding variables
         self.joint_state_msg = None
@@ -62,7 +67,7 @@ class ArbotixGazeboDriver(object):
         
         # Create servo objects
         self.servos = []
-        for name in controllers:
+        for name in joints:
             new_servo = SimServo(name, self.side, self.robot, command_ip)
             self.servos.append(new_servo)
             

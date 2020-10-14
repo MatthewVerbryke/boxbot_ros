@@ -13,7 +13,7 @@
   history.
 """
 
-
+import sys
 import thread
 
 import rospy
@@ -41,10 +41,10 @@ class JointStateAggregator(object):
         self.lock = thread.allocate_lock()
         
         # Get parameters
-        self.robot = rospy.get_param("~/robot", "")
-        self.rate = rospy.get_param("~/rate", 50.0)
+        self.robot = "boxbot"
+        self.rate =  100.0
 
-	# Message storage variables
+	    # Message storage variables
         self.left_joint_state_msg = JointState()
         self.right_joint_state_msg = JointState()
         
@@ -110,6 +110,7 @@ class JointStateAggregator(object):
                 
                 # Create a new combined joint state message
                 msg = JointState()
+                msg.header.stamp = rospy.Time.now()
                 msg.name = combined_name
                 msg.position = combined_position
                 msg.velocity = combined_velocity

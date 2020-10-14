@@ -43,13 +43,14 @@ class ArmStatePublisher():
         # Get parameters
         robot = rospy.get_param("~robot")
         side = rospy.get_param("~side")
-	self.side = side
+        self.side = side
         ip = rospy.get_param("~connections/{}_arm".format(side))
         
         # Parse out joint information from param server
-        self.joints = []
-        for name in rospy.get_param("~joints", dict().keys()):
-            self.joints.append(side + "_" + name)
+        joint_dict = rospy.get_param("~joints")
+        arm_joints = ["{}_{}".format(self.side, joint) for joint in joint_dict["arm"]]
+        eef_joints = ["{}_{}".format(self.side, joint) for joint in joint_dict["eef"]]
+        joints = arm_joints + eef_joints
         
         # Setup arm state storage variable
         self.arm_state = JointState()
