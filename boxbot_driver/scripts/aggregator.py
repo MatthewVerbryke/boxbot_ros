@@ -42,7 +42,7 @@ class JointStateAggregator(object):
         
         # Get parameters
         self.robot = "boxbot"
-        self.rate =  100.0
+        self.rate =  50.0
 
 	    # Message storage variables
         self.left_joint_state_msg = JointState()
@@ -92,6 +92,8 @@ class JointStateAggregator(object):
         Main execution function
         """
         
+        r = rospy.Rate(self.rate)
+        
         while not rospy.is_shutdown():
             
             # Acquire a lock
@@ -123,6 +125,8 @@ class JointStateAggregator(object):
                 
                 # Release lock
                 self.lock.release()
+                
+                r.sleep()
 
 
 if __name__ == "__main__":

@@ -42,7 +42,7 @@ class SimServo(object):
         
         # Setup parameters for this servo
         namespace = "~joints/{}_joint/".format(name)
-        self.name = "{}_{}".format(side, name)
+        self.name = "{}_{}_joint".format(side, name)
         command_topic = "{}/{}_{}_controller/command".format(robot, side, name)
         if command_ip == "local":
             self.local = True
@@ -50,9 +50,6 @@ class SimServo(object):
         else:
             self.local = False
             ip = command_ip
-        
-        # Setup joint parameters
-        self.id = int(rospy.get_param(namespace+"id"))
         
         # Setup joint variables
         self.index = 0

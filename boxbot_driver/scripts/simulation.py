@@ -48,13 +48,13 @@ class ArbotixGazeboDriver(object):
         self.side = rospy.get_param("~side", "")
         self.robot = rospy.get_param("~robot", "")
         self.rate = rospy.get_param("~rate", 100.0)
-        read_rate = rospy.get_param("~readRate", 10.0)
-        write_rate = rospy.get_param("~writeRate", 10.0)
+        read_rate = rospy.get_param("~read_rate", 10.0)
+        write_rate = rospy.get_param("~write_rate", 10.0)
         
         # Get full joint names
         joint_dict = rospy.get_param("~joints")
-        arm_joints = ["{}_{}_joint".format(self.side, joint) for joint in joint_dict["arm"]]
-        eef_joints = ["{}_{}_joint".format(self.side, joint) for joint in joint_dict["eef"]]
+        arm_joints = joint_dict["arm"]
+        eef_joints = joint_dict["eef"]
         joints = arm_joints + eef_joints
         
         # Message holding variables
@@ -62,6 +62,7 @@ class ArbotixGazeboDriver(object):
         self.joint_commands = None
         
         # Get ROSbridge publishers destinations
+        local_ip = rospy.get_param("~connections/{}_arm".format(self.side))
         command_ip = rospy.get_param("~connections/sim")
         state_ip = rospy.get_param("~connections/main")
         
@@ -70,9 +71,9 @@ class ArbotixGazeboDriver(object):
         for name in joints:
             new_servo = SimServo(name, self.side, self.robot, command_ip)
             self.servos.append(new_servo)
-            
+        
         # Setup topic names
-        sim_joint_state = "{}/{}_sim_joint_state".format(self.robot,
+        sim_joint_state = "{}/{}_joint_state".format(self.robot,
                                                          self.side)
         arm_joint_state = "{}/{}_arm/joint_states".format(self.robot,
                                                           self.side)
@@ -90,9 +91,9 @@ class ArbotixGazeboDriver(object):
                                           self.joint_state_cb)
         self.command_sub = rospy.Subscriber(arm_commands, JointState,
                                             self.joint_commands_cb)
-        
+                                            
         # Setup arm state publisher
-        if state_ip == "local":
+        if state_ip == local_ip:
             self.local = True
             self.state_pub = rospy.Publisher(arm_joint_state, JointState,
                                              queue_size=1)
@@ -145,15 +146,16 @@ class ArbotixGazeboDriver(object):
         
             # Update servo information
             for servo in self.servos:
+                self.joint_state_msg
                 servo.update_joint_info(self.joint_state_msg)
                 
                 # Fill out state message
                 state_msg.name.append(servo.name)
-                state_msg.positions.append(servo.position)
+                state_msg.position.append(servo.position)
                 state_msg.velocity.append(servo.velocity)
                 
-                # Clear out old state message
-                self.joint_state_msg = None
+            # Clear out old state message
+            self.joint_state_msg = None
                 
             return state_msg
             
@@ -203,7 +205,7 @@ class ArbotixGazeboDriver(object):
             if rospy.Time.now() >= self.r_next:
                 if self.joint_state_msg != None:
                     state_msg = self.update_state()
-                
+                    
                     # Publish message
                     if self.local:
                         self.state_pub.publish(state_msg)
@@ -212,7 +214,8 @@ class ArbotixGazeboDriver(object):
                     
                 # Update next read time
                 self.r_next = rospy.Time.now() + self.r_delta
-            
+                #print self.r_next.to_sec()
+                
             # Write commands
             if rospy.Time.now() >= self.w_next:
                 if self.joint_commands != None:
@@ -220,7 +223,8 @@ class ArbotixGazeboDriver(object):
                 
                 # Update next write time
                 self.w_next = rospy.Time.now() + self.w_delta
-                
+                #print self.w_next.to_sec()
+            
             # Hold cycle rate
             r.sleep()
             
@@ -252,6 +256,6 @@ if __name__ == "__main__":
     try:
         ArbotixGazeboDriver()
     except rospy.ROSInterruptException:
-        pass
+        rospy.logerr("ROS Interrupt Exception")
         
     sys.exit(0)

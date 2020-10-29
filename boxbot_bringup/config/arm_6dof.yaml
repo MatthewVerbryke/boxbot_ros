@@ -1,3 +1,5 @@
+# Kinematic parameters for the 6-DOF arm boxbot.
+
 base_link: arm_base_link
 eef_link: wrist_2_link
 
@@ -5,3 +7,18 @@ joints: {
     arm: [shoulder_1, shoulder_2, elbow, wrist_1, wrist_2, wrist_3],
     eef: [gripper],
 }
+
+DH: [[0.0, 0.0, 0.0, 0.0],
+     [pi/2, 0.0, 0.0, -1.24282],
+     [0.0, 0.15, 0.0, -0.32798],
+     [pi/2, 0.0, 0.1408, 0.0],
+     [pi/2, 0.0, 0.0, 0.0],
+     [-pi/2, 0.0, 0.0715, 0.0],
+]
+
+planning_group: "_arm"
+gripper_group: "_gripper"
+
+left_arm_base_pose: [0.0, 0.099613, 0.24953, -0.707107, 0.0, 0.0, 0.707107]
+right_arm_base_pose: [0.0, -0.099613, 0.24953, 0.707107, 0.0, 0.0, 0.707107]
+
