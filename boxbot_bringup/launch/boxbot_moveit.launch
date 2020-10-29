@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!-- Command-line arguments -->
+  <arg name="debug" default="false" />
+  <arg name="sim" default="false"/>
+  <arg name="six_dof" default="true"/>
+
+  <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+  <include if="$(arg six_dof)" file="$(find boxbot_6_dof_moveit_config)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="true"/>
+  </include>
+  
+  <include unless="$(arg six_dof)" file="$(find boxbot_5_dof_moveit_config)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="true"/>
+  </include>
+  
+  <!-- Run the main MoveIt executable without trajectory execution by default -->
+  <include if="$(arg six_dof)" file="$(find boxbot_6_dof_moveit_config)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="false"/>  
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+  
+  <include unless="$(arg six_dof)" file="$(find boxbot_5_dof_moveit_config)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="false"/>  
+    <arg name="fake_execution" value="false"/>
+    <arg name="info" value="true"/>
+    <arg name="debug" value="$(arg debug)"/>
+  </include>
+
+</launch>
