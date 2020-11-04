@@ -27,15 +27,31 @@
   </node>
 
   <!-- Launch simulated arbotix interfaces -->
-  <node if="$(arg left_driver)" name="left_driver" pkg="boxbot_driver" type="sim_arbotix_node" output="screen" ns="boxbot">
+  <node if="$(arg left_driver)" name="left_arm_driver" pkg="boxbot_driver" type="simulation.py" output="screen">
     <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
+    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
+    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
+    <param name="side" value="left"/>
+    <param name="robot" value="boxbot"/>
+  </node>
+
+  <node if="$(arg right_driver)" name="right_arm_driver" pkg="boxbot_driver" type="simulation.py" output="screen">
+    <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
+    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
+    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
+    <param name="side" value="right"/>
+    <param name="robot" value="boxbot"/>
+  </node>
+
+  <node name="left_state_publisher" pkg="boxbot_driver" type="state.py" output="screen">
+    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
     <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
     <param name="robot" value="boxbot" type="str"/>
     <param name="side" value="left" type="str"/>
   </node>
 
-  <node if="$(arg right_driver)" name="right_driver" pkg="boxbot_driver" type="sim_arbotix_node" output="screen" ns="boxbot">
-    <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
+  <node name="right_state_publisher" pkg="boxbot_driver" type="state.py" output="screen">
+    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
     <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
     <param name="robot" value="boxbot" type="str"/>
     <param name="side" value="right" type="str"/>
@@ -45,20 +61,5 @@
   <node name="sim_clock_publisher" pkg="boxbot_gazebo" type="clock.py" output="screen">
     <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
   </node>  
-
-  <!-- Launch arm state publishers to mimic hardware driver -->
-  <node unless="$(arg left_driver)" name="left_state_publisher" pkg="boxbot_driver" type="state.py" output="screen">
-    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
-    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
-    <param name="robot" value="boxbot" type="str"/>
-    <param name="side" value="left" type="str"/>
-  </node>
-
-  <node unless="$(arg right_driver)" name="right_state_publisher" pkg="boxbot_driver" type="state.py" output="screen">
-    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
-    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
-    <param name="robot" value="boxbot" type="str"/>
-    <param name="side" value="right" type="str"/>
-  </node>
 
 </launch>

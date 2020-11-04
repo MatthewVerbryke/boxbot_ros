@@ -7,6 +7,12 @@
   <arg name="headless" default="true"/>
   <arg name="side" default="left"/>
   <arg name="dof" default="6"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="state_pub" default="true"/>
+  <arg name="description_name" default="$(find boxbot_description)/robots/boxbot_$(arg dof)dof.urdf"/>
+
+  <!-- Load the URDF onto the param server -->
+  <param name="robot_description" textfile="$(arg description_name)"/>
 
   <!-- If running on the real robot, launch actual arbotix controllers (TODO: redo this section)-->
   <node unless="$(arg sim)" name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
@@ -25,6 +31,11 @@
     <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
     <param name="side" value="$(arg side)"/>
     <param name="robot" value="boxbot"/>
+  </node>
+
+  <!-- Launch a robot state publisher for TF data -->
+  <node if="$(arg state_pub)" name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+    <remap from="joint_states" to="boxbot/$(arg side)_arm/joint_states"/>
   </node>
   
 </launch>

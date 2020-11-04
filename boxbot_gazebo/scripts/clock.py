@@ -51,9 +51,10 @@ class SimClockPublisher():
         
         # Setup ROSbridge publisher(s)
         self.pubs = []
+        local_ip = rospy.get_param("~connections/sim")
         for name in rospy.get_param("~connections", dict()).keys():
             ip = rospy.get_param("~connections/" + name)
-            if ip == "local":
+            if ip == local_ip:
                 pass
             else:
                 self.pubs.append(rC.RosMsg("ws4py", "ws://"+ip+":9090/", "pub", "/clock", 

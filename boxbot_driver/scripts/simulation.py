@@ -47,7 +47,7 @@ class ArbotixGazeboDriver(object):
         # Get parameters
         self.side = rospy.get_param("~side", "")
         self.robot = rospy.get_param("~robot", "")
-        self.rate = rospy.get_param("~rate", 100.0)
+        self.rate = 50.0#rospy.get_param("~rate", 50.0)
         read_rate = rospy.get_param("~read_rate", 10.0)
         write_rate = rospy.get_param("~write_rate", 10.0)
         
@@ -65,24 +65,29 @@ class ArbotixGazeboDriver(object):
         local_ip = rospy.get_param("~connections/{}_arm".format(self.side))
         command_ip = rospy.get_param("~connections/sim")
         state_ip = rospy.get_param("~connections/main")
+        if command_ip == local_ip:
+            rospy.loginfo("Publishing commands to local ROS environment")
+            command_ip = "local" # TODO: rework this
+        else:
+            rospy.loginfo("Publishing commands to ws://{}:9090/".format(command_ip))
         
         # Create servo objects
         self.servos = []
         for name in joints:
             new_servo = SimServo(name, self.side, self.robot, command_ip)
             self.servos.append(new_servo)
-        
+
         # Setup topic names
         sim_joint_state = "{}/{}_joint_state".format(self.robot,
                                                          self.side)
         arm_joint_state = "{}/{}_arm/joint_states".format(self.robot,
                                                           self.side)
-        arm_commands = "{}/{}_arm/joint_commands".format(self.robot,
-                                                         self.side)
+        arm_commands = "{}/{}_arm/commands".format(self.robot,
+                                                   self.side)
         
         # Setup read/write rates
-        self.w_delta = rospy.Duration(1.0/write_rate)
-        self.r_delta = rospy.Duration(1.0/read_rate)
+        self.w_delta =rospy.Duration(0.01)#rospy.Duration(1.0/write_rate)
+        self.r_delta = rospy.Duration(0.01)#rospy.Duration(1.0/read_rate)
         self.w_next = rospy.Time.now() + self.w_delta
         self.r_next = rospy.Time.now() + self.r_delta
         
@@ -97,12 +102,14 @@ class ArbotixGazeboDriver(object):
             self.local = True
             self.state_pub = rospy.Publisher(arm_joint_state, JointState,
                                              queue_size=1)
+            rospy.loginfo("Publishing state data to the local ROS environment")
         else:
             self.local = False
             self.state_pub = rC.RosMsg("ws4py", "ws://"+state_ip+":9090/", "pub", 
                                        arm_joint_state,
                                        "sensor_msgs/JointState",
                                        pack_joint_state)
+            rospy.loginfo("Publishing state data to ws://{}:9090/".format(state_ip))
         
         # Run main program
         rospy.loginfo("{} arm driver initialized".format(self.side))
@@ -141,6 +148,9 @@ class ArbotixGazeboDriver(object):
         
         state_msg = JointState()
         state_msg.header.stamp = rospy.Time.now()
+        name = []
+        position = []
+        velocity = []
         
         try:
         
@@ -150,10 +160,14 @@ class ArbotixGazeboDriver(object):
                 servo.update_joint_info(self.joint_state_msg)
                 
                 # Fill out state message
-                state_msg.name.append(servo.name)
-                state_msg.position.append(servo.position)
-                state_msg.velocity.append(servo.velocity)
-                
+                name.append(servo.name)
+                position.append(servo.position)
+                velocity.append(servo.velocity)
+            
+            state_msg.name = name
+            state_msg.position = position
+            state_msg.velocity = velocity
+            
             # Clear out old state message
             self.joint_state_msg = None
                 
@@ -178,7 +192,6 @@ class ArbotixGazeboDriver(object):
             for servo in self.servos:
                 
                 # Assign desired joint positions to correct servo
-                i = servo.index
                 if msg.name[servo.index] != servo.name:
                     servo.index = msg.name.index(servo.name)
                 servo.desired = msg.position[servo.index]
@@ -202,29 +215,27 @@ class ArbotixGazeboDriver(object):
         while not rospy.is_shutdown():
             
             # Read state
-            if rospy.Time.now() >= self.r_next:
-                if self.joint_state_msg != None:
-                    state_msg = self.update_state()
-                    
-                    # Publish message
-                    if self.local:
-                        self.state_pub.publish(state_msg)
-                    else:
-                        self.state_pub.send(state_msg)
-                    
-                # Update next read time
-                self.r_next = rospy.Time.now() + self.r_delta
-                #print self.r_next.to_sec()
+            #if rospy.Time.now() >= self.r_next:
+            if self.joint_state_msg != None:
+                state_msg = self.update_state()
+                
+                # Publish message
+                if self.local:
+                    self.state_pub.publish(state_msg)
+                else:
+                    self.state_pub.send(state_msg)
+                
+            # Update next read time
+            #self.r_next = rospy.Time.now() + self.r_delta
                 
             # Write commands
-            if rospy.Time.now() >= self.w_next:
-                if self.joint_commands != None:
-                    self.publish_commands()
-                
-                # Update next write time
-                self.w_next = rospy.Time.now() + self.w_delta
-                #print self.w_next.to_sec()
+            #if rospy.Time.now() >= self.w_next:
+            if self.joint_commands != None:
+                self.publish_commands()
             
+            # Update next write time
+            #self.w_next = rospy.Time.now() + self.w_delta
+        
             # Hold cycle rate
             r.sleep()
             

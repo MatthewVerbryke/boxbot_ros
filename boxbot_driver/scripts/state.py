@@ -44,7 +44,13 @@ class ArmStatePublisher():
         robot = rospy.get_param("~robot")
         side = rospy.get_param("~side")
         self.side = side
-        ip = rospy.get_param("~connections/{}_arm".format(side))
+        local_ip = rospy.get_param("~connections/sim")
+        dest_ip = rospy.get_param("~connections/{}_arm".format(side))
+        if dest_ip == local_ip:
+            rospy.loginfo("Publishing commands to local ROS environment")
+            ip = "local" # TODO: rework this
+        else:
+            rospy.loginfo("Publishing commands to ws://{}:9090/".format(command_ip))
         
         # Parse out joint information from param server
         joint_dict = rospy.get_param("~joints")
@@ -58,7 +64,7 @@ class ArmStatePublisher():
         self.arm_state.position = [0.0]*len(self.joints)
         self.arm_state.velocity = [0.0]*len(self.joints)
         self.arm_state.effort = [0.0]*len(self.joints)
-        self.j = [0]*len(self.joints)
+        self.j = [None]*len(self.joints)
 
         # Initialize cleanup for this node
         rospy.on_shutdown(self.cleanup)
@@ -80,7 +86,7 @@ class ArmStatePublisher():
         if ip == "local":
             self.local = True
             self.pub = rospy.Publisher(arm_joint_state, JointState,
-                                       queue_size=5)
+                                       queue_size=1)
         else:
             self.local = False
             self.pub = rC.RosMsg("ws4py", "ws://"+ip+":9090/", "pub", arm_joint_state,
@@ -127,16 +133,14 @@ class ArmStatePublisher():
         # Retrieve information on arm joints
         for i in range(0, len(self.joints)):
             
-            # Save time on indexes since they shouldn't change change
-            j = self.j[i]
-            if msg.name[j] != self.joints[i]:
+            # Save time on indexes since they shouldn't change change (causing a large slowdown?)
+            if self.j[i] == None:
                 self.j[i] = msg.name.index(self.joints[i])
-                j = self.j[i]
             
             # Fill out remaining data
-            self.arm_state.position[i] = msg.position[j]
-            self.arm_state.velocity[i] = msg.velocity[j]
-            self.arm_state.effort[i] = msg.effort[j]
+            self.arm_state.position[i] = msg.position[self.j[i]]
+            self.arm_state.velocity[i] = msg.velocity[self.j[i]]
+            self.arm_state.effort[i] = msg.effort[self.j[i]]
         
     def main(self):
         """
@@ -157,9 +161,9 @@ class ArmStatePublisher():
                     self.pub.publish(self.arm_state)
                 else:
                     self.pub.send(self.arm_state)
-                
+            
             self.rate.sleep()
-
+    
     def cleanup(self):
         """
         Things to do when shutdown occurs.

@@ -6,7 +6,7 @@
   <arg name="dof" default="6"/>
   
   <!-- Set use sim time as true-->
-  <param name="use_sim_time" value="false"/>
+  <param name="use_sim_time" value="true"/>
 
   <!-- Load the robot decripiton into the parameter server -->
   <param name="robot_description" textfile="$(find boxbot_description)/robots/boxbot_$(arg dof)dof.urdf"/>
