@@ -64,7 +64,6 @@ class ArbotixGazeboDriver(object):
         # Get ROSbridge publishers destinations
         local_ip = rospy.get_param("~connections/{}_arm".format(self.side))
         command_ip = rospy.get_param("~connections/sim")
-        state_ip = rospy.get_param("~connections/main")
         if command_ip == local_ip:
             rospy.loginfo("Publishing commands to local ROS environment")
             command_ip = "local" # TODO: rework this
@@ -98,18 +97,10 @@ class ArbotixGazeboDriver(object):
                                             self.joint_commands_cb)
                                             
         # Setup arm state publisher
-        if state_ip == local_ip:
-            self.local = True
-            self.state_pub = rospy.Publisher(arm_joint_state, JointState,
-                                             queue_size=1)
-            rospy.loginfo("Publishing state data to the local ROS environment")
-        else:
-            self.local = False
-            self.state_pub = rC.RosMsg("ws4py", "ws://"+state_ip+":9090/", "pub", 
-                                       arm_joint_state,
-                                       "sensor_msgs/JointState",
-                                       pack_joint_state)
-            rospy.loginfo("Publishing state data to ws://{}:9090/".format(state_ip))
+        self.local = True
+        self.state_pub = rospy.Publisher(arm_joint_state, JointState,
+                                         queue_size=1)
+        rospy.loginfo("Publishing state data to the local ROS environment")
         
         # Run main program
         rospy.loginfo("{} arm driver initialized".format(self.side))
@@ -239,6 +230,24 @@ class ArbotixGazeboDriver(object):
             # Hold cycle rate
             r.sleep()
             
+def pack_header(header):
+    """
+    Package 'std_msgs/Header' message.
+    """
+    
+    # Get header info
+    seq = header.seq
+    secs = header.stamp.secs
+    nsecs = header.stamp.nsecs
+    frame = header.frame_id
+    
+    # Place into dictionary
+    header_msg = {"seq": seq,
+                  "stamp": {"secs": secs, "nsecs": nsecs},
+                  "frame_id": frame}
+                  
+    return header_msg
+
 def pack_joint_state(joint_state):
     """
     Package 'sensor_msgs/JointState' message
