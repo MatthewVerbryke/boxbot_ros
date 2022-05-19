@@ -1,16 +1,15 @@
-// Dynamixel Servo Class
+// Dynamixel servo class
 //
 // Copyright 2022 University of Cincinnati
 // All rights reserved. See LICENSE file at:
 // https://github.com/MatthewVerbryke/rse_dam
-// Additional copyright may be held by others, as reflected in the
-// commit history.
+// Additional copyright may be held by others, as reflected in the commit history.
 //
 // TODO: needs to be tested and debugged
 
 #include <string>
 
-# include "boxbot_driver/dynamixel.h"
+#include "boxbot_driver/dynamixel.h"
 
 // Constructor
 Dynamixel::Dynamixel(std::string nameIn, std::string sideIn, ros::NodeHandle nh, std::string robotIn){

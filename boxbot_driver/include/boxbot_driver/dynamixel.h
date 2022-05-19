@@ -1,10 +1,11 @@
-// Dynamixel Servo Class header
+// Dynamixel servo class header
 //
 // Copyright 2022 University of Cincinnati
 // All rights reserved. See LICENSE file at:
 // https://github.com/MatthewVerbryke/rse_dam
-// Additional copyright may be held by others, as reflected in the
-// commit history.
+// Additional copyright may be held by others, as reflected in the commit history.
+//
+// TODO: needs to be tested and debugged
 
 #ifndef DYNAMIXEL_H
 #define DYNAMIXEL_H
