@@ -4,8 +4,6 @@
 // All rights reserved. See LICENSE file at:
 // https://github.com/MatthewVerbryke/rse_dam
 // Additional copyright may be held by others, as reflected in the commit history.
-//
-// TODO: needs to be tested and debugged
 
 #ifndef SERIALINTERFACE
 #define SERIALINTERFACE
@@ -35,11 +33,13 @@ private:
 public:
     
     // Constructor
-    SerialInterface(std::string port_name, int baud_rate, size_t time_out);
+    SerialInterface(std::string port_name, int baud_rate, size_t ms_timeout);
     
     // Public Functions
     std::vector<int> readPacket();
-    std::vector<int> execute(int id, int ins, std::vector<int> params, bool ret);
+    std::vector<int> execute(int id, int ins, std::vector<int> params);
+    std::vector<int> read(std::vector<int> ids, int start, int length);
+    int write(std::vector<int> values, int start, int num_bytes);
 };
 
 #endif
