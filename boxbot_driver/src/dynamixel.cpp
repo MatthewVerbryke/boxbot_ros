@@ -17,10 +17,16 @@ Dynamixel::Dynamixel(std::string nameIn, std::string sideIn, ros::NodeHandle nh,
     // Setup the servo joint name
     robot = nameIn;
     side = sideIn;
-    name = side + "_" + nameIn + "_joint";
+    name = "~joints/" + nameIn;
     
     // Get parameters from server
-    //TODO
+    id = nh.param(name + "/id");
+    ticks = nh.param(name + "/ticks", 1024);
+    neutral = nh.param(name + "/neutral", self.ticks/2);
+    max_angle = nh.param(name + "/max_angle");
+    min_angle = nh.param(name + "/min_angle");
+    max_speed = nh.param(name + "/max_speed");
+    tolerance = 0.05;
     
     // Determine angular range
     if (ticks == 4096){
@@ -53,17 +59,7 @@ Dynamixel::Dynamixel(std::string nameIn, std::string sideIn, ros::NodeHandle nh,
     temperature 0.0;
     load = 0;
     last = ros::Time::now()
-    
-    // Setup publishers and subscribers
-    //CommandSub = nh.advertise<std_msgs::Float64>(commandTopic, 1, &Dynamixel::commandCB, this)
 }
-
-//NOTE: Not needed?
-//void commandCB(const std_msgs::Float64 &msg){
-    //if (enabled == true){
-        //return msg.data;
-    //}
-//}
 
 // Convert an angle (in radians) into a number of 'ticks'.
 int angleToTicks(float angleIn){

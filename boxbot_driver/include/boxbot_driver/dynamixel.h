@@ -25,7 +25,6 @@ private:
     std::string robot;
     std::string side;
     std::string name;
-    std::string commandTopic;
     int id;
     int ticks;
     int neutral;
@@ -59,12 +58,6 @@ private:
     int load;
     ros::Time last;
     
-    // ROS publishers and subscribers
-    //ros::Subscriber CommandSub;
-    
-    // Callback functions
-    //void commandCB(std_msgs::Float64 msg)
-        
     // Private functions
     int angleToTicks(float angleIn)
     float ticksToAngle(int ticksIn)
