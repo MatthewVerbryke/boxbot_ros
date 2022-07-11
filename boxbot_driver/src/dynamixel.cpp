@@ -20,12 +20,9 @@ Dynamixel::Dynamixel(std::string nameIn, std::string sideIn, ros::NodeHandle nh,
     name = "~joints/" + nameIn;
     
     // Get parameters from server
-    id = nh.param(name + "/id");
-    ticks = nh.param(name + "/ticks", 1024);
-    neutral = nh.param(name + "/neutral", self.ticks/2);
-    max_angle = nh.param(name + "/max_angle");
-    min_angle = nh.param(name + "/min_angle");
-    max_speed = nh.param(name + "/max_speed");
+    nh.getParam(name + "/id", id);
+    nh.param(name + "/ticks", ticks, 1024);
+    nh.param(name + "/neutral", neutral, ticks/2);
     tolerance = 0.05;
     
     // Determine angular range
@@ -35,6 +32,11 @@ Dynamixel::Dynamixel(std::string nameIn, std::string sideIn, ros::NodeHandle nh,
     else{
         range = 300.0;
     }
+    
+    // Get servo speed and range parameters
+    nh.param(name + "/max_angle", max_angle, range/2);
+    nh.param(name + "/min_angle", min_angle, -range/2);
+    nh.getParam(name + "/max_speed", max_speed);
     
     // Determine radian to 'tick' conversion
     double pi = 3.14159265359;
@@ -56,13 +58,13 @@ Dynamixel::Dynamixel(std::string nameIn, std::string sideIn, ros::NodeHandle nh,
     reads = 0;
     errors = 0;
     voltage = 0.0;
-    temperature 0.0;
+    temperature = 0.0;
     load = 0;
-    last = ros::Time::now()
+    last = ros::Time::now();
 }
 
 // Convert an angle (in radians) into a number of 'ticks'.
-int angleToTicks(float angleIn){
+int Dynamixel::angleToTicks(float angleIn){
     
     int ticksInAngle;
     
@@ -78,7 +80,7 @@ int angleToTicks(float angleIn){
     if (ticksInAngle >= ticks){
         ticksInAngle--;
     }
-    else (ticksInAngle < 0){
+    else {
         ticksInAngle = 0;
     }
     
@@ -86,7 +88,7 @@ int angleToTicks(float angleIn){
 }
 
 // Convert the number of 'ticks' into an angle (in radians).
-float ticksToAngle(int ticksIn){
+float Dynamixel::ticksToAngle(int ticksIn){
     
     float angle;
     
@@ -98,11 +100,11 @@ float ticksToAngle(int ticksIn){
         angle = -1*angle;
     }
     
-    return angle
+    return angle;
 }
 
 // Determine the new position to move to using interpolation.
-int interpolate(float frame){
+int Dynamixel::interpolate(float frame){
     
     // Cap movement
     if (std::abs(last_cmd - desired) < tolerance){
@@ -124,11 +126,11 @@ int interpolate(float frame){
     last_cmd = ticksToAngle(ticksOut);
     speed = cmd * frame;
     
-    return ticksOut
+    return ticksOut;
 }
 
 // Update the angle using the current reading from the servo.
-void setCurrentFeedback(int reading){
+void Dynamixel::setCurrentFeedback(int reading){
     
     // Handle invalid reading values
     if (reading < -1){
@@ -145,12 +147,22 @@ void setCurrentFeedback(int reading){
     
     // Update velocity estimate
     ros::Time t = ros::Time::now();
-    float delta_t = t - last;
-    velocity = (position - last_angle) / (delta_t::sec + delta_t::nsec*0.00000001);
+    ros::Duration delta_t = t - last;
+    velocity = (position - last_angle) / (delta_t.toSec());
     last = t;
     
     // Loop last command if servo is inactive
     if (active == false){
-        last_cmd = postion;
+        last_cmd = position;
     }
+}
+
+// Set the goal position the dyanmixel controller is moving to
+int Dynamixel::setControlOutput(double goal){
+    
+    // Convert from rads to ticks
+    int tick_goal = angleToTicks(goal);
+    desired = tick_goal;
+    
+    return tick_goal;
 }

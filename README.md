@@ -12,6 +12,8 @@ This software was developed and tested in:
 - Gazebo 9.0.0
 - MoveIt! for ROS Melodic
 
+The new C++ driver (currently WIP) requires [LibSerial](https://github.com/crayzeewulf/libserial) to create and use Serial Ports to interface with the ArbotixM boards.
+
 ## Installation 
 
 This program requires the following packages for hardware drivers:

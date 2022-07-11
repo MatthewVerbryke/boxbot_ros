@@ -11,15 +11,18 @@
 #include <unistd.h>
 #include <typeinfo>
 
-#include "interface.h"
-#include "control_table.h"
+#include "boxbot_driver/interface.h"
+#include "boxbot_driver/control_table.h"
 
-// Constructor
-SerialInterface::SerialInterface(std::string port_name, int baud_rate, size_t ms_timeout){
+// Empty Constructor
+SerialInterface::SerialInterface(){}
+
+// Input parameters and setup the serial ports (compiles better than direclty in constructor)
+void SerialInterface::setupPort(std::string port_name, int baud_rate, int ms_timeout){
     
     // Store input parameters
     name = port_name;
-    timeout = ms_timeout;
+    timeout = static_cast<size_t>(ms_timeout);
     
     // Try to open the desired serial port
     try{

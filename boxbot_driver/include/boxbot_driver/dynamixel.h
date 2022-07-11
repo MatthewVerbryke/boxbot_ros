@@ -59,17 +59,21 @@ private:
     ros::Time last;
     
     // Private functions
-    int angleToTicks(float angleIn)
-    float ticksToAngle(int ticksIn)
+    int angleToTicks(float angleIn);
+    float ticksToAngle(int ticksIn);
     
 public:
     
     // Constructor
-    Dynamixel::Dynamixel(std::string nameIn, std::string sideIn, ros::NodeHandle nh, std::string robotIn)
+    Dynamixel(std::string nameIn, std::string sideIn, ros::NodeHandle nh, std::string robotIn);
     
     // Public functions
-    int interpolate(float frame)
-    void setCurrentFeedback(int reading)
+    int interpolate(float frame);
+    void setCurrentFeedback(int reading);
+    int setControlOutput(double goal);
+    
+    // Access functions
+    int getID(){return id;};
 };
 
 #endif

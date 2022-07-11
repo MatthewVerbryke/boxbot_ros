@@ -20,3 +20,14 @@ target_link_libraries(sim_arbotix_node
 )
 
 add_library(sim_servo src/sim_servo.cpp)
+add_library(dynamixel src/dynamixel.cpp)
+add_library(interface src/interface.cpp)
+
+add_executable(arbotix_node src/arbotix.cpp)
+target_link_libraries(arbotix_node
+  ${catkin_LIBRARIES}
+  serial
+  dynamixel
+  interface
+)
+

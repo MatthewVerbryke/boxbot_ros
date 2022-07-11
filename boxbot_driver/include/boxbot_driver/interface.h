@@ -33,9 +33,10 @@ private:
 public:
     
     // Constructor
-    SerialInterface(std::string port_name, int baud_rate, size_t ms_timeout);
+    SerialInterface();
     
     // Public Functions
+    void setupPort(std::string port_name, int baud_rate, int ms_timeout);
     std::vector<int> readPacket();
     std::vector<int> execute(int id, int ins, std::vector<int> params);
     std::vector<int> read(std::vector<int> ids, int start, int length);
