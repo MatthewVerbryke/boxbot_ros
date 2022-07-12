@@ -15,14 +15,15 @@
 Dynamixel::Dynamixel(std::string nameIn, std::string sideIn, ros::NodeHandle nh, std::string robotIn){
     
     // Setup the servo joint name
-    robot = nameIn;
+    robot = robotIn;
     side = sideIn;
-    name = "~joints/" + nameIn;
+    name = nameIn;
+    std::string param_name = "joints/" + nameIn;
     
     // Get parameters from server
-    nh.getParam(name + "/id", id);
-    nh.param(name + "/ticks", ticks, 1024);
-    nh.param(name + "/neutral", neutral, ticks/2);
+    nh.getParam(param_name + "/id", id);
+    nh.param(param_name + "/ticks", ticks, 1024);
+    nh.param(param_name + "/neutral", neutral, ticks/2);
     tolerance = 0.05;
     
     // Determine angular range
@@ -34,9 +35,18 @@ Dynamixel::Dynamixel(std::string nameIn, std::string sideIn, ros::NodeHandle nh,
     }
     
     // Get servo speed and range parameters
-    nh.param(name + "/max_angle", max_angle, range/2);
-    nh.param(name + "/min_angle", min_angle, -range/2);
-    nh.getParam(name + "/max_speed", max_speed);
+    nh.param(param_name + "/max_angle", max_angle, range/2);
+    nh.param(param_name + "/min_angle", min_angle, -range/2);
+    nh.getParam(param_name + "/max_speed", max_speed);
+    
+    std::cout << name << " joint" << std::endl;
+    std::cout << "id: " << id << std::endl;
+    std::cout << "ticks: " << ticks << std::endl;
+    std::cout << "neutral: " << neutral << std::endl;
+    std::cout << "max angle: " << max_angle << std::endl;
+    std::cout << "min angle: " << min_angle << std::endl;
+    std::cout << "max speed: " << max_speed << std::endl;
+    std::cout << std::endl;
     
     // Determine radian to 'tick' conversion
     double pi = 3.14159265359;

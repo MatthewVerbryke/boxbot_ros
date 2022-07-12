@@ -7,12 +7,12 @@ This repository contains the ROS packages needed for the simulation of "Boxbot",
 ## Recommended OS/Programs
 
 This software was developed and tested in:
-- Ubuntu 18.04 LTS
-- ROS Melodic
-- Gazebo 9.0.0
-- MoveIt! for ROS Melodic
+- Ubuntu 20.04 LTS
+- ROS Noetic
+- Gazebo 11.10.2
+- MoveIt! for ROS Noetic
 
-The new C++ driver (currently WIP) requires [LibSerial](https://github.com/crayzeewulf/libserial) to create and use Serial Ports to interface with the ArbotixM boards.
+The new C++ driver (currently WIP) requires [Libserial](https://github.com/crayzeewulf/libserial) to create and use Serial Ports to interface with the ArbotixM boards.
 
 ## Installation 
 

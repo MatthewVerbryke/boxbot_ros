@@ -8,21 +8,21 @@
   <arg name="side" default="left"/>
   <arg name="dof" default="6"/>
   <arg name="use_sim_time" default="true"/>
-  <arg name="state_pub" default="true"/>
+  <arg name="state_pub" default="false"/>
   <arg name="description_name" default="$(find boxbot_description)/robots/boxbot_$(arg dof)dof.urdf"/>
 
   <!-- Load the URDF onto the param server -->
   <param name="robot_description" textfile="$(arg description_name)"/>
 
   <!-- If running on the real robot, launch actual arbotix controllers (TODO: redo this section)-->
-  <node unless="$(arg sim)" name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
+  <node unless="$(arg sim)" name="arbotix" pkg="boxbot_driver" type="arbotix_node" output="screen">
+    <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
     <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
-    <param name="sim" value="$(arg sim)"/>
   </node>
 
-  <node unless="$(arg sim)" name="gripper_controller" pkg="arbotix_controllers" type="gripper_controller" output="screen">
+  <!--node unless="$(arg sim)" name="gripper_controller" pkg="arbotix_controllers" type="gripper_controller" output="screen">
     <rosparam file="$(find widowx_arm_bringup)/config/widowx_arm_gripper.yaml" command="load" />
-  </node>
+  </node-->
 
   <!-- If simulated (i.e. in Gazebo) run the 'fake' arbotix controllers-->
   <node if="$(arg sim)" name="$(arg side)_arm_driver" pkg="boxbot_driver" type="simulation.py" output="screen">

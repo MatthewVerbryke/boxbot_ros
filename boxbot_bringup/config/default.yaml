@@ -1,8 +1,8 @@
 robot: boxbot
-
 port: /dev/ttyUSB0
+baud: 115200
+timeout: 250
 rate: 100
 read_rate: 50
 write_rate: 50
-
 reference_frame: "torso"

@@ -30,7 +30,7 @@ private:
     double read_rate;
     ros::Duration w_delta;
     ros::Duration r_delta;
-    XmlRpc::XmlRpcValue controllers;
+    std::vector<std::string> joints;
     
     // Serial port info
     std::string port_name;
@@ -87,6 +87,20 @@ public:
         arm_state_topic = "/" + robot + "/" + side + "_arm/joint_state";
         joint_command_topic = "/" + robot + "/" + side + "_arm/joint_command";
         
+        std::cout << "" << std::endl;
+        std::cout << "READ PARAMETERS" << std::endl;
+        std::cout << "" << std::endl;
+        std::cout << "robot: " << robot << std::endl;
+        std::cout << "side: " << side << std::endl;
+        std::cout << "" << std::endl;
+        std::cout << "port name: " << port_name << std::endl;
+        std::cout << "baud rate: " << baud_rate << std::endl;
+        std::cout << "timeout: " << time_out << std::endl;
+        std::cout << "loop rate: " << rate << std::endl;
+        std::cout << "read rate: " << read_rate << std::endl;
+        std::cout << "write rate: " << write_rate << std::endl;
+        std::cout << "" << std::endl;
+        
         // Setup initial read and write times
         ros::Duration w_delta(1/write_rate);
         w_next = ros::Time::now() + w_delta;
@@ -101,14 +115,13 @@ public:
         jointCommandSub = nh.subscribe(joint_command_topic, 1, &ArbotiX::jointCommandCB, this);
         
         // Setup joint list
-        // See ROS Answers: "Retrieve list of lists from yaml file / parameter server"
-        nh.getParam("controllers", controllers);
-        if (controllers.getType() != XmlRpc::XmlRpcValue::TypeArray){
-            ROS_ERROR("Parameter 'controllers' is not a list");
+        nh.getParam("joint_names", joints);        
+        if (joints.size() == 0){
+            ROS_ERROR("No joint names read in from parameter server");
         }
         else {
-            for (int i=0; i<controllers.size(); ++i){
-                std::string name = controllers[i];
+            for (int i=0; i<joints.size(); ++i){
+                std::string name = joints[i];
                 Dynamixel new_servo(name, side, nh, robot);
                 read_list.push_back(new_servo.getID());
                 servo_vector.push_back(new_servo);
@@ -137,7 +150,7 @@ public:
                 servo_vector[i].setCurrentFeedback(processed);
             }
             
-            // Publish system join state message
+            // Publish system joint state message
             //TODO
             
             // Update next read time
@@ -175,7 +188,7 @@ int main(int argc, char **argv){
     // Initialize arbotix driver
     ArbotiX ArbotixDriver;
     std::string side = ArbotixDriver.getSide();
-    ROS_INFO_STREAM("ArbotiX board driver initialize for " + side + " arm");
+    ROS_INFO_STREAM("ArbotiX board driver initialized for " + side + " arm");
     
     // Set loop rate
     double loop_rate = ArbotixDriver.getRate();
