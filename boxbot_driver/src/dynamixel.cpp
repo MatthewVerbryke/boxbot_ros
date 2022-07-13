@@ -20,6 +20,9 @@ Dynamixel::Dynamixel(std::string nameIn, std::string sideIn, ros::NodeHandle nh,
     name = nameIn;
     std::string param_name = "joints/" + nameIn;
     
+    // Set the check inputs flag
+    check_inputs = false;
+    
     // Get parameters from server
     nh.getParam(param_name + "/id", id);
     nh.param(param_name + "/ticks", ticks, 1024);
@@ -39,14 +42,17 @@ Dynamixel::Dynamixel(std::string nameIn, std::string sideIn, ros::NodeHandle nh,
     nh.param(param_name + "/min_angle", min_angle, -range/2);
     nh.getParam(param_name + "/max_speed", max_speed);
     
-    std::cout << name << " joint" << std::endl;
-    std::cout << "id: " << id << std::endl;
-    std::cout << "ticks: " << ticks << std::endl;
-    std::cout << "neutral: " << neutral << std::endl;
-    std::cout << "max angle: " << max_angle << std::endl;
-    std::cout << "min angle: " << min_angle << std::endl;
-    std::cout << "max speed: " << max_speed << std::endl;
-    std::cout << std::endl;
+    // Check what info the node has recieved, if desired
+    if (check_inputs == true){
+        std::cout << name << " joint" << std::endl;
+        std::cout << "id: " << id << std::endl;
+        std::cout << "ticks: " << ticks << std::endl;
+        std::cout << "neutral: " << neutral << std::endl;
+        std::cout << "max angle: " << max_angle << std::endl;
+        std::cout << "min angle: " << min_angle << std::endl;
+        std::cout << "max speed: " << max_speed << std::endl;
+        std::cout << std::endl;
+    }
     
     // Determine radian to 'tick' conversion
     double pi = 3.14159265359;
@@ -122,8 +128,9 @@ int Dynamixel::interpolate(float frame){
     }
     
     // Calculate the new position while respecting velocity limits
+    float invert_frame = 1/frame;    
     float cmd = desired - last_cmd;
-    float limit = max_speed / frame;
+    float limit = max_speed / invert_frame;
     if (cmd > limit){
         cmd = limit;
     }
@@ -134,7 +141,7 @@ int Dynamixel::interpolate(float frame){
     // Get the new goal angle/tick value
     int ticksOut = angleToTicks(last_cmd + cmd);
     last_cmd = ticksToAngle(ticksOut);
-    speed = cmd * frame;
+    speed = cmd * invert_frame;
     
     return ticksOut;
 }

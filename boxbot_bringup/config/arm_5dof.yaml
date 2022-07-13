@@ -3,7 +3,7 @@
 base_link: arm_base_link
 eef_link: wrist_2_link
 
-joints: [shoulder_1, shoulder_2, elbow, wrist_1, wrist_2 ,gripper]
+joint_names: [shoulder_1, shoulder_2, elbow, wrist_1, wrist_2 ,gripper]
 
 joints: {
     shoulder_1: {id: 1, ticks: 4096, range: 360.0, max_speed: 100.0},

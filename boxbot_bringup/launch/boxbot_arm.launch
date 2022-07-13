@@ -18,6 +18,7 @@
   <node unless="$(arg sim)" name="arbotix" pkg="boxbot_driver" type="arbotix_node" output="screen">
     <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
     <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
+    <param name="side" value="$(arg side)"/>
   </node>
 
   <!--node unless="$(arg sim)" name="gripper_controller" pkg="arbotix_controllers" type="gripper_controller" output="screen">

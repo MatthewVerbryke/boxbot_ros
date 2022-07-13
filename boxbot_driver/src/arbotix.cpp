@@ -31,6 +31,8 @@ private:
     ros::Duration w_delta;
     ros::Duration r_delta;
     std::vector<std::string> joints;
+    bool check_inputs = false;
+    bool first_cmd = false;
     
     // Serial port info
     std::string port_name;
@@ -43,6 +45,7 @@ private:
     std::string joint_command_topic;
     
     // Variables
+    bool first_read;
     long iter;
     std::vector<Dynamixel> servo_vector;
     int num_servos;
@@ -59,6 +62,11 @@ private:
         for (int i=0; i<num_servos; ++i){
             double desired_pos = msg.position[i];
             servo_vector[i].setControlOutput(desired_pos);
+        }
+        
+        // Set flag if this is the first command message
+        if (first_cmd == false){
+            first_cmd = true;
         }
     }
     
@@ -87,24 +95,30 @@ public:
         arm_state_topic = "/" + robot + "/" + side + "_arm/joint_state";
         joint_command_topic = "/" + robot + "/" + side + "_arm/joint_command";
         
-        std::cout << "" << std::endl;
-        std::cout << "READ PARAMETERS" << std::endl;
-        std::cout << "" << std::endl;
-        std::cout << "robot: " << robot << std::endl;
-        std::cout << "side: " << side << std::endl;
-        std::cout << "" << std::endl;
-        std::cout << "port name: " << port_name << std::endl;
-        std::cout << "baud rate: " << baud_rate << std::endl;
-        std::cout << "timeout: " << time_out << std::endl;
-        std::cout << "loop rate: " << rate << std::endl;
-        std::cout << "read rate: " << read_rate << std::endl;
-        std::cout << "write rate: " << write_rate << std::endl;
-        std::cout << "" << std::endl;
+        // Set the check inputs flag
+        check_inputs = false;
+        
+        // Check what info the node has recieved, if desired
+        if (check_inputs == true){
+            std::cout << "" << std::endl;
+            std::cout << "READ PARAMETERS" << std::endl;
+            std::cout << "" << std::endl;
+            std::cout << "robot: " << robot << std::endl;
+            std::cout << "side: " << side << std::endl;
+            std::cout << "" << std::endl;
+            std::cout << "port name: " << port_name << std::endl;
+            std::cout << "baud rate: " << baud_rate << std::endl;
+            std::cout << "timeout: " << time_out << std::endl;
+            std::cout << "loop rate: " << rate << std::endl;
+            std::cout << "read rate: " << read_rate << std::endl;
+            std::cout << "write rate: " << write_rate << std::endl;
+            std::cout << "" << std::endl;
+        }
         
         // Setup initial read and write times
-        ros::Duration w_delta(1/write_rate);
+        w_delta = ros::Duration(1/write_rate);
         w_next = ros::Time::now() + w_delta;
-        ros::Duration r_delta(1/read_rate);
+        r_delta = ros::Duration(1/read_rate);
         r_next = ros::Time::now() + r_delta;
         
         // Initialize variables
@@ -143,10 +157,10 @@ public:
         if (ros::Time::now() >= r_next){
             std::vector<int> values;
             values = Interface.read(read_list, P_PRESENT_POSITION_L, 2);
-                
+            
             // Process and store output values
             for (int i=0; i<num_servos; ++i){
-                int processed = values[2*i] + values[2*i+1]<<8;
+                int processed = values[2*i] + (values[2*i+1]<<8);
                 servo_vector[i].setCurrentFeedback(processed);
             }
             
@@ -158,23 +172,24 @@ public:
         }
         
         // Write commands to servos
-        if (ros::Time::now() >= w_next){
-            std::vector<int> write_values;
-            
-            // Construct messages for each servo
-            for (int j=0; j<num_servos; ++j){
-                int delta_ws = w_delta.toSec();
-                int v = servo_vector[j].interpolate(1/(delta_ws));
-                write_values.push_back(servo_vector[j].getID());
-                write_values.push_back(v%256);
-                write_values.push_back(v>>8);
+        if (first_cmd == true){
+            if (ros::Time::now() >= w_next){
+                std::vector<int> write_values;
+                
+                // Construct messages for each servo
+                for (int j=0; j<num_servos; ++j){
+                    int v = servo_vector[j].interpolate(w_delta.toSec());
+                    write_values.push_back(servo_vector[j].getID());
+                    write_values.push_back(v%256);
+                    write_values.push_back(v>>8);
+                }
+                
+                // Write the commands to the Arbotix
+                int error = Interface.write(write_values, P_GOAL_POSITION_L, 2);
+                
+                // Update next write time
+                w_next = ros::Time::now() + w_delta;
             }
-            
-            // write the commands to the Arbotix
-            int error = Interface.write(write_values, P_GOAL_POSITION_L, 2);
-            
-            // Update next write time
-            w_next = ros::Time::now() + w_delta;
         }
     }
 };
@@ -188,7 +203,7 @@ int main(int argc, char **argv){
     // Initialize arbotix driver
     ArbotiX ArbotixDriver;
     std::string side = ArbotixDriver.getSide();
-    ROS_INFO_STREAM("ArbotiX board driver initialized for " + side + " arm");
+    ROS_INFO_STREAM("ArbotiX board driver initialized for " + side + " WidowX arm");
     
     // Set loop rate
     double loop_rate = ArbotixDriver.getRate();
@@ -202,5 +217,6 @@ int main(int argc, char **argv){
         ArbotixDriver.update();
         ros::spinOnce();
         r.sleep();
+        return 0;
     }
 }

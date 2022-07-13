@@ -30,6 +30,7 @@ private:
     int neutral;
     float range;
     float rad_per_tick;
+    bool check_inputs;
     
     // Limits
     float max_angle;
