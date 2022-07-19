@@ -77,6 +77,7 @@ std::vector<int> SerialInterface::readPacket(){
         }
         catch(const ReadTimeout&){
             std::cerr << "Read command has timed out" << std::endl;
+            return {}; // <-- TODO: handle this better
         }
         
         // Retreive first header byte

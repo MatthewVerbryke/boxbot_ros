@@ -98,7 +98,7 @@ public:
         // Set the check inputs flag
         check_inputs = false;
         
-        // Check what info the node has recieved, if desired
+        // Check what info the node has recieved, for debugging
         if (check_inputs == true){
             std::cout << "" << std::endl;
             std::cout << "READ PARAMETERS" << std::endl;
@@ -158,14 +158,27 @@ public:
             std::vector<int> values;
             values = Interface.read(read_list, P_PRESENT_POSITION_L, 2);
             
+            // TODO: Check if we got something
+            
             // Process and store output values
             for (int i=0; i<num_servos; ++i){
                 int processed = values[2*i] + (values[2*i+1]<<8);
                 servo_vector[i].setCurrentFeedback(processed);
             }
             
-            // Publish system joint state message
-            //TODO
+            // Build arm joint state message
+            sensor_msgs::JointState arm_state_msg;
+            arm_state_msg.header.stamp = ros::Time::now();
+            for (int j=0; j<servo_vector.size(); ++j){
+                std::string new_name = servo_vector[j].getName();
+                double new_position = servo_vector[j].getPosition();
+                double new_velocity = servo_vector[j].getVelocity();
+                arm_state_msg.name.push_back(new_name);
+                arm_state_msg.position.push_back(new_position);
+            }
+            
+            // Publish state message
+            armStatePub.publish(arm_state_msg);
             
             // Update next read time
             r_next = ros::Time::now() + r_delta;
@@ -212,11 +225,14 @@ int main(int argc, char **argv){
     // Pause briefly so Gazebo/ROS can fully launch
     ros::Duration(2.0).sleep();
     
+    // Start reading servo information
+    ArbotixDriver.update();
+    ROS_INFO_STREAM("Starting servo updates");
+    
     // Run main loop
     while (ros::ok()){
         ArbotixDriver.update();
         ros::spinOnce();
         r.sleep();
-        return 0;
     }
 }

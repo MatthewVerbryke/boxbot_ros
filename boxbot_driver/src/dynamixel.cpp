@@ -12,13 +12,13 @@
 #include "boxbot_driver/dynamixel.h"
 
 // Constructor
-Dynamixel::Dynamixel(std::string nameIn, std::string sideIn, ros::NodeHandle nh, std::string robotIn){
+Dynamixel::Dynamixel(std::string name_in, std::string side_in, ros::NodeHandle nh, std::string robot_in){
     
     // Setup the servo joint name
-    robot = robotIn;
-    side = sideIn;
-    name = nameIn;
-    std::string param_name = "joints/" + nameIn;
+    robot = robot_in;
+    side = side_in;
+    name = name_in;
+    std::string param_name = "joints/" + name_in;
     
     // Set the check inputs flag
     check_inputs = false;
@@ -80,36 +80,36 @@ Dynamixel::Dynamixel(std::string nameIn, std::string sideIn, ros::NodeHandle nh,
 }
 
 // Convert an angle (in radians) into a number of 'ticks'.
-int Dynamixel::angleToTicks(float angleIn){
+int Dynamixel::angleToTicks(float angle_in){
     
-    int ticksInAngle;
+    int ticks_in_angle;
     
     // Handle inverted control mode
     if (invert == true){
-        ticksInAngle = neutral - (angleIn/rad_per_tick);
+        ticks_in_angle = neutral - (angle_in/rad_per_tick);
     }
     else{
-        ticksInAngle = neutral + (angleIn/rad_per_tick);
+        ticks_in_angle = neutral + (angle_in/rad_per_tick);
     }
     
     // Keep the value with in limits
-    if (ticksInAngle >= ticks){
-        ticksInAngle--;
+    if (ticks_in_angle >= ticks){
+        ticks_in_angle--;
     }
-    else {
-        ticksInAngle = 0;
+    else if (ticks_in_angle < 0){
+        ticks_in_angle = 0;
     }
     
-    return ticksInAngle;
+    return ticks_in_angle;
 }
 
 // Convert the number of 'ticks' into an angle (in radians).
-float Dynamixel::ticksToAngle(int ticksIn){
+float Dynamixel::ticksToAngle(int ticks_in){
     
     float angle;
     
     // Convert the value
-    angle = (ticksIn - neutral) * rad_per_tick;
+    angle = (ticks_in - neutral) * rad_per_tick;
     
     // Handle inverted control mode
     if (invert == true){
@@ -139,11 +139,11 @@ int Dynamixel::interpolate(float frame){
     }
     
     // Get the new goal angle/tick value
-    int ticksOut = angleToTicks(last_cmd + cmd);
-    last_cmd = ticksToAngle(ticksOut);
+    int ticks_out = angleToTicks(last_cmd + cmd);
+    last_cmd = ticksToAngle(ticks_out);
     speed = cmd * invert_frame;
     
-    return ticksOut;
+    return ticks_out;
 }
 
 // Update the angle using the current reading from the servo.
@@ -179,7 +179,7 @@ int Dynamixel::setControlOutput(double goal){
     
     // Convert from rads to ticks
     int tick_goal = angleToTicks(goal);
-    desired = tick_goal;
+    desired = goal;
     
     return tick_goal;
 }
