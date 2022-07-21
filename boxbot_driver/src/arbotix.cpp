@@ -203,6 +203,9 @@ public:
                 // Update next write time
                 w_next = ros::Time::now() + w_delta;
             }
+            
+        // Update iteration number
+        iter++;
         }
     }
 };

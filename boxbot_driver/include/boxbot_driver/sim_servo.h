@@ -21,12 +21,11 @@ private:
     
     // Parameters
     std::string name;
-    std::string jointName;
     std::string side;
     std::string robot;
-    std::string commandTopic;
-    std::string jointStateTopic;
-    int index;
+    std::string command_topic;
+    int id;
+    bool check_inputs;
     
     // Variables
     double position;
@@ -46,13 +45,13 @@ public:
     
     // Access functions
     std::string getName(){return name;};
-    int getIndex(){return index;};
+    int getID(){return id;};
     double getPosition(){return position;};
     double getVelocity(){return velocity;};
-    void setPosition(double poseIn){position = poseIn;};
-    void setVelocity(double velIn){velocity = velIn;};
+    void setPosition(double pose_in){position = pose_in;};
+    void setVelocity(double vel_in){velocity = vel_in;};
     void setDesired(double command){desired = command;};
-    void setIndex(int ind){index = ind;};
+    void setID(int id_in){id = id_in;};
 };
 
 #endif
