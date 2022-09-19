@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:macro name="gazebo_widowx" params="six_dof">
+  <xacro:macro name="gazebo_widowx" params="six_dof head">
 
   <!--Gazebo compatable colors-->
 
@@ -126,6 +126,46 @@
       <mu2>1.0</mu2>
       <material>Gazebo/DarkGrey</material>
     </gazebo>
+    
+     <xacro:if value="${head}">
+      <gazebo reference="neck_base_link">
+        <mu1>0.6</mu1>
+        <mu2>0.6</mu2>
+        <material>Gazebo/DarkGrey</material>
+      </gazebo>
+    </xacro:if>
+
+    <xacro:if value="${head}">
+      <gazebo reference="pan_link">
+        <mu1>0.6</mu1>
+        <mu2>0.6</mu2>
+        <material>Gazebo/DarkGrey</material>
+      </gazebo>
+    </xacro:if>
+    
+    <xacro:if value="${head}">
+      <gazebo reference="tilt_link">
+        <mu1>0.6</mu1>
+        <mu2>0.6</mu2>
+        <material>Gazebo/DarkGrey</material>
+      </gazebo>
+    </xacro:if>
+    
+    <xacro:if value="${head}">
+      <gazebo reference="left_camera_link">
+        <mu1>0.6</mu1>
+        <mu2>0.6</mu2>
+        <material>Gazebo/DarkGrey</material>
+      </gazebo>
+    </xacro:if>
+    
+    <xacro:if value="${head}">
+      <gazebo reference="right_camera_link">
+        <mu1>0.6</mu1>
+        <mu2>0.6</mu2>
+        <material>Gazebo/DarkGrey</material>
+      </gazebo>
+    </xacro:if>
   
   </xacro:macro>
 </robot>

@@ -43,12 +43,19 @@
   <xacro:widowx_arm parent="torso" prefix="right_">
     <origin xyz="0 -${M_SCALE*99.613} ${M_SCALE*249.53}" rpy="${M_PI/2.0} 0 0"/>
   </xacro:widowx_arm>
+  
+  <xacro:include filename="$(find boxbot_description)/urdf/head.urdf.xacro"/>
+  <xacro:boxbot_head parent="torso">
+    <origin xyz="0 0 ${M_SCALE*342.0}" rpy="0 0 0"/>
+  </xacro:boxbot_head>
+  
+  <xacro:include filename="$(find boxbot_description)/urdf/sensors.gazebo"/>
 
   <xacro:include filename="$(find boxbot_description)/urdf/servos.urdf.xacro"/>
-  <xacro:ros_control_widowx six_dof="true"/>
+  <xacro:ros_control_widowx six_dof="true" head="true"/>
 
   <xacro:include filename="$(find boxbot_description)/urdf/materials.gazebo"/>
-  <xacro:gazebo_widowx six_dof="true"/>
+  <xacro:gazebo_widowx six_dof="true" head="true"/>
 
 </robot>
 

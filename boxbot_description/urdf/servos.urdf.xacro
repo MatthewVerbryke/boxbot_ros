@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:macro name="ros_control_widowx" params="six_dof">
+  <xacro:macro name="ros_control_widowx" params="six_dof head">
 
     <!--gazebo ros control-->
 
@@ -195,6 +195,34 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
+    
+    <!-- head -->
+    
+    <xacro:if value="${head}">
+      <transmission name="htran1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="pan_joint">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="head_motor1">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+          <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+      </transmission>
+    </xacro:if>
+    
+    <xacro:if value="${head}">
+      <transmission name="htran2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="tilt_joint">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="head_motor2">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+          <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+      </transmission>
+    </xacro:if>
 
   </xacro:macro>
 </robot>
