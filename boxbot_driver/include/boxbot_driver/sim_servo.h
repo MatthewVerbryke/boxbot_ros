@@ -1,6 +1,6 @@
 // Gazebo simulated-servo class header.
 //
-// Copyright 2018 University of Cincinnati
+// Copyright 2022 University of Cincinnati
 // All rights reserved. See LICENSE file at:
 // https://github.com/MatthewVerbryke/rse_dam
 // Additional copyright may be held by others, as reflected in the
@@ -24,16 +24,15 @@ private:
     std::string side;
     std::string robot;
     std::string command_topic;
+    std::string mimic_topic;
     int id;
-    bool check_inputs;
+    bool is_gripper;
     
     // Variables
     double position;
     double desired;
     double velocity;
-        
-    // ROS publishers and subscribers
-    ros::Publisher ControlPub;
+    double opening;
     
 public:
 
@@ -42,6 +41,10 @@ public:
     
     // Joint command function
     void setCommandOutput();
+    
+    // ROS publishers and subscribers
+    ros::Publisher ControlPub;
+    ros::Publisher MimicPub;
     
     // Access functions
     std::string getName(){return name;};

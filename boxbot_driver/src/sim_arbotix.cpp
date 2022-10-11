@@ -102,10 +102,9 @@ public:
         nh.getParam("side", side);
         
         // Setup names
-        std::string robot_ns = "/" + robot;
-        arm_state_topic = robot_ns + "/" + side + "_arm/joint_states";
-        joint_command_topic = robot_ns + "/" + side + "_arm/joint_commands";
-        gazebo_joint_topic = robot_ns + "/joint_states";
+        arm_state_topic = "/" + robot + "/" + side + "_arm/joint_states";
+        joint_command_topic = "/" + robot + "/" + side + "_arm/joint_commands";
+        gazebo_joint_topic = "/" + robot + "/joint_states";
         
         // Setup initial read and write times
         ros::Duration r_delta(1/read_rate);

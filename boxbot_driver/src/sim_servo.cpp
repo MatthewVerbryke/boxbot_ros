@@ -7,6 +7,7 @@
 // commit history.
 
 #include <string>
+#include <math.h>
 
 #include "boxbot_driver/sim_servo.h"
 
@@ -18,29 +19,52 @@ SimServo::SimServo(std::string name_in, std::string side_in, ros::NodeHandle nh,
     name = name_in;
     std::string param_name = "joints/" + name_in;
     
-    // Set the check inputs flag
-    check_inputs = false;
+    // Set gripper flag
+    if (name == "gripper"){
+        is_gripper = true;
+    }
+    else {
+        is_gripper = false;
+    }
     
     // Get parameters from server
     nh.getParam(param_name + "/id", id);
     
-    //
+    // Build topic names
     command_topic = robot + "/" + side + "_" + name_in + "_controller/command";
+    mimic_topic = robot + "/" + side + "_" + name_in + "_mimic_controller/command";
     
     // Initialize variables
-    id = -1;
     position = 0.0;
     desired = 0.0;
     velocity = 0.0;
     
     // Setup publishers and subscribers
     ControlPub = nh.advertise<std_msgs::Float64>(command_topic, 1);
+    if (is_gripper){
+        MimicPub = nh.advertise<std_msgs::Float64>(mimic_topic, 1);
+    }
 }
 
 void SimServo::setCommandOutput(){
     
-    // Publish commands
+    // Calculate desired gripper opening (if needed)
+    if (is_gripper){
+        opening = 2*sin(desired)*0.02 + 0.01;
+    }
+
+    // Build command message
     std_msgs::Float64 commandMsg;
-    commandMsg.data = desired;
+    if (is_gripper){
+        commandMsg.data = opening;
+    }
+    else {
+        commandMsg.data = desired;
+    }
+    
+    // Publish commands
     ControlPub.publish(commandMsg);
+    if (is_gripper){
+        MimicPub.publish(commandMsg);
+    }
 }

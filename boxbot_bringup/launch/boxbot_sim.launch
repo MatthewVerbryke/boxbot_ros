@@ -45,7 +45,7 @@
     <arg name="six_dof" value="$(arg six_dof)"/>
   </include>
   
-  <node name="left_state_publisher" pkg="boxbot_driver" type="state.py" output="screen">
+  <!--node name="left_state_publisher" pkg="boxbot_driver" type="state.py" output="screen">
     <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
     <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
     <param name="robot" value="boxbot" type="str"/>
@@ -57,11 +57,11 @@
     <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
     <param name="robot" value="boxbot" type="str"/>
     <param name="side" value="right" type="str"/>
-  </node>
+  </node-->
 
   <!-- Launch a simulation clock publisher -->
-  <node name="sim_clock_publisher" pkg="boxbot_gazebo" type="clock.py" output="screen">
+  <!--node name="sim_clock_publisher" pkg="boxbot_gazebo" type="clock.py" output="screen">
     <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
-  </node>  
+  </node-->  
 
 </launch>

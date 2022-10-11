@@ -25,6 +25,7 @@
     <!-- Strip off the node name from published topics -->
     <remap from="$(arg side)_arm_driver/boxbot/$(arg side)_elbow_controller/command" to="/boxbot/$(arg side)_elbow_controller/command"/>
     <remap from="$(arg side)_arm_driver/boxbot/$(arg side)_gripper_controller/command" to="/boxbot/$(arg side)_gripper_controller/command"/>
+    <remap from="$(arg side)_arm_driver/boxbot/$(arg side)_gripper_mimic_controller/command" to="/boxbot/$(arg side)_gripper_mimic_controller/command"/>
     <remap from="$(arg side)_arm_driver/boxbot/$(arg side)_shoulder_1_controller/command" to="/boxbot/$(arg side)_shoulder_1_controller/command"/>
     <remap from="$(arg side)_arm_driver/boxbot/$(arg side)_shoulder_2_controller/command" to="/boxbot/$(arg side)_shoulder_2_controller/command"/>
     <remap from="$(arg side)_arm_driver/boxbot/$(arg side)_wrist_1_controller/command" to="/boxbot/$(arg side)_wrist_1_controller/command"/>
