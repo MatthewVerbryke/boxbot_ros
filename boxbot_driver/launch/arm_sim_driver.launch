@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<launch>
+  
+  <!-- Command-line arguments -->
+  <arg name="use_sim_time" default="true"/>
+  <arg name="headless" default="true"/>
+  <arg name="side" default="left"/>
+  <arg name="six_dof" default="true"/>
+  <arg name="state_pub" default="false"/>
+  
+  <!-- Load the correct URDF onto the param server -->
+  <param if="$(arg six_dof)" name="robot_description" textfile="$(find boxbot_description)/robots/boxbot_6dof.urdf"/>
+  <param unless="$(arg six_dof)" name="robot_description" textfile="$(find boxbot_description)/robots/boxbot_5dof.urdf"/>
+  
+  <!-- Launch the simulation arbotix drivers -->
+  <node name="$(arg side)_arm_driver" pkg="boxbot_driver" type="sim_arbotix_node" output="screen">
+    <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
+    <rosparam if="$(arg six_dof)" file="$(find boxbot_bringup)/config/arm_6dof.yaml"/>
+    <rosparam unless="$(arg six_dof)" file="$(find boxbot_bringup)/config/arm_5dof.yaml"/>
+    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
+    <param name="side" value="$(arg side)"/>
+    <param name="robot" value="boxbot"/>
+    
+    <!-- Strip off the node name from published topics -->
+    <remap from="$(arg side)_arm_driver/boxbot/$(arg side)_elbow_controller/command" to="/boxbot/$(arg side)_elbow_controller/command"/>
+    <remap from="$(arg side)_arm_driver/boxbot/$(arg side)_gripper_controller/command" to="/boxbot/$(arg side)_gripper_controller/command"/>
+    <remap from="$(arg side)_arm_driver/boxbot/$(arg side)_shoulder_1_controller/command" to="/boxbot/$(arg side)_shoulder_1_controller/command"/>
+    <remap from="$(arg side)_arm_driver/boxbot/$(arg side)_shoulder_2_controller/command" to="/boxbot/$(arg side)_shoulder_2_controller/command"/>
+    <remap from="$(arg side)_arm_driver/boxbot/$(arg side)_wrist_1_controller/command" to="/boxbot/$(arg side)_wrist_1_controller/command"/>
+    <remap from="$(arg side)_arm_driver/boxbot/$(arg side)_wrist_2_controller/command" to="/boxbot/$(arg side)_wrist_2_controller/command"/>
+    <remap if="$(arg six_dof)" from="$(arg side)_arm_driver/boxbot/$(arg side)_wrist_3_controller/command" to="/boxbot/$(arg side)_wrist_3_controller/command"/>
+  </node>
+  
+  <!-- Launch a robot state publisher for TF data -->
+  <node if="$(arg state_pub)" name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+    <remap from="joint_states" to="boxbot/$(arg side)_arm/joint_states"/>
+  </node>
+  
+</launch>

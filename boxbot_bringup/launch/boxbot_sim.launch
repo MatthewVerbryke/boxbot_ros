@@ -3,46 +3,48 @@
 <launch>
 
   <!-- Command-line arguments -->
-  <arg name="dof" default="6"/>
+  <arg name="six_dof" default="true"/>
   <arg name="world_name" default="empty"/>
   <arg name="gazebo_only" default="false"/>
-  <arg name="left_driver" default="false"/>
+  <arg name="left_driver" default="true"/>
   <arg name="right_driver" default="false"/>
-
-  <!-- Launch the appropriate Gazebo model -->
-  <include file="$(find boxbot_gazebo)/launch/boxbot_$(arg dof)dof_gazebo.launch">
-    <arg name="world" value="$(arg world_name)"/>
-  </include>
-
-  <!-- Launch low-level arm controllers -->
-  <include file="$(find boxbot_control)/launch/boxbot_$(arg dof)dof_control.launch"/>
+  
+  <!-- Launch the 6-DOF Boxbot model in Gazebo -->
+  <group if="$(arg six_dof)">
+    <include  file="$(find boxbot_gazebo)/launch/boxbot_6dof_gazebo.launch">
+      <arg name="world" value="$(arg world_name)"/>
+    </include>
+    <include file="$(find boxbot_control)/launch/boxbot_6dof_control.launch"/>
+  </group>
+  
+  <!-- Launch the 5-DOF Boxbot model in Gazebo -->
+  <group unless="$(arg six_dof)">
+    <include file="$(find boxbot_gazebo)/launch/boxbot_5dof_gazebo.launch">
+      <arg name="world" value="$(arg world_name)"/>
+    </include>
+    <include file="$(find boxbot_control)/launch/boxbot_5dof_control.launch"/>
+  </group>
   
   <!-- Launch joint mimic nodes-->
-  <node name="left_mimic" pkg="boxbot_gazebo" type="mimic_node" output="screen" ns="boxbot">
+  <!--node name="left_mimic" pkg="boxbot_gazebo" type="mimic_node" output="screen" ns="boxbot">
     <param name="side" value="left" type="str"/>
   </node>
 
   <node name="right_mimic" pkg="boxbot_gazebo" type="mimic_node" output="screen" ns="boxbot">
     <param name="side" value="right" type="str"/>
-  </node>
+  </node-->
 
-  <!-- Launch simulated arbotix interfaces -->
-  <node if="$(arg left_driver)" name="left_arm_driver" pkg="boxbot_driver" type="simulation.py" output="screen">
-    <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
-    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
-    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
-    <param name="side" value="left"/>
-    <param name="robot" value="boxbot"/>
-  </node>
-
-  <node if="$(arg right_driver)" name="right_arm_driver" pkg="boxbot_driver" type="simulation.py" output="screen">
-    <rosparam file="$(find boxbot_bringup)/config/default.yaml"/>
-    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
-    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
-    <param name="side" value="right"/>
-    <param name="robot" value="boxbot"/>
-  </node>
-
+  <!-- Launch simulated arbotix interfaces for each arm-->
+  <include if="$(arg left_driver)" file="$(find boxbot_driver)/launch/arm_sim_driver.launch">
+    <arg name="side" value="left"/>
+    <arg name="six_dof" value="$(arg six_dof)"/>
+  </include>
+  
+  <include if="$(arg right_driver)" file="$(find boxbot_driver)/launch/arm_sim_driver.launch">
+    <arg name="side" value="right"/>
+    <arg name="six_dof" value="$(arg six_dof)"/>
+  </include>
+  
   <node name="left_state_publisher" pkg="boxbot_driver" type="state.py" output="screen">
     <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
     <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
