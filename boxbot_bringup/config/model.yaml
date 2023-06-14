@@ -10,6 +10,7 @@ robot_model: {
             joint_names: [left_shoulder_1, left_shoulder_2, left_elbow, left_wrist_1, left_wrist_2, left_wrist_3],
             eef: {
                 name: left_arm_gripper,
+                type: single_servo_parallel_gripper,
                 base_link: left_gripper_rail_link,
                 joint_names: [left_gripper],
                 limits: [0.0, 0.09],
@@ -27,6 +28,7 @@ robot_model: {
             joint_names: [right_shoulder_1, right_shoulder_2, right_elbow, right_wrist_1, right_wrist_2, right_wrist_3],
             eef: {
                 name: right_arm_gripper,
+                type: single_servo_parallel_gripper,
                 base_link: right_gripper_rail_link,
                 joint_names: [right_gripper],
                 limits: [0.0, 0.09],
