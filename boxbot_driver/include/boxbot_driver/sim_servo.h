@@ -1,6 +1,6 @@
 // Gazebo simulated-servo class header.
 //
-// Copyright 2022 University of Cincinnati
+// Copyright 2022-2023 University of Cincinnati
 // All rights reserved. See LICENSE file at:
 // https://github.com/MatthewVerbryke/rse_dam
 // Additional copyright may be held by others, as reflected in the
@@ -21,6 +21,7 @@ private:
     
     // Parameters
     std::string name;
+    std::string full_name;
     std::string side;
     std::string robot;
     std::string command_topic;
@@ -48,6 +49,7 @@ public:
     
     // Access functions
     std::string getName(){return name;};
+    std::string getFullName(){return full_name;};
     int getID(){return id;};
     double getPosition(){return position;};
     double getVelocity(){return velocity;};

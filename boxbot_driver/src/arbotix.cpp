@@ -1,6 +1,6 @@
 // Simulated ArbotiX driver class.
 //
-// Copyright 2022 University of Cincinnati
+// Copyright 2022-2023 University of Cincinnati
 // All rights reserved. See LICENSE file at:
 // https://github.com/MatthewVerbryke/rse_dam
 // Additional copyright may be held by others, as reflected in the
@@ -170,7 +170,7 @@ public:
             sensor_msgs::JointState arm_state_msg;
             arm_state_msg.header.stamp = ros::Time::now();
             for (int j=0; j<servo_vector.size(); ++j){
-                std::string new_name = servo_vector[j].getName();
+                std::string new_name = servo_vector[j].getFullName();
                 double new_position = servo_vector[j].getPosition();
                 double new_velocity = servo_vector[j].getVelocity();
                 arm_state_msg.name.push_back(new_name);

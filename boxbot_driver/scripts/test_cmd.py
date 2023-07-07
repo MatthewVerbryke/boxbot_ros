@@ -3,7 +3,7 @@
 """
   A very simple node for testing the boxbot driver.
   
-  Copyright (c) 2020 University of Cincinnati
+  Copyright (c) 2020-2023 University of Cincinnati
   All rights reserved. See LICENSE file at:
   https://github.com/MatthewVerbryke/rse_dam
   Additional copyright may be held by others, as reflected in the commit
@@ -23,7 +23,7 @@ def test_command():
     # Get needed information
     topic = "/boxbot/left_arm/joint_commands"
     names = ["shoulder_1", "shoulder_2", "elbow", "wrist_1", "wrist_2", "wrist_3", "gripper"]
-    goal_pos = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    goal_pos = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] #ENTER COMMANDS HERE
     
     # Setup publisher
     pub = rospy.Publisher(topic, JointState, queue_size = 1)
