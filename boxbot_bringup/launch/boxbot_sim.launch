@@ -7,7 +7,7 @@
   <arg name="world_name" default="empty"/>
   <arg name="gazebo_only" default="false"/>
   <arg name="left_driver" default="true"/>
-  <arg name="right_driver" default="false"/>
+  <arg name="right_driver" default="true"/>
   
   <!-- Launch the 6-DOF Boxbot model in Gazebo -->
   <group if="$(arg six_dof)">
@@ -24,15 +24,6 @@
     </include>
     <include file="$(find boxbot_control)/launch/boxbot_5dof_control.launch"/>
   </group>
-  
-  <!-- Launch joint mimic nodes-->
-  <!--node name="left_mimic" pkg="boxbot_gazebo" type="mimic_node" output="screen" ns="boxbot">
-    <param name="side" value="left" type="str"/>
-  </node>
-
-  <node name="right_mimic" pkg="boxbot_gazebo" type="mimic_node" output="screen" ns="boxbot">
-    <param name="side" value="right" type="str"/>
-  </node-->
 
   <!-- Launch simulated arbotix interfaces for each arm-->
   <include if="$(arg left_driver)" file="$(find boxbot_driver)/launch/arm_sim_driver.launch">
@@ -44,24 +35,12 @@
     <arg name="side" value="right"/>
     <arg name="six_dof" value="$(arg six_dof)"/>
   </include>
+
+  <!-- Handle publishing to non-local nodes (Temporarly non-functional) -->
+  <!--include file="$(find boxbot_driver)/launch/driver_rosbridge.launch">
+    <arg unless="$(arg six_dof)" name="dof" value="5"/>
+    <arg name="left_driver" value="$(arg left_driver)"
+    <arg name="right_driver" value="$(arg right_driver)"
+  </include-->
   
-  <!--node name="left_state_publisher" pkg="boxbot_driver" type="state.py" output="screen">
-    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
-    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
-    <param name="robot" value="boxbot" type="str"/>
-    <param name="side" value="left" type="str"/>
-  </node>
-
-  <node name="right_state_publisher" pkg="boxbot_driver" type="state.py" output="screen">
-    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
-    <rosparam file="$(find boxbot_bringup)/config/arm_$(arg dof)dof.yaml"/>
-    <param name="robot" value="boxbot" type="str"/>
-    <param name="side" value="right" type="str"/>
-  </node-->
-
-  <!-- Launch a simulation clock publisher -->
-  <!--node name="sim_clock_publisher" pkg="boxbot_gazebo" type="clock.py" output="screen">
-    <rosparam file="$(find boxbot_bringup)/config/connections.yaml"/>
-  </node-->  
-
 </launch>
