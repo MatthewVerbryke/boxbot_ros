@@ -67,7 +67,7 @@ private:
 public:
     
     // Constructor
-    Dynamixel(std::string name_in, std::string side_in, ros::NodeHandle nh, std::string robot_in);
+    Dynamixel(std::string name_in, std::string side_in, ros::NodeHandle n, ros::NodeHandle nh, std::string robot_in);
     
     // Public functions
     int interpolate(float frame);

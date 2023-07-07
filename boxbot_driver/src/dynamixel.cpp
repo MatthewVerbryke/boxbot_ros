@@ -12,7 +12,7 @@
 #include "boxbot_driver/dynamixel.h"
 
 // Constructor
-Dynamixel::Dynamixel(std::string name_in, std::string side_in, ros::NodeHandle nh, std::string robot_in){
+Dynamixel::Dynamixel(std::string name_in, std::string side_in, ros::NodeHandle n, ros::NodeHandle nh, std::string robot_in){
     
     // Setup the servo joint name
     robot = robot_in;

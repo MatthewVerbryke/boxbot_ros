@@ -11,7 +11,7 @@
 
 #include "boxbot_driver/sim_servo.h"
 
-SimServo::SimServo(std::string name_in, std::string side_in, ros::NodeHandle nh, std::string robot_in){
+SimServo::SimServo(std::string name_in, std::string side_in, ros::NodeHandle n, ros::NodeHandle nh, std::string robot_in){
     
     // Setup names
     side = side_in;
@@ -41,9 +41,9 @@ SimServo::SimServo(std::string name_in, std::string side_in, ros::NodeHandle nh,
     velocity = 0.0;
     
     // Setup publishers and subscribers
-    ControlPub = nh.advertise<std_msgs::Float64>(command_topic, 1);
+    ControlPub = n.advertise<std_msgs::Float64>(command_topic, 1);
     if (is_gripper){
-        MimicPub = nh.advertise<std_msgs::Float64>(mimic_topic, 1);
+        MimicPub = n.advertise<std_msgs::Float64>(mimic_topic, 1);
     }
 }
 

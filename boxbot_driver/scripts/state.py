@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
   Publishes the joint state message for one arm from the simulation 

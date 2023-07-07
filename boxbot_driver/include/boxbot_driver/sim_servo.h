@@ -38,7 +38,7 @@ private:
 public:
 
     // Constructor
-    SimServo(std::string name, std::string side, ros::NodeHandle nh, std::string robot);
+    SimServo(std::string name, std::string side, ros::NodeHandle n, ros::NodeHandle nh, std::string robot);
     
     // Joint command function
     void setCommandOutput();

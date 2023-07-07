@@ -89,8 +89,10 @@ private:
     
 public:
     SimArbotiX(){
+        
         // Set node handle
-        ros::NodeHandle nh("~");
+        ros::NodeHandle nh("~"); // Private node handle
+        ros::NodeHandle n(""); // Public node handle; outside this nodes namespace
         
         // Get ROS parameters
         nh.param("rate", rate, 100.0);
@@ -114,9 +116,9 @@ public:
         iter = 0;
         
         // Setup publishers and subscribers
-        armStatePub  = nh.advertise<sensor_msgs::JointState>(arm_state_topic, 1);
-        armCommandSub = nh.subscribe(joint_command_topic, 1, &SimArbotiX::jointCommandCB, this);
-        gazeboJointSub = nh.subscribe(gazebo_joint_topic, 1, &SimArbotiX::jointStateCB, this);
+        armStatePub  = n.advertise<sensor_msgs::JointState>(arm_state_topic, 1);
+        armCommandSub = n.subscribe(joint_command_topic, 1, &SimArbotiX::jointCommandCB, this);
+        gazeboJointSub = n.subscribe(gazebo_joint_topic, 1, &SimArbotiX::jointStateCB, this);
         
         // Setup joint list
         nh.getParam("joint_names", joints);        
@@ -126,7 +128,7 @@ public:
         else {
             for (int i=0; i<joints.size(); ++i){
                 std::string name = joints[i];
-                SimServo new_servo(name, side, nh, robot);
+                SimServo new_servo(name, side, n, nh, robot);
                 servo_vector.push_back(new_servo);
             }
         }
