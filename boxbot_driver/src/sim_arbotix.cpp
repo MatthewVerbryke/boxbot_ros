@@ -48,15 +48,24 @@ private:
     ros::Subscriber gazeboJointSub;
     
     // Command callback function
-    void jointCommandCB(const sensor_msgs::JointState &msg){
-        for (int i=0; i<num_servos; ++i){
-            double desired_pos = msg.position[i];
-            servo_vector[i].setDesired(desired_pos);
+    void jointCommandCB(const sensor_msgs::JointState& msg){
+        
+        // Catch empty message command message; TODO: expand checks?
+        if (msg.position.empty()){
+            ROS_WARN("No values detected in joint command");
+        }
+        
+        // Extract commands from message
+        else {
+            for (int i=0; i<num_servos; ++i){
+                double desired_pos = msg.position[i];
+                servo_vector[i].setDesired(desired_pos);
+            }
         }
     }
     
     // Joint state callback function
-    void jointStateCB(const sensor_msgs::JointState &msg){
+    void jointStateCB(const sensor_msgs::JointState& msg){
         int msg_size = msg.name.size();
         for (int i=0; i<num_servos; ++i){
             
@@ -158,7 +167,7 @@ public:
                 arm_state_msg.position.push_back(new_position);
                 arm_state_msg.velocity.push_back(new_velocity);
             }
-    
+            
             // Publish message
             armStatePub.publish(arm_state_msg);
             

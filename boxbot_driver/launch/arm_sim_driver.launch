@@ -4,7 +4,6 @@
   
   <!-- Command-line arguments -->
   <arg name="use_sim_time" default="true"/>
-  <arg name="headless" default="true"/>
   <arg name="side" default="left"/>
   <arg name="six_dof" default="true"/>
   <arg name="state_pub" default="false"/>

@@ -59,9 +59,17 @@ private:
     
     // Command callback function
     void jointCommandCB(const sensor_msgs::JointState &msg){
-        for (int i=0; i<num_servos; ++i){
-            double desired_pos = msg.position[i];
-            servo_vector[i].setControlOutput(desired_pos);
+        
+        // Catch empty message command message; TODO: expand checks?
+        if (msg.position.empty()){
+            ROS_WARN("No values detected in joint command");
+        }
+        
+        // Extract commands from message
+        else {
+            for (int i=0; i<num_servos; ++i){
+                double desired_pos = msg.position[i];
+                servo_vector[i].setControlOutput(desired_pos);
         }
         
         // Set flag if this is the first command message
