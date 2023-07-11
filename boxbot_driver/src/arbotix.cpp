@@ -18,8 +18,8 @@
 #include "boxbot_driver/dynamixel.h"
 #include "boxbot_driver/interface.h"
 
-class ArbotiX{
-
+class ArbotiX
+{
 private:
     
     // Parameters
@@ -70,6 +70,7 @@ private:
             for (int i=0; i<num_servos; ++i){
                 double desired_pos = msg.position[i];
                 servo_vector[i].setControlOutput(desired_pos);
+            }
         }
         
         // Set flag if this is the first command message
