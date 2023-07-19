@@ -37,7 +37,7 @@
   </include>
 
   <!-- Handle publishing to non-local nodes (Temporarly non-functional) -->
-  <!--include file="$(find boxbot_driver)/launch/driver_rosbridge.launch">
+  <!--include file="$(find boxbot_driver)/launch/???.launch">
     <arg unless="$(arg six_dof)" name="dof" value="5"/>
     <arg name="left_driver" value="$(arg left_driver)"
     <arg name="right_driver" value="$(arg right_driver)"

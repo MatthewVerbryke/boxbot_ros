@@ -21,21 +21,20 @@ SimServo::SimServo(std::string name_in, std::string side_in, ros::NodeHandle n, 
     std::string param_name = "joints/" + name_in;
     
     // Set gripper flag
-    if (name == "gripper"){
+    std::string gripper_str = "gripper";
+    if (name.find(gripper_str) != std::string::npos){
         is_gripper = true;
     }
     else {
         is_gripper = false;
     }
     
-    // Get parameters from server
-    nh.getParam(param_name + "/id", id);
-    
     // Build topic names
     command_topic = robot + "/" + side + "_" + name_in + "_controller/command";
     mimic_topic = robot + "/" + side + "_" + name_in + "_mimic_controller/command";
     
     // Initialize variables
+    id = -1;
     position = 0.0;
     desired = 0.0;
     velocity = 0.0;
@@ -49,15 +48,11 @@ SimServo::SimServo(std::string name_in, std::string side_in, ros::NodeHandle n, 
 
 void SimServo::setCommandOutput(){
     
-    // Calculate desired gripper opening (if needed)
-    if (is_gripper){
-        opening = 2*sin(desired)*0.02 + 0.01;
-    }
-
     // Build command message
     std_msgs::Float64 commandMsg;
     if (is_gripper){
-        commandMsg.data = opening;
+        // Calculate desired gripper opening (if needed)
+        commandMsg.data = -0.121704*desired + 0.002; // overly simple linear model
     }
     else {
         commandMsg.data = desired;

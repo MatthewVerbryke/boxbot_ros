@@ -71,7 +71,7 @@ private:
             
             // Find the index of the joint in the joint state message if we don't know already
             int joint_index = servo_vector[i].getID();
-            std::string name = servo_vector[i].getName();
+            std::string name = servo_vector[i].getFullName();
             if (joint_index == -1){
                 int j=0;
                 while (j<msg_size){
@@ -79,7 +79,7 @@ private:
                     if (joint_name == name){
                         servo_vector[i].setID(j);
                         ROS_INFO_STREAM(name + " index: " + std::to_string(j));
-                        i = msg_size;
+                        j = msg_size;
                     }
                     j++;
                 }
@@ -130,7 +130,7 @@ public:
         gazeboJointSub = n.subscribe(gazebo_joint_topic, 1, &SimArbotiX::jointStateCB, this);
         
         // Setup joint list
-        nh.getParam("joint_names", joints);        
+        nh.getParam("joint_names", joints);
         if (joints.size() == 0){
             ROS_ERROR("No joint names read in from parameter server");
         }

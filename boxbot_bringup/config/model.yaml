@@ -7,17 +7,17 @@ model_config: {
             name: left_arm,
             base_link: left_arm_base_link,
             tool_link: left_gripper_rail_link,
-            joint_names: [left_shoulder_1, left_shoulder_2, left_elbow, left_wrist_1, left_wrist_2, left_wrist_3],
+            joint_names: [left_shoulder_1_joint, left_shoulder_2_joint, left_elbow_joint, left_wrist_1_joint, left_wrist_2_joint, left_wrist_3_joint],
             eef: {
                 name: left_arm_gripper,
                 type: single_servo_parallel_gripper,
                 base_link: left_gripper_rail_link,
-                joint_names: [left_gripper],
+                joint_names: [left_gripper_joint],
                 limits: [0.0, 0.09],
                 equation: {
                     type: linear,
-                    a: -2.77778,
-                    b: 0.0,
+                    a: -8.216656807,
+                    b: 0.016433314,
                 }
             }
         },
@@ -25,17 +25,17 @@ model_config: {
             name: right_arm,
             base_link: right_arm_base_link,
             tool_link: right_gripper_rail_link,
-            joint_names: [right_shoulder_1, right_shoulder_2, right_elbow, right_wrist_1, right_wrist_2, right_wrist_3],
+            joint_names: [right_shoulder_1_joint, right_shoulder_2_joint, right_elbow_joint, right_wrist_1_joint, right_wrist_2_joint, right_wrist_3_joint],
             eef: {
                 name: right_arm_gripper,
                 type: single_servo_parallel_gripper,
                 base_link: right_gripper_rail_link,
-                joint_names: [right_gripper],
+                joint_names: [right_gripper_joint],
                 limits: [0.0, 0.09],
                 equation: {
                     type: linear,
-                    a: -2.77778,
-                    b: 0.0,
+                    a: -8.216656807,
+                    b: 0.016433314,
                 }
             }
         },
