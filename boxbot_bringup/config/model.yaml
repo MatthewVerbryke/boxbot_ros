@@ -13,11 +13,12 @@ model_config: {
                 type: single_servo_parallel_gripper,
                 base_link: left_gripper_rail_link,
                 joint_names: [left_gripper_joint],
-                limits: [0.0, 0.09],
+                limits: [0.002, 0.031],
+                speed: 1.57,
                 equation: {
                     type: linear,
-                    a: -8.216656807,
-                    b: 0.016433314,
+                    a: -87.964255794,
+                    b: 0.174532254,
                 }
             }
         },
@@ -31,19 +32,25 @@ model_config: {
                 type: single_servo_parallel_gripper,
                 base_link: right_gripper_rail_link,
                 joint_names: [right_gripper_joint],
-                limits: [0.0, 0.09],
+                limits: [0.002, 0.031],
+                speed: 1.57,
                 equation: {
                     type: linear,
-                    a: -8.216656807,
-                    b: 0.016433314,
+                    a: -87.964255794,
+                    b: 0.174532254,
                 }
             }
         },
-        #head: {
-            #name: head,
-            #base_link: torso,
-            #tool_link: tilt_link,
-            #joint_names: [pan, tilt],
-        #}
+        head: {
+            name: head,
+            base_link: neck_base_link,
+            tool_link: tilt_link,
+            joint_names: [pan, tilt],
+            eef: {
+                name: fake_head_gripper,
+                type: none,
+                base_link: tilt_link,
+            }
+        }
     }
 }
