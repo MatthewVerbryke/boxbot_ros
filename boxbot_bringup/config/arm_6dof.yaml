@@ -15,13 +15,6 @@ joints: {
     gripper_joint: {id: 7, max_angle: 0, min_angle: -145, max_speed: 90, type: prismatic, radius: 0.0078, connector: 0.024, offset: 0.016},
 }
 
-DH: [[0.0, 0.0, 0.0, 0.0],
-     [pi/2, 0.0, 0.0, -1.24282],
-     [0.0, 0.15, 0.0, -0.32798],
-     [pi/2, 0.0, 0.1408, 0.0],
-     [pi/2, 0.0, 0.0, 0.0],
-     [-pi/2, 0.0, 0.0715, 0.0],]
-
 planning_group: "_arm"
 gripper_group: "_gripper"
 
