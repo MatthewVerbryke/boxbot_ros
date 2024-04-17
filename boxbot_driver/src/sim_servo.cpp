@@ -48,19 +48,34 @@ SimServo::SimServo(std::string name_in, std::string side_in, ros::NodeHandle n, 
 
 void SimServo::setCommandOutput(){
     
-    // Build command message
-    std_msgs::Float64 commandMsg;
+    // Calculate desired gripper opening, if needed
+    double desired_act;
     if (is_gripper){
-        // Calculate desired gripper opening (if needed)
-        commandMsg.data = -0.121704*desired + 0.002; // overly simple linear model
+
+        desired_act = -0.0114592*desired + 0.002; // overly simple linear model
     }
     else {
-        commandMsg.data = desired;
+        desired_act = desired;
     }
+    
+    // Build command message
+    std_msgs::Float64 commandMsg;
+    commandMsg.data = desired_act;
     
     // Publish commands
     ControlPub.publish(commandMsg);
     if (is_gripper){
         MimicPub.publish(commandMsg);
+    }
+}
+
+void SimServo::setPosition(double pose_in){
+    
+    // Convert opening to notional angle for simulation
+    if (is_gripper){
+        position = -87.964255794*pose_in + 0.174532254; // overly simple linear model
+    }
+    else {
+        position = pose_in;
     }
 }

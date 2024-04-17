@@ -63,15 +63,15 @@ boxbot:
     joint: right_gripper_prismatic_joint_2
 
   gazebo_ros_control/pid_gains:
-    left_shoulder_1_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0}
-    left_shoulder_2_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0}
+    left_shoulder_1_joint: {p: 100.0, i: 5.0, d: 5.0, i_clamp_min: -1.0, i_clamp_max: 1.0}
+    left_shoulder_2_joint: {p: 100.0, i: 5.0, d: 5.0, i_clamp_min: -1.0, i_clamp_max: 1.0}
     left_elbow_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0}
     left_wrist_1_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0}
     left_wrist_2_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0}
     left_gripper_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0}
     left_gripper_prismatic_joint_2: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0}
-    right_shoulder_1_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0}
-    right_shoulder_2_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0}
+    right_shoulder_1_joint: {p: 100.0, i: 5.0, d: 5.0,, i_clamp_min: -1.0, i_clamp_max: 1.0}
+    right_shoulder_2_joint: {p: 100.0, i: 5.0, d: 5.0,, i_clamp_min: -1.0, i_clamp_max: 1.0}
     right_elbow_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0}
     right_wrist_1_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0}
     right_wrist_2_joint: {p: 50.0, i: 0.1, d: 1.0, i_clamp_min: -1.0, i_clamp_max: 1.0}

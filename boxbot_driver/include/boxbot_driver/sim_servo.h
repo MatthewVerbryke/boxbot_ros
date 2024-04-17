@@ -42,6 +42,7 @@ public:
     
     // Joint command function
     void setCommandOutput();
+    void setPosition(double pose_in);
     
     // ROS publishers and subscribers
     ros::Publisher ControlPub;
@@ -53,7 +54,6 @@ public:
     int getID(){return id;};
     double getPosition(){return position;};
     double getVelocity(){return velocity;};
-    void setPosition(double pose_in){position = pose_in;};
     void setVelocity(double vel_in){velocity = vel_in;};
     void setDesired(double command){desired = command;};
     void setID(int id_in){id = id_in;};
