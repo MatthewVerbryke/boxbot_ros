@@ -52,7 +52,7 @@ void SimServo::setCommandOutput(){
     double desired_act;
     if (is_gripper){
 
-        desired_act = -0.0114592*desired + 0.002; // overly simple linear model
+        desired_act = 0.00707054*desired + 0.0198936; // overly simple linear model
     }
     else {
         desired_act = desired;
@@ -73,7 +73,7 @@ void SimServo::setPosition(double pose_in){
     
     // Convert opening to notional angle for simulation
     if (is_gripper){
-        position = -87.964255794*pose_in + 0.174532254; // overly simple linear model
+        position = 141.432*pose_in - 2.81359; // overly simple linear model
     }
     else {
         position = pose_in;

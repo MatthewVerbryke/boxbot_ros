@@ -15,7 +15,7 @@
 			left_wrist_2_joint_controller
 			left_wrist_3_joint_controller
 			left_gripper_joint_controller
-			left_gripper_mimic_joint_controller
+			left_gripper_joint_mimic_controller
 			right_shoulder_1_joint_controller
 			right_shoulder_2_joint_controller
 			right_elbow_joint_controller
@@ -23,7 +23,7 @@
 			right_wrist_2_joint_controller
 			right_wrist_3_joint_controller
 			right_gripper_joint_controller
-			right_gripper_mimic_joint_controller
+			right_gripper_joint_mimic_controller
 			neck_pan_joint_controller
 			neck_tilt_joint_controller
   "/>

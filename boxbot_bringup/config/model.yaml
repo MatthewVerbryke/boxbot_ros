@@ -24,8 +24,8 @@ model_config: {
                 speed: 1.57,
                 equation: {
                     type: linear,
-                    a: -87.964255794,
-                    b: 0.174532254,
+                    a: 141.432,
+                    b: -2.81359,
                 }
             }
         },
@@ -50,8 +50,8 @@ model_config: {
                 speed: 1.57,
                 equation: {
                     type: linear,
-                    a: -87.964255794,
-                    b: 0.174532254,
+                    a: 141.432,
+                    b: -2.81359,
                 }
             }
         },

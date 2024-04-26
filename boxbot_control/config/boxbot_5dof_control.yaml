@@ -30,7 +30,7 @@ boxbot:
     type: position_controllers/JointPositionController
     joint: left_gripper_joint
 
-  left_gripper_mimic_joint_controller:
+  left_gripper_joint_mimic_controller:
     type: position_controllers/JointPositionController
     joint: left_gripper_prismatic_joint_2
 
@@ -58,7 +58,7 @@ boxbot:
     type: position_controllers/JointPositionController
     joint: right_gripper_joint
 
-  right_gripper_mimic_joint_controller:
+  right_gripper_joint_mimic_controller:
     type: position_controllers/JointPositionController
     joint: right_gripper_prismatic_joint_2
 
