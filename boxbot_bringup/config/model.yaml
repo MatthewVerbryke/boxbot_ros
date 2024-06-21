@@ -60,11 +60,24 @@ model_config: {
             base_link: neck_base_link,
             tool_link: tilt_link,
             joint_names: [pan, tilt],
+            ik_config: 2d_point,
             eef: {
                 name: fake_head_gripper,
                 type: none,
                 base_link: tilt_link,
             }
+        },
+        torso: {
+            name: torso,
+            base_link: torso,
+            tool_link: neck_base_link,
+            subsystem_links: {
+                head: neck_base_link,
+                left_arm: left_arm_base_link,
+                right_arm: right_arm_base_link,
+            },
+            joint_names: [],
+            ik_config: static,
         }
     }
 }
