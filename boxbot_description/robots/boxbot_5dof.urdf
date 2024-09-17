@@ -674,15 +674,15 @@
       <update_rate>30.0</update_rate>
       <camera name="leftcamera">
         <pose>0 0 0 0 1.57 0</pose>
-        <horizontal_fov>1.3962634</horizontal_fov>
+        <horizontal_fov>0.85853</horizontal_fov>
         <image>
-          <width>800</width>
-          <height>800</height>
+          <width>640</width>
+          <height>480</height>
           <format>R8G8B8</format>
         </image>
         <clip>
-          <near>0.02</near>
-          <far>300</far>
+          <near>0.013</near>
+          <far>1.0</far>
         </clip>
         <noise>
           <type>gaussian</type>
@@ -711,15 +711,15 @@
       <update_rate>30.0</update_rate>
       <camera name="rightcamera">
         <pose>0 0 0 0 1.57 0</pose>
-        <horizontal_fov>1.3962634</horizontal_fov>
+        <horizontal_fov>0.85853</horizontal_fov>
         <image>
-          <width>800</width>
-          <height>800</height>
+          <width>640</width>
+          <height>480</height>
           <format>R8G8B8</format>
         </image>
         <clip>
-          <near>0.02</near>
-          <far>300</far>
+          <near>0.013</near>
+          <far>1.0</far>
         </clip>
         <noise>
           <type>gaussian</type>
