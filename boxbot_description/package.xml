@@ -1,17 +1,19 @@
 <?xml version="1.0"?>
-<package format="2">
+<package format="3">
   <name>boxbot_description</name>
   <version>0.0.0</version>
   <description>The boxbot_description package</description>
-
   <maintainer email="verbrymr@mail.uc.edu">Matthew Verbryke</maintainer>
-
   <license>BSD-3</license>
-
   <author email="verbrymr@mail.uc.edu">Matthew Verbryke</author>
-
-  <buildtool_depend>catkin</buildtool_depend>
-
+  
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  
+  <exec_depend>urdf_launch</exec_depend>
+  
+  <test_depend>ament_lint_auto</test_depend>
+  
   <export>
-  </export>
+    <build_type>ament_cmake</build_type>
+  </export>  
 </package>

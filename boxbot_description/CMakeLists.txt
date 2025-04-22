@@ -1,5 +1,16 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 project(boxbot_description)
-find_package(catkin REQUIRED)
-catkin_package()
 
+find_package(ament_cmake REQUIRED)
+
+install(
+  DIRECTORY config launch meshes robots xacro
+  DESTINATION share/${PROJECT_NAME}
+)
+
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  ament_lint_auto_find_test_dependencies()
+endif()
+
+ament_package()
