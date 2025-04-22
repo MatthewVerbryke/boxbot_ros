@@ -2,7 +2,7 @@
 
 <robot name="boxbot" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:property name="M_SCALE" value="0.001"/>
-  <xacro:include filename="$(find boxbot_description)/urdf/common_materials.xacro" />
+  <xacro:include filename="$(find boxbot_description)/xacro/common_materials.xacro" />
   
   <link name="world"/>
 
@@ -34,27 +34,28 @@
     <child link="torso"/>
   </joint>
 
-  <xacro:include filename="$(find boxbot_description)/urdf/widowx.urdf.xacro"/>
-  <xacro:widowx_arm parent="torso" prefix="left_">
+  <xacro:include filename="$(find boxbot_description)/xacro/widowx.urdf.xacro"/>
+  <xacro:widowx_arm parent="torso" prefix="left_" six_dof="false">
     <origin xyz="0 ${M_SCALE*99.613} ${M_SCALE*249.53}" rpy="-${M_PI/2.0} 0 0" />
   </xacro:widowx_arm>
 
-  <xacro:include filename="$(find boxbot_description)/urdf/widowx.urdf.xacro"/>
-  <xacro:widowx_arm parent="torso" prefix="right_">
+  <xacro:include filename="$(find boxbot_description)/xacro/widowx.urdf.xacro"/>
+  <xacro:widowx_arm parent="torso" prefix="right_" six_dof="false">
     <origin xyz="0 -${M_SCALE*99.613} ${M_SCALE*249.53}" rpy="${M_PI/2.0} 0 0"/>
   </xacro:widowx_arm>
 
-  <xacro:include filename="$(find boxbot_description)/urdf/head.urdf.xacro"/>
+  <xacro:include filename="$(find boxbot_description)/xacro/head.urdf.xacro"/>
   <xacro:boxbot_head parent="torso">
     <origin xyz="0 0 ${M_SCALE*342.0}" rpy="0 0 0"/>
   </xacro:boxbot_head>
   
-  <xacro:include filename="$(find boxbot_description)/urdf/sensors.gazebo"/>
+  <!--xacro:include filename="$(find boxbot_description)/xacro/sensors.gazebo"/>
 
-  <xacro:include filename="$(find boxbot_description)/urdf/servos.urdf.xacro"/>
+  <xacro:include filename="$(find boxbot_description)/xacro/servos.urdf.xacro"/>
   <xacro:ros_control_widowx six_dof="true" head="true"/>
 
-  <xacro:include filename="$(find boxbot_description)/urdf/materials.gazebo"/>
-  <xacro:gazebo_widowx six_dof="true" head="true"/>
+  <xacro:include filename="$(find boxbot_description)/xacro/materials.gazebo"/>
+  <xacro:gazebo_widowx six_dof="true" head="true"/-->
+  
 </robot>
 

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   
-  <xacro:include filename="$(find boxbot_description)/urdf/common_materials.xacro" />
-
-  <xacro:macro name="boxbot_head" params="parent *origin">
+  <xacro:include filename="$(find boxbot_description)/xacro/common_materials.xacro" />
   
-    <!-- links -->
+  <xacro:macro name="boxbot_head" params="parent *origin">
     
+    <!-- links -->
     <link name="neck_base_link">
       <visual>
         <origin rpy="0 0 ${pi/2}" xyz="0 0 0"/>
@@ -37,7 +36,7 @@
         <xacro:material_black />
       </visual>
       <collision>
-        <origin rpy="0 0 ${pi/2}" xyz="0 0 -0.0022"/>
+        <origin rpy="0 0 ${pi/2}" xyz="0.02 0 0.017"/>
         <geometry>
           <box size="0.039 0.09 0.04"/>
         </geometry>
@@ -113,7 +112,6 @@
     </link>
     
     <!-- joints -->
-    
     <joint name="neck_base_joint" type="fixed">
       <xacro:insert_block name="origin" />
       <parent link="${parent}" />
@@ -127,7 +125,7 @@
       <parent link="neck_base_link"/>
       <child link="pan_link"/>
     </joint>
-
+    
     <joint name="tilt_joint" type="revolute">
       <axis xyz="0 1 0"/>
       <limit effort="3" lower="${radians(-90)}" upper="0.50" velocity="${pi}"/>
@@ -148,6 +146,6 @@
       <child link="right_camera_link"/>
     </joint>
     
- </xacro:macro>
+  </xacro:macro>
 
 </robot>
