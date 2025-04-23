@@ -1,22 +1,16 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 project(boxbot_gazebo)
 
-find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  sensor_msgs
-  std_msgs
+find_package(ament_cmake REQUIRED)
+
+install(
+  DIRECTORY launch world
+  DESTINATION share/${PROJECT_NAME}
 )
 
-include_directories(
-  ${catkin_INCLUDE_DIRS}
-)
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  ament_lint_auto_find_test_dependencies()
+endif()
 
-catkin_package(CATKIN_DEPENDS
-  roscpp
-  std_msgs
-)
-
-add_executable(mimic_node src/mimic.cpp)
-target_link_libraries(mimic_node
-  ${catkin_LIBRARIES}
-)
+ament_package()
