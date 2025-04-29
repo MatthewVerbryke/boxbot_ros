@@ -57,7 +57,7 @@
         <xacro:material_black />
       </visual>
       <collision>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <origin rpy="0 ${radians(-90)} 0" xyz="0.02 0 0"/>
         <geometry>
           <box size="0.02 0.1 0.005"/>
         </geometry>
@@ -145,6 +145,16 @@
       <parent link="tilt_link" />
       <child link="right_camera_link"/>
     </joint>
+    
+    <!--xacro:include filename="$(find boxbot_description)/xacro/camera.xacro"/>
+    <xacro:rgb_camera parent="tilt_link" prefix="left_">
+      <origin rpy="0 ${radians(-90)} 0" xyz="0.023 0.045 0.005"/>
+    </xacro:rgb_camera>
+    
+    <xacro:include filename="$(find boxbot_description)/xacro/camera.xacro"/>
+    <xacro:rgb_camera parent="tilt_link" prefix="right_">
+      <origin rpy="0 ${radians(-90)} 0" xyz="0.023 -0.045 0.005"/>
+    </xacro:rgb_camera-->
     
   </xacro:macro>
 
