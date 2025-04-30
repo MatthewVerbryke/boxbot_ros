@@ -24,6 +24,7 @@ from launch.substitutions import (
 )
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from ros_gz_bridge.actions import RosGzBridge
 
 
 def retrieve_top_directory():
@@ -70,15 +71,26 @@ def generate_launch_description():
 		choices=['5', '6'],
 		description='Select WidowX arm model by degrees of freedom'
 	)
+	config_file_arg = DeclareLaunchArgument(
+		name='config_file',
+		default_value='ros_gz_config.yaml',
+		description='YAML config file'
+	)
 	
 	# Construct model file name
 	file_name = PythonExpression(
-		['"boxbot_{}dof.urdf"', '.format(',	LaunchConfiguration("dof"),	')']
+		['"boxbot_{}dof.urdf"', '.format(',	LaunchConfiguration('dof'),	')']
 	)
 	
 	# Construct required paths
 	gz_launch_path = PathJoinSubstitution(
 		[FindPackageShare('ros_gz_sim'), 'launch', 'gz_sim.launch.py']
+	)
+	control_path = PathJoinSubstitution(
+		[FindPackageShare("boxbot_control"), 'launch', 'control.launch.py']
+	)
+	bridge_path = PathJoinSubstitution(
+		[FindPackageShare('boxbot_gazebo'), 'config', LaunchConfiguration('config_file')]
 	)
 	world_path = PathJoinSubstitution(
 		[FindPackageShare('boxbot_gazebo'), 'world', LaunchConfiguration('world')]
@@ -94,8 +106,8 @@ def generate_launch_description():
 	gz_launch_include = IncludeLaunchDescription(
 		PythonLaunchDescriptionSource(gz_launch_path),
 		launch_arguments={
-			'gz_args': [world_path],
-			'on_exit_shutdown': 'True'
+			'gz_args': ['-r ', world_path],
+			'on_exit_shutdown': 'true',
 		}.items()
 	)
 	spawn_entity_node = Node(
@@ -113,10 +125,28 @@ def generate_launch_description():
 				   '-allow_renaming', 'false']
 	)
 	
+	# Configure ROS-to-Gazebo bridge
+	bridge_node = RosGzBridge(
+		bridge_name='ros_gz_bridge',
+		config_file=bridge_path
+	)
+	
+	# Configure controller launcher
+	control_launcher = IncludeLaunchDescription(
+		PythonLaunchDescriptionSource(control_path),
+		launch_arguments={
+			'dof': LaunchConfiguration('dof'),
+			'use_gazebo': 'true'
+		}.items()
+	)
+	
 	return LaunchDescription([
 		world_arg,
 		dof_arg,
+		config_file_arg,
 		resource_path_var,
 		gz_launch_include,
-		spawn_entity_node
+		spawn_entity_node,
+		bridge_node,
+		control_launcher
 	])
