@@ -9,8 +9,13 @@
   
   <buildtool_depend>ament_cmake</buildtool_depend>
   
-  <depend>launch</depend>
-  <depend>launch_ros</depend>
+  <exec_depend>gz_ros2_control</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>ros_gz_bridge</exec_depend>
+  <exec_depend>ros_gz_sim</exec_depend>
+  <exec_depend>boxbot_control</exec_depend>
+  <exec_depend>boxbot_description</exec_depend>
   
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

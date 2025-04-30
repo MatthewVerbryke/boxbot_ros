@@ -4,7 +4,7 @@ project(boxbot_gazebo)
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY launch world
+  DIRECTORY config launch world
   DESTINATION share/${PROJECT_NAME}
 )
 
