@@ -125,10 +125,18 @@ def generate_launch_description():
 				   '-allow_renaming', 'false']
 	)
 	
-	# Configure ROS-to-Gazebo bridge
+	# Configure ROS-Gazebo bridge
 	bridge_node = RosGzBridge(
 		bridge_name='ros_gz_bridge',
 		config_file=bridge_path
+	)
+	
+	# Configure ROS-Gazebo bridge for camera images
+	image_bridge_node = Node(
+		package='ros_gz_image',
+		executable='image_bridge',
+		arguments=['/left_camera/image_raw'],
+		output='screen'
 	)
 	
 	# Configure controller launcher
@@ -148,5 +156,6 @@ def generate_launch_description():
 		gz_launch_include,
 		spawn_entity_node,
 		bridge_node,
+		image_bridge_node,
 		control_launcher
 	])
