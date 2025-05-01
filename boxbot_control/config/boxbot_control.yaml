@@ -16,7 +16,6 @@ left_arm_6dof_controller:
       - left_wrist_2_joint
       - left_wrist_3_joint
       - left_gripper_joint
-      - left_gripper_prismatic_joint_2
     interface_name: position
     
 right_arm_6dof_controller:
@@ -30,7 +29,6 @@ right_arm_6dof_controller:
       - right_wrist_2_joint
       - right_wrist_3_joint
       - right_gripper_joint
-      - right_gripper_prismatic_joint_2
     interface_name: position
 
 left_arm_5dof_controller:
@@ -43,7 +41,6 @@ left_arm_5dof_controller:
       - left_wrist_1_joint
       - left_wrist_2_joint
       - left_gripper_joint
-      - left_gripper_prismatic_joint_2
     interface_name: position
     
 right_arm_5dof_controller:
@@ -56,7 +53,6 @@ right_arm_5dof_controller:
       - right_wrist_1_joint
       - right_wrist_2_joint
       - right_gripper_joint
-      - right_gripper_prismatic_joint_2
     interface_name: position
 
 head_controller:

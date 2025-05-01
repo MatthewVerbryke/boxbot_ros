@@ -53,17 +53,14 @@
   <xacro:include filename="$(find boxbot_description)/xacro/boxbot.ros2_control.xacro"/>
   <xacro:widowx_ros2_control name="left_arm_interface" prefix="left_" six_dof="true" use_gazebo="true"/>
   <xacro:widowx_ros2_control name="right_arm_interface" prefix="right_" six_dof="true" use_gazebo="true"/>
-  <xacro:pan_tilt_head name="head_interface" use_gazebo="true"/>
+  <xacro:head_ros2_control name="head_interface" use_gazebo="true"/>
   <gazebo>
     <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
       <parameters>$(find boxbot_control)/config/boxbot_control.yaml</parameters>
     </plugin>
   </gazebo>
-  
-  <!--xacro:include filename="$(find boxbot_description)/xacro/servos.urdf.xacro"/>
-  <xacro:ros_control_widowx six_dof="true" head="true"/>
 
-  <xacro:include filename="$(find boxbot_description)/xacro/materials.gazebo"/>
+  <!--xacro:include filename="$(find boxbot_description)/xacro/materials.gazebo"/>
   <xacro:gazebo_widowx six_dof="true" head="true"/-->
   
 </robot>
