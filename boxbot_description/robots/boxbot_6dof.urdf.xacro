@@ -61,5 +61,8 @@
     </plugin>
   </gazebo>
   
+  <xacro:include filename="$(find boxbot_description)/xacro/gazebo_materials.xacro"/>
+  <xacro:gazebo_boxbot six_dof="true" head="true"/>
+  
 </robot>
 

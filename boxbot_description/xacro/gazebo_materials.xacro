@@ -1,14 +1,13 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:macro name="gazebo_widowx" params="six_dof head">
+  <xacro:macro name="gazebo_boxbot" params="six_dof head">
 
   <!--Gazebo compatable colors-->
 
     <gazebo reference="torso">
       <mu1>0.3</mu1>
       <mu2>0.3</mu2>
-      <material>Gazebo/Wood</material>
     </gazebo>
   
     <!--left arm-->
@@ -16,57 +15,48 @@
     <gazebo reference="left_shoulder_link">
       <mu1>0.6</mu1>
       <mu2>0.6</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
   
     <gazebo reference="left_biceps_link">
       <mu1>0.6</mu1>
       <mu2>0.6</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
   
     <gazebo reference="left_forearm_1_link">
       <mu1>0.6</mu1>
       <mu2>0.6</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
 
     <xacro:if value="${six_dof}">
       <gazebo reference="left_forearm_2_link">
         <mu1>0.6</mu1>
         <mu2>0.6</mu2>
-        <material>Gazebo/DarkGrey</material>
       </gazebo>
     </xacro:if>
   
     <gazebo reference="left_wrist_1_link">
       <mu1>0.6</mu1>
       <mu2>0.6</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
   
     <gazebo reference="left_wrist_2_link">
       <mu1>0.6</mu1>
       <mu2>0.6</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
   
     <gazebo reference="left_gripper_rail_link">
       <mu1>0.6</mu1>
       <mu2>0.6</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
   
     <gazebo reference="left_gripper_1_link">
       <mu1>1.0</mu1>
       <mu2>1.0</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
   
     <gazebo reference="left_gripper_2_link">
       <mu1>1.0</mu1>
       <mu2>1.0</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
   
     <!--right arm-->
@@ -74,64 +64,54 @@
     <gazebo reference="right_shoulder_link">
       <mu1>0.6</mu1>
       <mu2>0.6</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
   
     <gazebo reference="right_biceps_link">
       <mu1>0.6</mu1>
       <mu2>0.6</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
   
     <gazebo reference="right_forearm_1_link">
       <mu1>0.6</mu1>
       <mu2>0.6</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
 
     <xacro:if value="${six_dof}">
       <gazebo reference="right_forearm_2_link">
         <mu1>0.6</mu1>
         <mu2>0.6</mu2>
-        <material>Gazebo/DarkGrey</material>
       </gazebo>
     </xacro:if>
   
     <gazebo reference="right_wrist_1_link">
       <mu1>0.6</mu1>
       <mu2>0.6</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
   
     <gazebo reference="right_wrist_2_link">
       <mu1>0.6</mu1>
       <mu2>0.6</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
   
     <gazebo reference="right_gripper_rail_link">
       <mu1>0.6</mu1>
       <mu2>0.6</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
   
     <gazebo reference="right_gripper_1_link">
       <mu1>1.0</mu1>
       <mu2>1.0</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
   
     <gazebo reference="right_gripper_2_link">
       <mu1>1.0</mu1>
       <mu2>1.0</mu2>
-      <material>Gazebo/DarkGrey</material>
     </gazebo>
     
      <xacro:if value="${head}">
       <gazebo reference="neck_base_link">
         <mu1>0.6</mu1>
         <mu2>0.6</mu2>
-        <material>Gazebo/DarkGrey</material>
       </gazebo>
     </xacro:if>
 
@@ -139,7 +119,6 @@
       <gazebo reference="pan_link">
         <mu1>0.6</mu1>
         <mu2>0.6</mu2>
-        <material>Gazebo/DarkGrey</material>
       </gazebo>
     </xacro:if>
     
@@ -147,7 +126,6 @@
       <gazebo reference="tilt_link">
         <mu1>0.6</mu1>
         <mu2>0.6</mu2>
-        <material>Gazebo/DarkGrey</material>
       </gazebo>
     </xacro:if>
     
@@ -155,7 +133,6 @@
       <gazebo reference="left_camera_link">
         <mu1>0.6</mu1>
         <mu2>0.6</mu2>
-        <material>Gazebo/DarkGrey</material>
       </gazebo>
     </xacro:if>
     
@@ -163,7 +140,6 @@
       <gazebo reference="right_camera_link">
         <mu1>0.6</mu1>
         <mu2>0.6</mu2>
-        <material>Gazebo/DarkGrey</material>
       </gazebo>
     </xacro:if>
   
