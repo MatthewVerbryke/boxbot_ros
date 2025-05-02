@@ -31,5 +31,11 @@
 			<color rgba="${color_greyish}"/>
 		</material>
 	</xacro:macro>
+	
+	<xacro:macro name="material_ivory">
+		<material name="">
+			<color rgba="${color_ivory}"/>
+		</material>
+	</xacro:macro>
   
 </robot>

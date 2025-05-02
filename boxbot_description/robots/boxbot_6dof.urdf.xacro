@@ -12,7 +12,7 @@
       <geometry>
         <mesh filename="package://boxbot_description/meshes/torso_link.stl"/>
       </geometry>
-      <xacro:material_yellow/>
+      <xacro:material_ivory/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="1.5707963268 0 1.5707963268" />
@@ -60,9 +60,6 @@
       <parameters>$(find boxbot_control)/config/boxbot_control.yaml</parameters>
     </plugin>
   </gazebo>
-
-  <!--xacro:include filename="$(find boxbot_description)/xacro/materials.gazebo"/>
-  <xacro:gazebo_widowx six_dof="true" head="true"/-->
   
 </robot>
 
