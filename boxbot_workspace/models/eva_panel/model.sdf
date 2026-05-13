@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+  <model name="eva_panel">
+    
+    <link name="station">
+      <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+      <inertial>
+        <mass>100.0</mass>
+        <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+        <inertia>
+          <ixx>1.0</ixx>
+          <ixy>0.0</ixy> 
+          <ixz>0.0</ixz> 
+          <iyy>1.0</iyy> 
+          <iyz>0.0</iyz> 
+          <izz>1.0</izz>  
+        </inertia>
+      </inertial>
+      <visual name="station_visual">
+        <geometry>
+          <mesh>
+            <uri>model://eva_panel/meshes/eva_station.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/White</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="station_collision">
+        <geometry>
+          <mesh>
+            <uri>model://eva_panel/meshes/eva_station.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+    
+    <link name="yaw_handle">
+      <pose>0.425 0.030 0.100 0.0 0.0 0.0</pose>
+      <inertial>
+        <mass>0.080</mass>
+        <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+        <inertia>
+          <ixx>0.001</ixx>
+          <ixy>0.0</ixy> 
+          <ixz>0.0</ixz> 
+          <iyy>0.001</iyy> 
+          <iyz>0.0</iyz> 
+          <izz>0.001</izz>  
+        </inertia>
+      </inertial>
+      <visual name="yaw_dial_visual">
+        <geometry>
+          <mesh>
+            <uri>model://eva_panel/meshes/dial_handle.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Yellow</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="yaw_dial_collision">
+        <geometry>
+          <mesh>
+            <uri>model://eva_panel/meshes/dial_handle.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+    
+    <link name="pitch_handle">
+      <pose>0.575 0.030 0.100 0.0 0.0 0.0</pose>
+      <inertial>
+        <mass>0.080</mass>
+        <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+        <inertia>
+          <ixx>0.001</ixx>
+          <ixy>0.0</ixy> 
+          <ixz>0.0</ixz> 
+          <iyy>0.001</iyy> 
+          <iyz>0.0</iyz> 
+          <izz>0.001</izz>  
+        </inertia>
+      </inertial>
+      <visual name="pitch_dial_visual">
+        <geometry>
+          <mesh>
+            <uri>model://eva_panel/meshes/dial_handle.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/SkyBlue</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="pitch_dial_collision">
+        <geometry>
+          <mesh>
+            <uri>model://eva_panel/meshes/dial_handle.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+    
+    <joint name="fixed" type="fixed">
+      <parent>world</parent>
+      <child>station</child>
+    </joint>
+    
+    <joint name="yaw_dial" type="revolute">
+      <parent>station</parent>
+      <child>yaw_handle</child>
+      <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+      <axis>
+      	<xyz>0.0 1.0 0.0</xyz>
+      </axis>
+    </joint>
+    
+    <joint name="pitch_dial" type="revolute">
+      <parent>station</parent>
+      <child>pitch_handle</child>
+      <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+      <axis>
+      	<xyz>0.0 1.0 0.0</xyz>
+      </axis>
+    </joint>
+  
+  </model>
+</sdf>

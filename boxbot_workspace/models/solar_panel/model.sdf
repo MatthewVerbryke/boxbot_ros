@@ -1,0 +1,341 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+  <model name="solar_panel">
+    <link name="base">
+      <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.003</ixx>
+          <ixy>0.0</ixy> 
+          <ixz>0.0</ixz> 
+          <iyy>0.005</iyy> 
+          <iyz>0.0</iyz> 
+          <izz>0.002</izz>  
+        </inertia>
+      </inertial>
+      <visual name="base_visual">
+        <geometry>
+          <mesh>
+            <uri>model://solar_panel/meshes/briefcase_half_2.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/DarkGrey</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="base_collision">
+        <geometry>
+          <mesh>
+            <uri>model://solar_panel/meshes/briefcase_half_2.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+  
+    <link name="lid">
+      <pose>0.0 0.05 0.0 3.141592653 0.0 0.0</pose>
+      <inertial>
+        <mass>0.35</mass>
+        <inertia>
+          <ixx>0.002</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.003</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+      </inertial>
+      <visual name="lid_visual">
+        <geometry>
+          <mesh>
+            <uri>model://solar_panel/meshes/briefcase_half_1.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/DarkGrey</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="lid_collision">
+        <geometry>
+          <mesh>
+            <uri>model://solar_panel/meshes/briefcase_half_1.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+    
+    <link name="panel1">
+      <pose>0.0 0.025 0.165 0.0 0.0 0.0</pose>
+      <inertial>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>0.002</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.003</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+      </inertial>
+      <visual name="panel1_visual">
+        <geometry>
+          <mesh>
+            <uri>model://solar_panel/meshes/solar_panel.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Blue</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="panel1_collision">
+        <geometry>
+          <mesh>
+            <uri>model://solar_panel/meshes/solar_panel.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="panel2">
+      <pose>0.0 0.025 -0.165 0.0 0.0 0.0</pose>
+      <inertial>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>0.002</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.003</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+      </inertial>
+      <visual name="panel2_visual">
+        <geometry>
+          <mesh>
+            <uri>model://solar_panel/meshes/solar_panel.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Blue</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="panel2_collision">
+        <geometry>
+          <mesh>
+            <uri>model://solar_panel/meshes/solar_panel.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+    
+    <link name="panel3">
+      <pose>0.0 0.02 0.165 0.0 0.0 0.0</pose>
+      <inertial>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>0.002</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.003</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+      </inertial>
+      <visual name="panel3_visual">
+        <geometry>
+          <mesh>
+            <uri>model://solar_panel/meshes/solar_panel.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Blue</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="panel3_collision">
+        <geometry>
+          <mesh>
+            <uri>model://solar_panel/meshes/solar_panel.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="panel4">
+      <pose>0.0 0.02 -0.165 0.0 0.0 0.0</pose>
+      <inertial>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>0.002</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.003</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+      </inertial>
+      <visual name="panel4_visual">
+        <geometry>
+          <mesh>
+            <uri>model://solar_panel/meshes/solar_panel.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Blue</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="panel4_collision">
+        <geometry>
+          <mesh>
+            <uri>model://solar_panel/meshes/solar_panel.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+    
+    <link name="button">
+      <pose>0.100 0.025 -0.100225 0.0 0.0 -1.570796326</pose>
+      <inertial>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>0.002</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.003</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+      </inertial>
+      <visual name="button_visual">
+        <geometry>
+          <mesh>
+            <uri>model://solar_panel/meshes/button.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="button_collision">
+        <geometry>
+          <mesh>
+            <uri>model://solar_panel/meshes/button.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>    
+    <joint name="lid_hinge" type="revolute">
+      <parent>base</parent>
+      <child>lid</child>
+      <pose>-0.075 0.025 0.0 0.0 0.0 0.0</pose>
+      <axis>
+      	<xyz>0.0 0.0 -1.0</xyz>
+      	<limit>
+      	  <lower>0.0</lower>
+      	  <upper>3.141592653</upper>
+      	</limit>
+      </axis>
+    </joint>
+    
+    <joint name="panel1_hinge" type="revolute">
+      <parent>base</parent>
+      <child>panel1</child>
+      <pose>0.0 0.0 -0.055 0.0 0.0 0.0</pose>
+      <axis>
+      	<xyz>-1.0 0.0 0.0</xyz>
+      	<limit>
+      	  <lower>0.0</lower>
+      	  <upper>3.141592653</upper>
+      	</limit>
+      </axis>
+    </joint>
+    
+    <joint name="panel2_hinge" type="revolute">
+      <parent>base</parent>
+      <child>panel2</child>
+      <pose>0.0 0.0 0.055 0.0 0.0 0.0</pose>
+      <axis>
+      	<xyz>1.0 0.0 0.0</xyz>
+      	<limit>
+      	  <lower>0.0</lower>
+      	  <upper>3.141592653</upper>
+      	</limit>
+      </axis>
+    </joint>
+    
+    <joint name="panel3_hinge" type="revolute">
+      <parent>lid</parent>
+      <child>panel3</child>
+      <pose>0.0 0.005 -0.055 0.0 0.0 0.0</pose>
+      <axis>
+      	<xyz>1.0 0.0 0.0</xyz>
+      	<limit>
+      	  <lower>0.0</lower>
+      	  <upper>3.141592653</upper>
+      	</limit>
+      </axis>
+    </joint>
+    
+    <joint name="panel4_hinge" type="revolute">
+      <parent>lid</parent>
+      <child>panel4</child>
+      <pose>0.0 0.005 0.055 0.0 0.0 0.0</pose>
+      <axis>
+      	<xyz>-1.0 0.0 0.0</xyz>
+      	<limit>
+      	  <lower>0.0</lower>
+      	  <upper>3.141592653</upper>
+      	</limit>
+      </axis>
+    </joint>
+    
+    <joint name="button_push" type="prismatic">
+      <parent>base</parent>
+      <child>button</child>
+      <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+      <axis>
+      	<xyz>0.0 -1.0 0.0</xyz>
+      	<limit>
+      	  <lower>-0.0001</lower>
+      	  <upper>0.003</upper>
+      	</limit>
+      </axis>
+    </joint>
+    
+  </model>
+</sdf>

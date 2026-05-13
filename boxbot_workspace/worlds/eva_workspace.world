@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+  <world name="default">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <include>
+      <uri>model://eva_panel</uri>
+      <pose>0.430 -0.425 0.12 0.0 0.0 1.570796326</pose>
+    </include>
+    <include>
+      <uri>model://solar_panel</uri>
+      <pose>0.0 0.38 0.0 1.570796326 0.0 -1.570796326</pose>
+    </include>
+  </world>
+</sdf>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+  <model name="iss_pack">
+    
+    <link name="pack">
+      <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+      <inertial>
+        <pose>0.0 0.0625 0.0 0.0 0.0 0.0</pose>
+        <inertia>
+          <ixx>0.005</ixx>
+          <ixy>0.0</ixy> 
+          <ixz>0.0</ixz> 
+          <iyy>0.005</iyy> 
+          <iyz>0.0</iyz> 
+          <izz>0.005</izz>  
+        </inertia>
+        <mass>1.0</mass>
+      </inertial>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://iss_pack/meshes/iss_pack.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>Gazebo/White</material>
+      </visual>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://iss_pack/meshes/iss_pack.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+    
+  </model>
+</sdf>

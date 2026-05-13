@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+  <model name="iva_panel">
+    
+    <link name="station">
+      <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+      <inertial>
+        <mass>100.0</mass>
+        <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+        <inertia>
+          <ixx>1.0</ixx>
+          <ixy>0.0</ixy> 
+          <ixz>0.0</ixz> 
+          <iyy>1.0</iyy> 
+          <iyz>0.0</iyz> 
+          <izz>1.0</izz>  
+        </inertia>
+      </inertial>
+      <visual name="station_visual">
+        <geometry>
+          <mesh>
+            <uri>model://iva_panel/meshes/iva_station.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="station_collision">
+        <geometry>
+          <mesh>
+            <uri>model://iva_panel/meshes/iva_station.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+    
+    <link name="airlock">
+      <pose>0.325 0.0 0.205 -1.570796 0.0 0.0</pose>
+      <inertial>
+        <mass>2.309</mass>
+        <inertia>
+          <ixx>0.023</ixx>
+          <ixy>0.0</ixy> 
+          <ixz>0.0</ixz> 
+          <iyy>0.012</iyy> 
+          <iyz>0.0</iyz> 
+          <izz>0.034</izz>  
+        </inertia>
+      </inertial>
+      <visual name="airlock_visual">
+        <geometry>
+          <mesh>
+            <uri>model://iva_panel/meshes/airlock.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/White</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="airlock_collision">
+        <geometry>
+          <mesh>
+            <uri>model://iva_panel/meshes/airlock.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+    
+    <link name="handle">
+      <pose>0.325 0.0625 0.205 0.0 0.0 0.0</pose>
+      <inertial>
+        <mass>0.439</mass>
+        <inertia>
+          <ixx>0.001</ixx>
+          <ixy>0.0</ixy> 
+          <ixz>0.0</ixz> 
+          <iyy>0.002</iyy> 
+          <iyz>0.0</iyz> 
+          <izz>0.001</izz>  
+        </inertia>
+      </inertial>
+      <visual name="handle_visual">
+        <geometry>
+          <mesh>
+            <uri>model://iva_panel/meshes/wheel_handle.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/DarkGrey</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="handle_collision">
+        <geometry>
+          <mesh>
+            <uri>model://iva_panel/meshes/wheel_handle.stl</uri>
+            <scale>0.001 0.001 0.001</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+    
+    <joint name="fixed" type="fixed">
+      <parent>world</parent>
+      <child>station</child>
+    </joint>
+    
+    <joint name="door_hinge" type="revolute">
+      <parent>station</parent>
+      <child>airlock</child>
+      <pose>-0.125 0.0 0.0 0.0 0.0 0.0</pose>
+      <axis>
+      	<xyz>0.0 -1.0 0.0</xyz>
+      	<limit>
+          <lower>0.0</lower>
+          <upper>1.570796</upper>
+        </limit>
+        <dynamics>
+          <damping>0.01</damping>
+          <friction>0.01</friction>
+        </dynamics>
+      </axis>
+    </joint>
+    
+    <joint name="handle_axle" type="revolute">
+      <parent>airlock</parent>
+      <child>handle</child>
+      <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+      <axis>
+      	<xyz>0.0 1.0 0.0</xyz>
+      	<dynamics>
+          <damping>0.01</damping>
+          <friction>0.01</friction>
+        </dynamics>
+      </axis>
+    </joint>
+    
+  </model>
+</sdf>

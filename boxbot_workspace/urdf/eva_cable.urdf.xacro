@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+
+<robot name="cable" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="radius" value="0.003"/>
+  <xacro:property name="length" value="0.015"/>
+  <xacro:property name="effort" value="0.000"/>
+  <xacro:property name="velocity" value="10.0"/>
+  <xacro:property name="damping" value="0.001"/>
+  <xacro:property name="friction" value="0.0"/>
+  
+  <link name="world"/>
+  
+  <link name="bend_0">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <sphere radius="${radius}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="${radius}"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <link name="link_0">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length/2 + radius}"/>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length/2 + radius}"/>
+      <geometry>
+        <cylinder radius="${radius}" length="${length}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length/2 + radius}"/>
+      <geometry>
+        <cylinder radius="${radius}" length="${length}"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="fixed" type="fixed">
+    <parent link="world"/>
+    <child link="bend_0"/>
+    <origin xyz="0.43 -0.025 0.32" rpy="1.570796 0.0 -1.570796"/>
+  </joint>
+  
+  <joint name="joint_0" type="revolute">
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+    <parent link="bend_0"/>
+    <child link="link_0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-1.570796" upper="1.570796" effort="${effort}" velocity="${velocity}"/>
+    <dynamics damping="${damping}" friction="${friction}"/>
+  </joint>
+  
+  <gazebo reference="bend_0">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+  
+  <gazebo reference="link_0">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+  
+  <xacro:include filename="$(find bb_workspace)/urdf/cable.xacro"/>
+  <xacro:cable_segment number="1" parent="0" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
+  <xacro:cable_segment number="2" parent="1" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
+  <xacro:cable_segment number="3" parent="2" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
+  <xacro:cable_segment number="4" parent="3" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
+  <xacro:cable_segment number="5" parent="4" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
+  <xacro:cable_segment number="6" parent="5" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
+  <xacro:cable_segment number="7" parent="6" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
+  <xacro:cable_segment number="8" parent="7" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
+  <xacro:cable_segment number="9" parent="8" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
+  <xacro:cable_segment number="10" parent="9" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
+  <xacro:cable_segment number="11" parent="10" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
+  <xacro:cable_segment number="12" parent="11" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
+  <xacro:cable_segment number="13" parent="12" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
+  <xacro:cable_segment number="14" parent="13" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
+  
+  <link name="plug">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length/2}"/>
+      <mass value="0.01"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length/2}"/>
+      <geometry>
+        <mesh filename="package://bb_workspace/meshes/plug.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length/2}"/>
+      <geometry>
+        <mesh filename="package://bb_workspace/meshes/plug.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="plug_joint" type="fixed">
+    <origin rpy="1.570796 0.0 0.0" xyz="0.0 0.0075 ${length + radius}"/>
+    <parent link="link_14"/>
+    <child link="plug"/>
+  </joint>
+  
+  <gazebo reference="plug">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  
+</robot>

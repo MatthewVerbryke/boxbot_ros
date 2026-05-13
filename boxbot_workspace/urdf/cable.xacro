@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="cable_segment" params="number parent radius length effort velocity damping friction">
+  
+    <link name="bend_${number}">
+      <inertial>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+      </collision>
+    </link>
+    
+    <link name="link_${number}">
+      <inertial>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length/2 + radius}"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      </inertial>
+      <visual>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length/2 + radius}"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${length}"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length/2 + radius}"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${length}"/>
+        </geometry>
+      </collision>
+    </link>
+    
+    <joint name="${parent}_to_${number}" type="revolute">
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length + 2*radius}"/>
+      <parent link="link_${parent}"/>
+      <child link="bend_${number}"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-0.523599" upper="0.523599" effort="${effort}" velocity="${velocity}"/>
+      <dynamics damping="${damping}" friction="${friction}"/>
+    </joint>
+    
+    <joint name="joint_${number}" type="revolute">
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <parent link="bend_${number}"/>
+      <child link="link_${number}"/>
+      <axis xyz="1 0 0"/>
+      <limit lower="-1.570796" upper="1.570796" effort="${effort}" velocity="${velocity}"/>
+      <dynamics damping="${damping}" friction="${friction}"/>
+    </joint>
+    
+  <gazebo reference="bend_${number}">
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+  
+  <gazebo reference="link_${number}">
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+    
+  </xacro:macro>
+</robot>
