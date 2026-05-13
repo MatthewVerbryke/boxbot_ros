@@ -75,7 +75,7 @@
     <material>Gazebo/FlatBlack</material>
   </gazebo>
   
-  <xacro:include filename="$(find bb_workspace)/urdf/cable.xacro"/>
+  <xacro:include filename="$(find boxbot_workspace)/urdf/cable.xacro"/>
   <xacro:cable_segment number="1" parent="0" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
   <xacro:cable_segment number="2" parent="1" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
   <xacro:cable_segment number="3" parent="2" radius="${radius}" length="${length}" effort="${effort}" velocity="${velocity}" damping="${damping}" friction="${friction}"/>
@@ -100,13 +100,13 @@
     <visual>
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length/2}"/>
       <geometry>
-        <mesh filename="package://bb_workspace/meshes/plug.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://boxbot_workspace/meshes/plug.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 ${length/2}"/>
       <geometry>
-        <mesh filename="package://bb_workspace/meshes/plug.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://boxbot_workspace/meshes/plug.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
