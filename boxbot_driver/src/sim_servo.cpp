@@ -1,6 +1,6 @@
 // Gazebo simulated-servo class.
 //
-// Copyright 2022-2023 University of Cincinnati
+// Copyright 2022-2026 University of Cincinnati
 // All rights reserved. See LICENSE file at:
 // https://github.com/MatthewVerbryke/rse_dam
 // Additional copyright may be held by others, as reflected in the
@@ -11,8 +11,8 @@
 
 #include "boxbot_driver/sim_servo.h"
 
-SimServo::SimServo(std::string name_in, std::string side_in, ros::NodeHandle n, ros::NodeHandle nh, std::string robot_in){
-    
+SimServo::SimServo(std::string name_in, std::string side_in, rclcpp::Node::SharedPtr node_ptr, std::string robot_in){
+	
     // Setup names
     side = side_in;
     robot = robot_in;
@@ -30,8 +30,8 @@ SimServo::SimServo(std::string name_in, std::string side_in, ros::NodeHandle n, 
     }
     
     // Build topic names
-    command_topic = robot + "/" + side + "_" + name_in + "_controller/command";
-    mimic_topic = robot + "/" + side + "_" + name_in + "_mimic_controller/command";
+    command_topic = robot + "/" + side + "_" + name + "_controller/command";
+    mimic_topic = robot + "/" + side + "_" + name + "_mimic_controller/command";
     
     // Initialize variables
     id = -1;
@@ -40,10 +40,10 @@ SimServo::SimServo(std::string name_in, std::string side_in, ros::NodeHandle n, 
     velocity = 0.0;
     
     // Setup publishers and subscribers
-    ControlPub = n.advertise<std_msgs::Float64>(command_topic, 1);
+    ControlPub = node->create_publisher<std_msgs::Float64>(command_topic, 1);
     if (is_gripper){
-        MimicPub = n.advertise<std_msgs::Float64>(mimic_topic, 1);
-    }
+		MimicPub = node->create_publisher<std_msgs::Float64>(mimic_topic, 1);
+	}
 }
 
 void SimServo::setCommandOutput(){
@@ -51,7 +51,6 @@ void SimServo::setCommandOutput(){
     // Calculate desired gripper opening, if needed
     double desired_act;
     if (is_gripper){
-
         desired_act = 0.00707054*desired + 0.0198936; // overly simple linear model
     }
     else {
@@ -63,9 +62,9 @@ void SimServo::setCommandOutput(){
     commandMsg.data = desired_act;
     
     // Publish commands
-    ControlPub.publish(commandMsg);
+    this->ControlPub->publish(commandMsg);
     if (is_gripper){
-        MimicPub.publish(commandMsg);
+        this->MimicPub->publish(commandMsg);
     }
 }
 

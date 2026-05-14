@@ -1,6 +1,6 @@
 // Simulated ArbotiX driver class.
 //
-// Copyright 2022-2023 University of Cincinnati
+// Copyright 2022-2026 University of Cincinnati
 // All rights reserved. See LICENSE file at:
 // https://github.com/MatthewVerbryke/rse_dam
 // Additional copyright may be held by others, as reflected in the
@@ -8,13 +8,14 @@
 
 #include <string>
 #include <vector>
+#include <chrono>
 
-#include <ros/ros.h>
-#include <sensor_msgs/JointState.h>
+#include <rclcpp/rclcpp.h>
+#include <sensor_msgs/msg/joint_state.hpp>
 
 #include "boxbot_driver/sim_servo.h"
 
-class SimArbotiX
+class SimArbotiX : public rclcpp::Node
 {
 private:
     
@@ -24,13 +25,14 @@ private:
     std::string side;
     double write_rate;
     double read_rate;
-    ros::Duration w_delta;
-    ros::Duration r_delta;
+    rclcpp::Duration w_delta;
+    rclcpp::Duration r_delta;
     std::vector<std::string> joints;
     bool check_inputs = false;
     bool first_cmd = false;
+    std::chrono::duration interval;
     
-    // Topics 
+    // Topic name 
     std::string arm_state_topic;
     std::string joint_command_topic;
     std::string gazebo_joint_topic;
@@ -39,20 +41,23 @@ private:
     long iter;
     std::vector<SimServo> servo_vector;
     int num_servos;
-    ros::Time w_next;
-    ros::Time r_next;
+    rclcpp::Time w_next;
+    rclcpp::Time r_next;
     
     // ROS publishers and subscribers
-    ros::Publisher armStatePub;
-    ros::Subscriber armCommandSub;
-    ros::Subscriber gazeboJointSub;
+    rclcpp::Publisher armStatePub;
+    rclcpp::Subscription armCommandSub;
+    rclcpp::Subscription gazeboJointSub;
+    
+    // ROS wall timer
+    rclcpp::TimerBase::SharedPtr timer_;
     
     // Command callback function
     void jointCommandCB(const sensor_msgs::JointState& msg){
         
         // Catch empty message command message; TODO: expand checks?
         if (msg.position.empty()){
-            ROS_WARN("No values detected in joint command");
+            RCLCPP_WARN(this->get_logger(), "No values detected in joint command");
         }
         
         // Extract commands from message
@@ -78,7 +83,8 @@ private:
                     std::string joint_name = msg.name[j];
                     if (joint_name == name){
                         servo_vector[i].setID(j);
-                        ROS_INFO_STREAM(name + " index: " + std::to_string(j));
+                        std::string id_note = name + " index: " + std::to_string(j);
+                        RCLCPP_INFO(this->get_logger(), id_note);
                         j = msg_size;
                     }
                     j++;
@@ -96,69 +102,16 @@ private:
         }
     }
     
-public:
-    SimArbotiX(){
-        
-        // Set node handle
-        ros::NodeHandle nh("~"); // Private node handle
-        ros::NodeHandle n(""); // Public node handle; outside this nodes namespace
-        
-        // Get ROS parameters
-        nh.param("rate", rate, 100.0);
-        nh.param("read_rate", read_rate, 10.0);
-        nh.param("write_rate", write_rate, 10.0);
-        nh.getParam("robot", robot);
-        nh.getParam("side", side);
-        
-        // Setup names
-        arm_state_topic = "/" + robot + "/" + side + "_arm/joint_states";
-        joint_command_topic = "/" + robot + "/" + side + "_arm/joint_commands";
-        gazebo_joint_topic = "/" + robot + "/joint_states";
-        
-        // Setup initial read and write times
-        ros::Duration r_delta(1/read_rate);
-        r_next = ros::Time::now() + r_delta;
-        ros::Duration w_delta(1/write_rate);
-        w_next = ros::Time::now() + w_delta;
-        
-        // Initialize variables
-        iter = 0;
-        
-        // Setup publishers and subscribers
-        armStatePub  = n.advertise<sensor_msgs::JointState>(arm_state_topic, 1);
-        armCommandSub = n.subscribe(joint_command_topic, 1, &SimArbotiX::jointCommandCB, this);
-        gazeboJointSub = n.subscribe(gazebo_joint_topic, 1, &SimArbotiX::jointStateCB, this);
-        
-        // Setup joint list
-        nh.getParam("joint_names", joints);
-        if (joints.size() == 0){
-            ROS_ERROR("No joint names read in from parameter server");
-        }
-        else {
-            for (int i=0; i<joints.size(); ++i){
-                std::string name = joints[i];
-                SimServo new_servo(name, side, n, nh, robot);
-                servo_vector.push_back(new_servo);
-            }
-        }
-        
-        // Store number of servos
-        num_servos = servo_vector.size();
-    }
-    
-    // Access functions
-    double getRate(){return rate;};
-    std::string getSide(){return side;};
-    
     // Get joint states and publish commands
     void update(){
         
-        // Read in the current servo positions
-        if (ros::Time::now() >= r_next){
-            
-            // Build joint state message
+        // Get current time
+        rclcpp::Time now = this->get_clock->now()
+        
+        // Read in current servo positions
+        if (now >= r_next){
             sensor_msgs::JointState arm_state_msg;
-            arm_state_msg.header.stamp = ros::Time::now();
+            arm_state_msg.header.stamp = now;
             for (int i=0; i<num_servos; ++i){
                 std::string new_name = servo_vector[i].getFullName();
                 float new_position = servo_vector[i].getPosition();
@@ -172,11 +125,11 @@ public:
             armStatePub.publish(arm_state_msg);
             
             // Update new read time
-            r_next = ros::Time::now() + r_delta;
+            r_next = now + r_delta;
         }
         
         // Publish commands
-        if (ros::Time::now() >= w_next){
+        if (now >= w_next){
             
             for (int j=0; j<num_servos; ++j){
                 
@@ -191,41 +144,81 @@ public:
                 }
                 
                 // Update new write time
-                w_next = ros::Time::now() + w_delta;
+                w_next = now + w_delta;
             }
         }
         
         // Update iteration number
         iter++;
     }
+    
+public:
+    SimArbotiX()
+    : Node("SimArbotix")
+    {
+        // Declare parameters
+        this->declare_parameter("rate", 100.0);
+        this->declare_parameter("read_rate", 10.0);
+        this->declare_parameter("write_rate", 10.0);
+        this->declare_parameter("robot", "");
+        this->declare_parameter("side", "");
+        this->declare_parameter("joint_names", "");
+        
+        // Get parameters
+        rate = this->get_parameter("rate").as_double();
+        read_rate = this->get_parameter("read_rate").as_double();
+        write_rate = this->get_parameter("write_rate").as_double();
+        robot = this->get_parameter("robot").as_string()
+        side = this->get_parameter("side").as_string()
+        joints = this.get_parameter("joint_names").as_string_array();
+        interval = std::chrono::milliseconds(1000/rate);
+        
+        // Setup names
+        arm_state_topic = "/" + robot + "/" + side + "_arm/joint_states";
+        joint_command_topic = "/" + robot + "/" + side + "_arm/joint_commands";
+        gazebo_joint_topic = "/" + robot + "/joint_states";
+        
+        // Setup initial read and write times
+        rclcpp::Duration r_delta(1/read_rate);
+        r_next = this->get_clock->now() + r_delta;
+        rclcpp::Duration w_delta(1/write_rate);
+        w_next = this->get_clock->now() + w_delta;
+        
+        // Initialize variables
+        iter = 0;
+        
+        // Setup publishers and subscribers
+        armStatePub = this->create_publisher<sensor_msgs::JointState>(arm_state_topic, 1);
+        armCommandSub = this->create_subscription<sensor_msgs::JointState(joint_command_topic, 1, jointCommandCB);
+        gazeboJointSub = this->create_subscription<sensor_msgs::JointState(gazebo_joint_topic, 1, jointStateCB);
+        
+        // Setup joint list
+        if (joints.size() == 0){
+            RCLCPP_ERROR(this->get_logger(), "No joint names read in from parameter server");
+        }
+        else {
+            for (int i=0; i<joints.size(); ++i){
+                std::string name = joints[i];
+                SimServo new_servo(name, side, this->shared_from_this(), robot);
+                servo_vector.push_back(new_servo);
+            }
+        }
+        
+        // Store number of servos
+        num_servos = servo_vector.size();
+        
+        // Setup wall timer
+        RCLCPP_INFO(this->get_logger(), "Starting simulated servo updates")
+        timer_ = this->create_wall_timer(interval, std::bind(&SimArbotiX::update, this));
+    }
 };
 
 int main(int argc, char **argv){
-    
-    // Initialize node
-    ros::init(argc, argv, "Sim_Arbotix");
-    
-    // Initialize simulated arbotix
-    SimArbotiX arbotix;
-    std::string side = arbotix.getSide();
-    ROS_INFO_STREAM("Simulated ArbotiX board initialized for " + side + " arm");
-    
-    // Set loop rate
-    double loop_rate = arbotix.getRate();
-    ros::Rate r(loop_rate);
-    
-    // Sleep so that Gazebo and ROS-controller can fully launch
-    ros::Duration(2.0).sleep();
-    
-    // Start simulated servo reading
-    arbotix.update();
-    ROS_INFO_STREAM("Starting simulated servo updates");
-    
-    // Main Loop
-    while (ros::ok())
-    {
-        arbotix.update();
-        ros::spinOnce();
-        r.sleep();
-    }
+	
+	rclcpp::init(argc, argv);
+	rclcpp::sleep_for(std::chrono::seconds(2.0));
+	rclcpp::spin(std::make_shared<SimArbotiX>());
+	rclcpp::shutdown();
+	
+	return 0;
 }

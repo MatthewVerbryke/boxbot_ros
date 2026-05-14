@@ -1,6 +1,6 @@
 // Gazebo simulated-servo class header.
 //
-// Copyright 2022-2023 University of Cincinnati
+// Copyright 2022-2026 University of Cincinnati
 // All rights reserved. See LICENSE file at:
 // https://github.com/MatthewVerbryke/rse_dam
 // Additional copyright may be held by others, as reflected in the
@@ -11,9 +11,9 @@
 
 #include <string>
 
-#include <ros/ros.h>
-#include <sensor_msgs/JointState.h>
-#include <std_msgs/Float64.h>
+#include <rclcpp/rclcpp.hpp>
+#include <sensor_msgs/msg/joint_state.hpp>
+#include <std_msgs/msg/Float64.hpp>
 
 class SimServo
 {
@@ -38,15 +38,15 @@ private:
 public:
 
     // Constructor
-    SimServo(std::string name, std::string side, ros::NodeHandle n, ros::NodeHandle nh, std::string robot);
+    SimServo(std::string name, std::string side, rclcpp::Node::SharedPtr node, std::string robot);
     
     // Joint command function
     void setCommandOutput();
     void setPosition(double pose_in);
     
     // ROS publishers and subscribers
-    ros::Publisher ControlPub;
-    ros::Publisher MimicPub;
+    rclcpp::Publisher ControlPub;
+    rclcpp::Publisher MimicPub;
     
     // Access functions
     std::string getName(){return name;};
