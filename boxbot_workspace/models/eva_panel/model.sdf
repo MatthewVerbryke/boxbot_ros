@@ -26,7 +26,7 @@
         <material>
           <script>
             <uri>file://media/materials/scripts/gazebo.material</uri>
-            <name>Gazebo/White</name>
+            <name>PR2/Grey0</name>
           </script>
         </material>
       </visual>

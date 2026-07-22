@@ -23,7 +23,12 @@
             <scale>0.001 0.001 0.001</scale>
           </mesh>
         </geometry>
-        <material>Gazebo/White</material>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/DarkGrey</name>
+          </script>
+        </material>
       </visual>
       <collision name="collision">
         <geometry>
