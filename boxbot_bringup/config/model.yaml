@@ -23,9 +23,10 @@ model_config: {
                 limits: [0.002, 0.031],
                 speed: 1.57,
                 equation: {
-                    type: linear,
-                    a: 141.432,
-                    b: -2.81359,
+                    type: quadratic,
+                    a: -0.00566303,
+                    b: -0.00281567,
+                    c: 0.0327,
                 }
             }
         },
@@ -49,9 +50,10 @@ model_config: {
                 limits: [0.002, 0.031],
                 speed: 1.57,
                 equation: {
-                    type: linear,
-                    a: 141.432,
-                    b: -2.81359,
+                    type: quadratic,
+                    a: -0.00566303,
+                    b: -0.00281567,
+                    c: 0.0327,
                 }
             }
         },
