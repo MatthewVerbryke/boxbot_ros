@@ -4,6 +4,7 @@
 
   <!-- Command-line arguments -->
   <arg name="six_dof" default="true"/>
+  <arg name="use_workspace" default="false"/>
   <arg name="world_name" default="empty"/>
   <arg name="gazebo_only" default="false"/>
   <arg name="left_driver" default="true"/>
@@ -13,6 +14,7 @@
   <group if="$(arg six_dof)">
     <include  file="$(find boxbot_gazebo)/launch/boxbot_6dof_gazebo.launch">
       <arg name="world" value="$(arg world_name)"/>
+      <arg name="use_workspace" value="$(arg use_workspace)"/>
     </include>
     <include file="$(find boxbot_control)/launch/boxbot_6dof_control.launch"/>
   </group>
@@ -21,6 +23,7 @@
   <group unless="$(arg six_dof)">
     <include file="$(find boxbot_gazebo)/launch/boxbot_5dof_gazebo.launch">
       <arg name="world" value="$(arg world_name)"/>
+      <arg name="use_workspace" value="$(arg use_workspace)"/>
     </include>
     <include file="$(find boxbot_control)/launch/boxbot_5dof_control.launch"/>
   </group>
