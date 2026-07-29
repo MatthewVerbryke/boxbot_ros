@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<sdf version="1.7">
+  <model name="block">
+    <pose>0.0 0.0 0.015 0.0 0.0 0.0</pose>
+    <static>false</static>
+    <link name="block_link">
+      <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+      <inertial>
+        <inertia>
+          <ixx>0.001</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.001</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+        <mass>0.01</mass>
+      </inertial>
+      <collision name="block_collision">
+        <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+        <geometry>
+          <box>
+            <size>0.03 0.03 0.03</size>
+	      </box>
+        </geometry>
+      </collision>
+      <visual name="block_visual">
+        <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+        <geometry>
+          <box>
+            <size>0.03 0.03 0.03</size>
+	      </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Gold</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
